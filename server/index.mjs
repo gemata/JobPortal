@@ -6,6 +6,10 @@ import mongooseConnection from './config/mongoose.js';
 import * as AdminJSSequelize from '@adminjs/sequelize';
 import * as AdminJSMongoose from '@adminjs/mongoose'
 import dbContext from './models/dbContext.js';
+import argon2 from 'argon2';
+import passwordsFeature from '@adminjs/passwords';
+import { componentLoader } from './components.js';
+
 import User from './models/user.entity.js';
 import Job from './models/job.entity.js';
 import Post from './models/post.entity.js';
@@ -29,11 +33,30 @@ const DEFAULT_ADMIN = {
 }
 
 const authenticate = async (email, password) => {
-  if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
-    return Promise.resolve(DEFAULT_ADMIN)
+  try {
+
+    if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+      return Promise.resolve(DEFAULT_ADMIN)
+    }
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return null;
+    }
+
+    const passwordMatch = await argon2.verify(user.password, password);
+
+    if (passwordMatch && user.role === "Admin") {
+      return Promise.resolve(user);
+    }
+    return null;
+  } catch (error) {
+    console.error('Error authenticating user:', error);
+    return null;
   }
-  return null
 }
+
 
 const start = async () => {
   const app = express();
@@ -65,13 +88,27 @@ const start = async () => {
   })();
 
   const admin = new AdminJS({
+    componentLoader,
     resources: [
       {
         resource: User,
         options: {
           parent: "mySQL",
-          listProperties: ['id', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt'],
+          listProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'role'],
+          showProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt', 'role'],
+          editProperties: ['email', 'email', 'firstName', 'lastName', 'newPassword', 'JobId', 'role'],
+          properties: { password: { isVisible: false } },
         },
+        features: [
+          passwordsFeature({
+            componentLoader,
+            properties: {
+              password: 'newPassword',
+              encryptedPassword: 'password',
+            },
+            hash: argon2.hash,
+          }),
+        ]
       },
       {
         resource: Job,
@@ -86,7 +123,7 @@ const start = async () => {
       {
         resource: Resume,
         options:
-          { parent: "mySQL", listProperties: ['id', 'type', 'employeeId'] }
+          { parent: "mySQL", listProperties: ['id', 'type', 'UserId'] }
       },
       {
         resource: Category,
@@ -95,6 +132,7 @@ const start = async () => {
         },
       }
     ],
+    componentLoader,
     rootPath: '/admin' // Specify the root path for AdminJS
   });
 
@@ -107,7 +145,7 @@ const start = async () => {
     },
     null,
     {
-      resave: true,
+      resave: false,
       saveUninitialized: true,
     }
   );
@@ -126,6 +164,9 @@ const start = async () => {
   app.listen(PORT, () => {
     console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`);
   });
+
+  if (process.env.NODE_ENV === 'production') await admin.initialize();
+  else admin.watch();
 };
 
 start();

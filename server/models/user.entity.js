@@ -9,6 +9,10 @@ const User = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,6 +20,14 @@ const User = sequelize.define(
     lastName: {
       type: DataTypes.STRING,
     },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   },
   {
     sequelize, // We need to pass the connection instance

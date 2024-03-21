@@ -12,8 +12,11 @@
   "dependencies": {
     "@adminjs/express": "^6.1.0",
     "@adminjs/mongoose": "^4.1.0",
+    "@adminjs/passwords": "^4.0.0",
     "@adminjs/sequelize": "^4.1.1",
     "adminjs": "^7.7.3",
+    "argon": "^2.0.21",
+    "argon2": "^0.40.1",
     "connect-pg-simple": "^9.0.1",
     "connect-session-sequelize": "^7.1.7",
     "dotenv": "^16.4.5",
