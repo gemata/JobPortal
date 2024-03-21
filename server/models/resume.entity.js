@@ -1,36 +1,26 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
-import Job from "./job.entity.js";
 
-const User = sequelize.define(
-  "User",
+const Resume = sequelize.define(
+  "Resume",
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    firstName: {
+    type: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
     },
   },
   {
     sequelize, // We need to pass the connection instance
-    freezeTableName: true,
   }
 );
 
-User.belongsTo(Job, {
-  type: DataTypes.INTEGER,
-  foreignKey: "jobId",
-});
 // `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
+console.log("Creating Resume Model"); // true
+console.log(Resume === sequelize.models.Resume); // true
 
-await User.sync({ alter: true });
-
-export default User;
+export default Resume;
