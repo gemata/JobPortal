@@ -15,6 +15,7 @@ import Job from './models/job.entity.js';
 import Post from './models/post.entity.js';
 import Resume from './models/resume.entity.js';
 import Category from './models/category.entity.js';
+import userRouter from './routes/user.router.js';
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -151,7 +152,15 @@ const start = async () => {
   );
   app.use(admin.options.rootPath, adminRouter);
 
-  app.get('/', async (req, res) => {
+  
+  
+  // Middleware to parse JSON bodies
+  app.use(express.json());
+  
+  // Use user routes
+  app.use('/api/users', userRouter);
+
+  app.get('/api/users', async (req, res) => {
     try {
       const users = await User.findAll();
       res.send(users);

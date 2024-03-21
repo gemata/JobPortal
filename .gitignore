@@ -13,3 +13,5 @@ yarn-error.log*
 /.changelog
 .npm/
 .env
+/server/.adminjs/bundle.js
+/server/.adminjs/entry.js
