@@ -1,7 +1,25 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-main().catch(err => console.log(err));
+dotenv.config({ path: '../.env' });
 
-async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/test');
-}
+console.log("Loaded MongoDB URI:", process.env.MONGODB_URI);
+
+const mongooseConnection = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+
+    // const kittySchema = new mongoose.Schema({
+    //   name: String
+    // });
+
+    // const Kitten = mongoose.model('Kitten', kittySchema);
+
+    // const fluffy = new Kitten({ name: 'fluffy' });
+    // await fluffy.save();
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
+};
+
+export default mongooseConnection;
