@@ -1,12 +1,17 @@
 // Import the User model and Sequelize
 import User from '../models/user.entity.js';
 import { Op } from 'sequelize';
+import argon2 from 'argon2';
 
 // Controller functions
 const UserController = {
   // Create a new user
   async createUser(req, res) {
+    const { body } = req;
     try {
+
+      body.password = await argon2.hash(body.password);
+
       const newUser = await User.create(req.body);
       return res.status(201).json(newUser);
     } catch (error) {
@@ -41,8 +46,12 @@ const UserController = {
   // Update a user
   async updateUser(req, res) {
     const { id } = req.params;
+    const { body } = req;
     try {
-      const [updatedRowsCount, updatedUser] = await User.update(req.body, {
+
+      body.password = await argon2.hash(body.password);
+
+      const [updatedRowsCount, updatedUser] = await User.update(body, {
         where: { id },
         returning: true, // Return the updated user object
       });

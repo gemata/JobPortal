@@ -98,7 +98,16 @@ const start = async () => {
           listProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'role'],
           showProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt', 'role'],
           editProperties: ['email', 'email', 'firstName', 'lastName', 'newPassword', 'JobId', 'role'],
-          properties: { password: { isVisible: false } },
+          properties: {
+            password: { isVisible: false },
+            role: {
+              availableValues: [
+                { value: 'User', label: 'User' },
+                { value: 'Admin', label: 'Admin' },
+                { value: 'Editor', label: 'Editor' },
+              ],
+            },
+          },
         },
         features: [
           passwordsFeature({
@@ -152,23 +161,23 @@ const start = async () => {
   );
   app.use(admin.options.rootPath, adminRouter);
 
-  
-  
+
+
   // Middleware to parse JSON bodies
   app.use(express.json());
-  
+
   // Use user routes
   app.use('/api/users', userRouter);
 
-  app.get('/api/users', async (req, res) => {
-    try {
-      const users = await User.findAll();
-      res.send(users);
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  });
+  // app.get('/api/users', async (req, res) => {
+  //   try {
+  //     const users = await User.findAll();
+  //     res.send(users);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     res.status(500).send('Internal Server Error');
+  //   }
+  // });
 
   app.listen(PORT, () => {
     console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`);
