@@ -19,8 +19,6 @@ const Post = sequelize.define(
   }
 );
 
-// `sequelize.define` also returns the model
-console.log("Creating Post Model"); // true
-console.log(Post === sequelize.models.Post); // true
+console.log("Post model created successfully:", Post === sequelize.models.Post);
 
 export default Post;

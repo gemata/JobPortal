@@ -34,7 +34,6 @@ const User = sequelize.define(
     sequelize, // We need to pass the connection instance
   });
 
-console.log("Creating User Model");
-console.log(User === sequelize.models.User); // true
+console.log("User model created successfully:", User === sequelize.models.User);
 
 export default User;

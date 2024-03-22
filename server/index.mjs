@@ -10,6 +10,10 @@ import argon2 from 'argon2';
 import passwordsFeature from '@adminjs/passwords';
 import importExportFeature from '@adminjs/import-export';
 import { componentLoader } from './components.js';
+import connectSessionStore from "connect-session-sequelize";
+import { Store as SessionStore } from 'express-session';
+import cookieParser from 'cookie-parser';
+import { dark, light, noSidebar } from '@adminjs/themes'
 
 import User from './models/user.entity.js';
 import Job from './models/job.entity.js';
@@ -49,7 +53,7 @@ const authenticate = async (email, password) => {
 
     const passwordMatch = await argon2.verify(user.password, password);
 
-    if (passwordMatch && user.role === "Admin") {
+    if (passwordMatch && user.role !== "User") {
       return Promise.resolve(user);
     }
     return null;
@@ -59,10 +63,9 @@ const authenticate = async (email, password) => {
   }
 }
 
-
 const start = async () => {
   const app = express();
-
+  app.use(cookieParser());
   try {
     await sequelize.authenticate();
     console.log('Sequelize connection has been established successfully.');
@@ -90,6 +93,8 @@ const start = async () => {
   })();
 
   const admin = new AdminJS({
+    defaultTheme: light.id,
+    availableThemes: [dark, light],
     componentLoader,
     resources: [
       {
@@ -150,22 +155,30 @@ const start = async () => {
     rootPath: '/admin' // Specify the root path for AdminJS
   });
 
+  const SequelizeStore = connectSessionStore(SessionStore);
+  const sessionStore = new SequelizeStore({ db: sequelize, expiration: 3600 });
+
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
     {
       authenticate,
-      cookieName: 'adminjs',
+      cookieName: 'userSessionToken',
       cookiePassword: 'sessionsecret',
     },
     null,
     {
-      resave: false,
+      store: sessionStore,
+      resave: true,
       saveUninitialized: true,
+      secret: 'sessionsecret',
+      cookie: {
+        httpOnly: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',
+      },
+      name: 'userSessionToken',
     }
   );
   app.use(admin.options.rootPath, adminRouter);
-
-
 
   // Middleware to parse JSON bodies
   app.use(express.json());
@@ -173,15 +186,27 @@ const start = async () => {
   // Use user routes
   app.use('/api/users', userRouter);
 
-  // app.get('/api/users', async (req, res) => {
-  //   try {
-  //     const users = await User.findAll();
-  //     res.send(users);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     res.status(500).send('Internal Server Error');
-  //   }
-  // });
+  app.get('/', async (req, res) => {
+    try {
+      const sessionId = req.cookies.userSessionToken;
+      const sid = sessionId.split('.')[0].slice(2);
+
+      const sessionModel = sessionStore.sessionModel;
+
+      const session = await sessionModel.findOne({ where: { sid } });
+      const dataObject = JSON.parse(session.data);
+
+      if (!dataObject.adminUser) {
+        return res.redirect('/admin/login');
+      }
+
+      res.send(dataObject.adminUser);
+
+    } catch (err) {
+      console.error('Error fetching sessions:', err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
   app.listen(PORT, () => {
     console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`);

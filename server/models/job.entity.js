@@ -15,7 +15,6 @@ const Job = sequelize.define('Job', {
   sequelize, // We need to pass the connection instance
 });
 
-console.log("Creating Job Model");
-console.log(Job === sequelize.models.Job);
+console.log("Job model created successfully:", Job === sequelize.models.Job);
 
 export default Job;

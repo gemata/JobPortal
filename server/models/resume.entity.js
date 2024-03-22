@@ -19,8 +19,6 @@ const Resume = sequelize.define(
   }
 );
 
-// `sequelize.define` also returns the model
-console.log("Creating Resume Model"); // true
-console.log(Resume === sequelize.models.Resume); // true
+console.log("Resume model created successfully:", Resume === sequelize.models.Resume);
 
 export default Resume;
