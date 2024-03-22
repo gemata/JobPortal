@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@adminjs/express": "^6.1.0",
+    "@adminjs/import-export": "^3.0.0",
     "@adminjs/mongoose": "^4.1.0",
     "@adminjs/passwords": "^4.0.0",
     "@adminjs/sequelize": "^4.1.1",

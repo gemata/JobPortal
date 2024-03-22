@@ -8,6 +8,7 @@ import * as AdminJSMongoose from '@adminjs/mongoose'
 import dbContext from './models/dbContext.js';
 import argon2 from 'argon2';
 import passwordsFeature from '@adminjs/passwords';
+import importExportFeature from '@adminjs/import-export';
 import { componentLoader } from './components.js';
 
 import User from './models/user.entity.js';
@@ -118,31 +119,34 @@ const start = async () => {
             },
             hash: argon2.hash,
           }),
+          importExportFeature({ componentLoader }),
         ]
       },
       {
         resource: Job,
         options:
-          { parent: "mySQL", listProperties: ['id', 'name', 'createdAt', 'updatedAt'] }
+          { parent: "mySQL", listProperties: ['id', 'name', 'createdAt', 'updatedAt'] },
+        features: [importExportFeature({ componentLoader })]
       },
       {
         resource: Post,
         options:
-          { parent: "mySQL", listProperties: ['id', 'name', 'createdAt', 'updatedAt'] }
+          { parent: "mySQL", listProperties: ['id', 'name', 'createdAt', 'updatedAt'] },
+        features: [importExportFeature({ componentLoader })]
       },
       {
         resource: Resume,
         options:
-          { parent: "mySQL", listProperties: ['id', 'type', 'UserId'] }
+          { parent: "mySQL", listProperties: ['id', 'type', 'UserId'] },
+        features: [importExportFeature({ componentLoader })]
       },
       {
         resource: Category,
-        options: {
-          parent: "mongoDB",
-        },
+        options:
+          { parent: "mongoDB", listProperties: ['_id', 'title', 'createdAt', 'updatedAt'], editProperties: ['title'] },
+        features: [importExportFeature({ componentLoader })]
       }
     ],
-    componentLoader,
     rootPath: '/admin' // Specify the root path for AdminJS
   });
 
