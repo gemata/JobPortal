@@ -9,11 +9,12 @@ import dbContext from './models/dbContext.js';
 import argon2 from 'argon2';
 import passwordsFeature from '@adminjs/passwords';
 import importExportFeature from '@adminjs/import-export';
-import { componentLoader } from './components.js';
+import { componentLoader, Components } from './components.js';
 import connectSessionStore from "connect-session-sequelize";
 import { Store as SessionStore } from 'express-session';
 import cookieParser from 'cookie-parser';
 import { dark, light, noSidebar } from '@adminjs/themes'
+import { DefaultAuthProvider } from 'adminjs';
 
 import User from './models/user.entity.js';
 import Job from './models/job.entity.js';
@@ -38,11 +39,10 @@ const DEFAULT_ADMIN = {
   password: 'password',
 }
 
-const authenticate = async (email, password) => {
+const authenticate = async ({ email, password }, ctx) => {
   try {
-
     if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
-      return Promise.resolve(DEFAULT_ADMIN)
+      return DEFAULT_ADMIN;
     }
 
     const user = await User.findOne({ where: { email } });
@@ -53,15 +53,17 @@ const authenticate = async (email, password) => {
 
     const passwordMatch = await argon2.verify(user.password, password);
 
-    if (passwordMatch && user.role !== "User") {
-      return Promise.resolve(user);
+    if (!passwordMatch || user.role === "User" || user.role === "Business") {
+      return null;
     }
-    return null;
+
+    return user;
   } catch (error) {
     console.error('Error authenticating user:', error);
     return null;
   }
 }
+
 
 const start = async () => {
   const app = express();
@@ -92,11 +94,20 @@ const start = async () => {
     }
   })();
 
+  const dashboardHandler = async () => {
+    return { message: 'Data from handler' }
+  }
+
   const admin = new AdminJS({
     defaultTheme: light.id,
     availableThemes: [dark, light],
+    dashboard: {
+      component: Components.Dashboard,
+      handler: dashboardHandler,
+    },
     componentLoader,
     resources: [
+      //MySQL DB Models
       {
         resource: User,
         options: {
@@ -109,6 +120,7 @@ const start = async () => {
             role: {
               availableValues: [
                 { value: 'User', label: 'User' },
+                { value: 'Business', label: 'Business' },
                 { value: 'Admin', label: 'Admin' },
                 { value: 'Editor', label: 'Editor' },
               ],
@@ -145,6 +157,8 @@ const start = async () => {
           { parent: "mySQL", listProperties: ['id', 'type', 'UserId'] },
         features: [importExportFeature({ componentLoader })]
       },
+      //MongoDB Models
+      //Default id is "_id"
       {
         resource: Category,
         options:
@@ -155,15 +169,21 @@ const start = async () => {
     rootPath: '/admin' // Specify the root path for AdminJS
   });
 
+  const authProvider = new DefaultAuthProvider({
+    componentLoader,
+    authenticate,
+  });
+
   const SequelizeStore = connectSessionStore(SessionStore);
   const sessionStore = new SequelizeStore({ db: sequelize, expiration: 3600 });
 
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
     {
-      authenticate,
+      // authenticate,
       cookieName: 'userSessionToken',
       cookiePassword: 'sessionsecret',
+      provider: authProvider
     },
     null,
     {
