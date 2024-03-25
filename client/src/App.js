@@ -1,17 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useEffect } from 'react';
+import logo from "./logo.svg";
+import "./App.css";
+import React, { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Homepage/Home";
 
 function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/', {
-          method: 'GET',
-          credentials: 'include'
+        const response = await fetch("http://localhost:5000/", {
+          method: "GET",
+          credentials: "include",
         });
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const responseData = await response.json();
         console.log(responseData);
@@ -25,20 +27,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </div>
   );
 }
