@@ -3,13 +3,14 @@ import AdminJSExpress from '@adminjs/express';
 import express from 'express';
 import sequelize from './config/sequelize.mjs';
 import mongooseConnection from './config/mongoose.js';
+import cors from 'cors';
 import * as AdminJSSequelize from '@adminjs/sequelize';
 import * as AdminJSMongoose from '@adminjs/mongoose'
 import dbContext from './models/dbContext.js';
 import argon2 from 'argon2';
 import passwordsFeature from '@adminjs/passwords';
 import importExportFeature from '@adminjs/import-export';
-import { componentLoader, Components } from './components.js';
+import { componentLoader, Components } from './componentLoader.js';
 import connectSessionStore from "connect-session-sequelize";
 import { Store as SessionStore } from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -53,8 +54,12 @@ const authenticate = async ({ email, password }, ctx) => {
 
     const passwordMatch = await argon2.verify(user.password, password);
 
-    if (!passwordMatch || user.role === "User" || user.role === "Business") {
+    if (!passwordMatch) {
       return null;
+    }
+
+    if (user.role === "User" || user.role === "Business") {
+      ctx.res.redirect('http://localhost:3000/');
     }
 
     return user;
@@ -64,10 +69,16 @@ const authenticate = async ({ email, password }, ctx) => {
   }
 }
 
-
 const start = async () => {
   const app = express();
+
   app.use(cookieParser());
+
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }));
+
   try {
     await sequelize.authenticate();
     console.log('Sequelize connection has been established successfully.');
@@ -120,7 +131,7 @@ const start = async () => {
             role: {
               availableValues: [
                 { value: 'User', label: 'User' },
-                { value: 'Business', label: 'Business' },
+                { value: 'Company', label: 'Company' },
                 { value: 'Admin', label: 'Admin' },
                 { value: 'Editor', label: 'Editor' },
               ],
@@ -177,6 +188,50 @@ const start = async () => {
   const SequelizeStore = connectSessionStore(SessionStore);
   const sessionStore = new SequelizeStore({ db: sequelize, expiration: 3600 });
 
+  const getSessionData = async (req, res) => {
+    try {
+      const sessionId = req.cookies.userSessionToken;
+
+      if (!sessionId) {
+        return null;
+      }
+
+      const sid = sessionId.split('.')[0].slice(2);
+
+      const sessionModel = sessionStore.sessionModel;
+
+      const session = await sessionModel.findOne({ where: { sid } });
+
+      if (!session) {
+        return null;
+      }
+
+      return JSON.parse(session.data);
+
+    } catch (error) {
+      console.error('Error fetching session data:', error);
+      return null;
+    }
+  };
+
+  const isAdmin = async (req, res, next) => {
+    try {
+      const dataObject = await getSessionData(req, res);
+
+      const { adminUser } = dataObject || {};
+
+      if ((adminUser?.email === 'admin@example.com' || adminUser?.role === "Admin" || req.path === '/login' || req.path.startsWith('/frontend/assets/'))) {
+        next();
+      } else {
+        return res.status(403).send('Forbidden');
+      }
+
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  };
+
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
     {
@@ -198,7 +253,7 @@ const start = async () => {
       name: 'userSessionToken',
     }
   );
-  app.use(admin.options.rootPath, adminRouter);
+  app.use(admin.options.rootPath, isAdmin, adminRouter);
 
   // Middleware to parse JSON bodies
   app.use(express.json());
@@ -208,22 +263,11 @@ const start = async () => {
 
   app.get('/', async (req, res) => {
     try {
-      const sessionId = req.cookies.userSessionToken;
-      const sid = sessionId.split('.')[0].slice(2);
-
-      const sessionModel = sessionStore.sessionModel;
-
-      const session = await sessionModel.findOne({ where: { sid } });
-      const dataObject = JSON.parse(session.data);
-
-      if (!dataObject.adminUser) {
-        return res.redirect('/admin/login');
-      }
+      const dataObject = await getSessionData(req, res);
 
       res.send(dataObject.adminUser);
-
-    } catch (err) {
-      console.error('Error fetching sessions:', err);
+    } catch (error) {
+      console.error('Error fetching session data:', error);
       res.status(500).send('Internal Server Error');
     }
   });

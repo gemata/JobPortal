@@ -10,7 +10,7 @@ const componentLoader = new ComponentLoader();
 const Components = {
   // Dashboard: componentLoader.add('Dashboard', 'dashboard.jsx')
   Dashboard: componentLoader.add("Dashboard", path.join(__dirname, './components/dashboard')),
-  Login: componentLoader.override("Login", path.join(__dirname, './components/login'))
+  Login: componentLoader.override("Login", path.join(__dirname, './components/login')),
 };
 
 export { componentLoader, Components };
