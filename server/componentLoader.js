@@ -11,6 +11,8 @@ const Components = {
   // Dashboard: componentLoader.add('Dashboard', 'dashboard.jsx')
   Dashboard: componentLoader.add("Dashboard", path.join(__dirname, './components/dashboard')),
   Login: componentLoader.override("Login", path.join(__dirname, './components/login')),
+  SidebarBranding: componentLoader.override("SidebarBranding", path.join(__dirname, './components/sidebarBranding')),
+  SidebarFooter: componentLoader.override("SidebarFooter", path.join(__dirname, './components/sidebarFooter')),
 };
 
 export { componentLoader, Components };
