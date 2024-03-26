@@ -231,7 +231,8 @@ const start = async () => {
       if ((adminUser?.email === 'admin@example.com' || adminUser?.role === "Admin" || req.path === '/login' || req.path.startsWith('/frontend/assets/'))) {
         next();
       } else {
-        return res.status(403).send('Forbidden');
+        return res.redirect('/admin/login');
+        // return res.status(403).send('Forbidden');
       }
 
     } catch (error) {

@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
-import { Box, BoxProps, Button, FormGroup, H2, H5, Illustration, Input, Label, MadeWithLove, MessageBox, Text } from '@adminjs/design-system';
-import { useTranslation } from 'adminjs';
-import { cssClass, themeGet } from '@adminjs/design-system';
+import styled from 'styled-components';
+import logoImage from 'logo1.png';
 
 const SidebarBranding: React.FC<{}> = () => {
   const StyledLink = styled(Link)`
@@ -29,7 +27,8 @@ const SidebarBranding: React.FC<{}> = () => {
 
   return (
     <>
-      <StyledLink to={'/admin'} data-css='sidebar-logo'>
+      <StyledLink to={'/admin'} data-css='sidebar-logo' style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        <img width='50px' style={{ borderRadius: '50%' }} src={'https://lh3.googleusercontent.com/d/1sepgRdNHedA0P270SGyjWRyNVEr918hN=s220?authuser=0'} alt='Logo' />
         <StyledH1>{'Job Horizon'}</StyledH1>
       </StyledLink>
     </>
