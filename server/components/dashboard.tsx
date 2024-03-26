@@ -21,7 +21,7 @@ export const DashboardHeader: React.FC = () => {
       .getDashboard()
       .then((response) => {
         const responseData = response.data as Data;
-        setData(responseData); // { message: 'Hello World' }
+        setData(responseData);
       })
       .catch((error) => {});
   }, []);
