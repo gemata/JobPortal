@@ -181,7 +181,7 @@ const start = async () => {
       {
         resource: ChatLog,
         options:
-          { parent: "mongoDB", listProperties: ['_id', 'sender', 'reciever', 'timestamp']},
+          { parent: "mongoDB", listProperties: ['_id', 'sender', 'reciever', 'timestamp'], editProperties: ['_id,','sender', 'reciever']},
         features: [importExportFeature({ componentLoader })]
       }
     ],
