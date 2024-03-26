@@ -23,6 +23,8 @@ import Post from './models/post.entity.js';
 import Resume from './models/resume.entity.js';
 import Category from './models/category.entity.js';
 import userRouter from './routes/user.router.js';
+import ChatLog from './models/chatLog.js';
+
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -174,6 +176,12 @@ const start = async () => {
         resource: Category,
         options:
           { parent: "mongoDB", listProperties: ['_id', 'title', 'createdAt', 'updatedAt'], editProperties: ['title'] },
+        features: [importExportFeature({ componentLoader })]
+      },
+      {
+        resource: ChatLog,
+        options:
+          { parent: "mongoDB", listProperties: ['_id', 'sender', 'reciever', 'timestamp']},
         features: [importExportFeature({ componentLoader })]
       }
     ],
