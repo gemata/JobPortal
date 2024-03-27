@@ -5,6 +5,7 @@ import User from "./user.entity.js";
 import Post from "./post.entity.js";
 import Resume from "./resume.entity.js";
 import WorkExperience from "./workexperience.entity.js";
+import Education from "./education.entity.js";
 
 const dbContext = async () => {
   Job.hasMany(User);
@@ -16,6 +17,8 @@ const dbContext = async () => {
   User.hasMany(WorkExperience);
   WorkExperience.belongsTo(User);
 
+  User.hasMany(Education);
+  Education.belongsTo(User);
   await sequelize.sync({ alter: true });
 };
 

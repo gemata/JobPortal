@@ -76,35 +76,7 @@ const WorkExperienceController = {
     }
   },
 
-  // Send an email
-  async forgotPassword(req, res) {
-    const { body } = req;
-    const email = body.email;
-
-    const WorkExperience = await WorkExperience.findOne({ where: { email } });
-
-    if (!WorkExperience) {
-      return res.status(404).json({ message: "WorkExperience not found" });
-    }
-
-    res.mailer.send(
-      "email",
-      {
-        to: email, // REQUIRED. This can be a comma delimited string just like a normal email to field.
-        subject: "Reset Password", // REQUIRED.
-        email: email, // Pass the email as data
-      },
-      function (err, message) {
-        if (err) {
-          console.log(err);
-          res.send("There was an error sending the email");
-          return;
-        }
-        res.header("Content-Type", "text/plain");
-        res.send(message);
-      }
-    );
-  },
+  
 };
 
 export default WorkExperienceController;
