@@ -64,7 +64,7 @@ const UserController = {
     }
   },
 
-  // Delete a user
+  // Delete an user
   async deleteUser(req, res) {
     const { id } = req.params;
     try {
@@ -77,6 +77,32 @@ const UserController = {
       return res.status(500).json({ error: error.message });
     }
   },
+
+  // Send an email
+  async forgotPassword(req, res) {
+    const { body } = req;
+    const email = body.email;
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.mailer.send('email', {
+      to: email, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
+      subject: 'Reset Password', // REQUIRED.
+      email: email // Pass the email as data
+    }, function (err, message) {
+      if (err) {
+        console.log(err);
+        res.send('There was an error sending the email');
+        return;
+      }
+      res.header('Content-Type', 'text/plain');
+      res.send(message);
+    });
+  }
 };
 
 export default UserController;

@@ -7,6 +7,8 @@ userRouter.post('/', UserController.createUser);
 
 userRouter.get('/', UserController.getUsers);
 
+userRouter.post('/forgot-password', UserController.forgotPassword);
+
 userRouter.get('/:id', UserController.getUserById);
 
 userRouter.put('/:id', UserController.updateUser);

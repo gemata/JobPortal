@@ -145,10 +145,41 @@ const Login: React.FC<{}> = () => {
     }
   };
 
-  const handleForgotPasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleForgotPasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm') as HTMLInputElement;
+    const emailInput = forgotPasswordForm.querySelector('input[name="email"]') as HTMLInputElement;
+
+    const email = emailInput.value;
+
+    console.log(email);
+
+    if (!email) {
+      console.log('Please fill in your email');
+      return;
+    }
+
+    const requestBody = {
+      email: email,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('Error mailing user:', error.message);
+    }
   };
 
   const toggleTerms = () => {
@@ -442,7 +473,7 @@ const Login: React.FC<{}> = () => {
           </Box>
         </Box>
         <p style={{ color: '#6B7781', fontFamily: 'TTNormsRegular, Roboto', fontSize: '12px', padding: '20px', letterSpacing: '1px' }}>
-          © Lab 2 2024. All rights reserved |{' '}
+          © Job Horizon 2024. All rights reserved |{' '}
           <a href='#' style={{ color: '#3040d6', textDecoration: 'none' }}>
             Privacy Policy
           </a>{' '}

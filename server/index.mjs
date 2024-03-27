@@ -8,6 +8,8 @@ import * as AdminJSSequelize from '@adminjs/sequelize';
 import * as AdminJSMongoose from '@adminjs/mongoose'
 import dbContext from './models/dbContext.js';
 import argon2 from 'argon2';
+import path from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
 import passwordsFeature from '@adminjs/passwords';
 import importExportFeature from '@adminjs/import-export';
 import { componentLoader, Components } from './componentLoader.js';
@@ -16,6 +18,8 @@ import { Store as SessionStore } from 'express-session';
 import cookieParser from 'cookie-parser';
 import { dark, light, noSidebar } from '@adminjs/themes'
 import { DefaultAuthProvider } from 'adminjs';
+import mailer from 'express-mailer';
+import dotenv from "dotenv";
 
 import User from './models/user.entity.js';
 import Job from './models/job.entity.js';
@@ -36,6 +40,11 @@ AdminJS.registerAdapter({
 })
 
 const PORT = 5000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: '../.env' });
+console.log("Loaded MongoDB URI:", process.env.MONGODB_URI);
 
 const DEFAULT_ADMIN = {
   email: 'admin@example.com',
@@ -80,6 +89,21 @@ const start = async () => {
     origin: 'http://localhost:3000',
     credentials: true,
   }));
+
+  mailer.extend(app, {
+    from: 'jobhorizonsite@gmail.com',
+    host: 'smtp.gmail.com',
+    secureConnection: true,
+    port: 465,
+    transportMethod: 'SMTP',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.APP_PASSWORD
+    }
+  });
+
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
 
   try {
     await sequelize.authenticate();
@@ -181,7 +205,7 @@ const start = async () => {
       {
         resource: ChatLog,
         options:
-          { parent: "mongoDB", listProperties: ['_id', 'sender', 'reciever', 'timestamp'], editProperties: ['_id,','sender', 'reciever']},
+          { parent: "mongoDB", listProperties: ['_id', 'sender', 'receiver', 'createdAt'], editProperties: ['sender', 'receiver', 'message'] },
         features: [importExportFeature({ componentLoader })]
       }
     ],
