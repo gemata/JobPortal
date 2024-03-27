@@ -228,7 +228,7 @@ const start = async () => {
       },
       {
         resource: WorkExperience,
-        options: { parent: "mySQL", listProperties: ["id", "UserId"] },
+        options: { parent: "mySQL" },
         features: [importExportFeature({ componentLoader })],
       },
       {
