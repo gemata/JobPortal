@@ -28,6 +28,8 @@ import Resume from './models/resume.entity.js';
 import Category from './models/category.entity.js';
 import userRouter from './routes/user.router.js';
 import ChatLog from './models/chatLog.js';
+import WorkExperience from './models/workexperience.entity.js';
+import WorkExperienceRouter from './routes/workexperience.router.js';
 
 
 AdminJS.registerAdapter({
@@ -194,6 +196,13 @@ const start = async () => {
           { parent: "mySQL", listProperties: ['id', 'type', 'UserId'] },
         features: [importExportFeature({ componentLoader })]
       },
+      {
+        resource: WorkExperience,
+        options:
+          { parent: "mySQL", listProperties: ['id','UserId'] },
+        features: [importExportFeature({ componentLoader })]
+      },
+      
       //MongoDB Models
       //Default id is "_id"
       {
@@ -293,6 +302,8 @@ const start = async () => {
 
   // Use user routes
   app.use('/api/users', userRouter);
+  app.use('/api/workexperience', WorkExperienceRouter);
+
 
   app.get('/', async (req, res) => {
     try {
