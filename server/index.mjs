@@ -20,16 +20,17 @@ import { dark, light, noSidebar } from "@adminjs/themes";
 import { DefaultAuthProvider } from "adminjs";
 import mailer from "express-mailer";
 import dotenv from "dotenv";
+import uploadFeature from '@adminjs/upload';
 
-import User from "./models/user.entity.js";
-import Job from "./models/job.entity.js";
-import Post from "./models/post.entity.js";
-import Resume from "./models/resume.entity.js";
-import Category from "./models/category.entity.js";
-import userRouter from "./routes/user.router.js";
-import ChatLog from "./models/chatLog.js";
-import WorkExperience from "./models/workexperience.entity.js";
-import WorkExperienceRouter from "./routes/workexperience.router.js";
+import User from './models/user.entity.js';
+import Job from './models/job.entity.js';
+import Post from './models/post.entity.js';
+import Resume from './models/resume.entity.js';
+import Category from './models/category.entity.js';
+import userRouter from './routes/user.router.js';
+import ChatLog from './models/chatLog.js';
+import WorkExperience from './models/workexperience.entity.js';
+import WorkExperienceRouter from './routes/workexperience.router.js';
 import Education from "./models/education.entity.js";
 import EducationRouter from "./routes/education.router.js";
 
@@ -95,6 +96,8 @@ const start = async () => {
     })
   );
 
+  app.use(express.static(path.join(__dirname, '../public')));
+
   mailer.extend(app, {
     from: "jobhorizonsite@gmail.com",
     host: "smtp.gmail.com",
@@ -154,33 +157,9 @@ const start = async () => {
         resource: User,
         options: {
           parent: "mySQL",
-          listProperties: [
-            "id",
-            "email",
-            "firstName",
-            "lastName",
-            "JobId",
-            "role",
-          ],
-          showProperties: [
-            "id",
-            "email",
-            "firstName",
-            "lastName",
-            "JobId",
-            "createdAt",
-            "updatedAt",
-            "role",
-          ],
-          editProperties: [
-            "email",
-            "email",
-            "firstName",
-            "lastName",
-            "newPassword",
-            "JobId",
-            "role",
-          ],
+          listProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'role'],
+          showProperties: ['id', 'email', 'profilePic', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt', 'role'],
+          editProperties: ['email', 'profilePic', 'firstName', 'lastName', 'newPassword', 'JobId', 'role'],
           properties: {
             password: { isVisible: false },
             role: {
@@ -194,6 +173,12 @@ const start = async () => {
           },
         },
         features: [
+          uploadFeature({
+            componentLoader,
+            provider: { local: { bucket: 'public/profilePics' } },
+            properties: { file: 'profilePic', key: 's3Key', bucket: 'bucket', mimeType: 'mime' },
+            validation: { mimeTypes: ['image/png', 'application/pdf', 'audio/mpeg'] },
+          }),
           passwordsFeature({
             componentLoader,
             properties: {

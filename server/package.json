@@ -17,6 +17,7 @@
     "@adminjs/passwords": "^4.0.0",
     "@adminjs/sequelize": "^4.1.1",
     "@adminjs/themes": "^1.0.1",
+    "@adminjs/upload": "^4.0.2",
     "adminjs": "^7.7.3",
     "argon2": "^0.40.1",
     "connect-session-sequelize": "^7.1.7",
