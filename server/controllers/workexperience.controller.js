@@ -1,16 +1,11 @@
 // Import the WorkExperience model and Sequelize
 import WorkExperience from "../models/workexperience.entity.js";
-import { Op } from "sequelize";
-import argon2 from "argon2";
 
 // Controller functions
 const WorkExperienceController = {
   // Create a new WorkExperience
   async createWorkExperience(req, res) {
-    const { body } = req;
     try {
-      body.password = await argon2.hash(body.password);
-
       const newWorkExperience = await WorkExperience.create(req.body);
       return res.status(201).json(newWorkExperience);
     } catch (error) {
@@ -47,8 +42,6 @@ const WorkExperienceController = {
     const { id } = req.params;
     const { body } = req;
     try {
-      body.password = await argon2.hash(body.password);
-
       const [updatedRowsCount, updatedWorkExperience] = await WorkExperience.update(body, {
         where: { id },
         returning: true, // Return the updated WorkExperience object
@@ -76,7 +69,6 @@ const WorkExperienceController = {
     }
   },
 
-  
 };
 
 export default WorkExperienceController;

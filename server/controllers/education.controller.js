@@ -1,16 +1,11 @@
 // Import the Education model and Sequelize
 import Education from "../models/education.entity.js";
-import { Op } from "sequelize";
-import argon2 from "argon2";
 
 // Controller functions
 const EducationController = {
   // Create a new Education
   async createEducation(req, res) {
-    const { body } = req;
     try {
-      body.password = await argon2.hash(body.password);
-
       const newEducation = await Education.create(req.body);
       return res.status(201).json(newEducation);
     } catch (error) {
@@ -47,8 +42,6 @@ const EducationController = {
     const { id } = req.params;
     const { body } = req;
     try {
-      body.password = await argon2.hash(body.password);
-
       const [updatedRowsCount, updatedEducation] = await Education.update(body, {
         where: { id },
         returning: true, // Return the updated Education object
@@ -76,7 +69,7 @@ const EducationController = {
     }
   },
 
-  
+
 };
 
 export default EducationController;

@@ -6,6 +6,7 @@ import Post from "./post.entity.js";
 import Resume from "./resume.entity.js";
 import WorkExperience from "./workexperience.entity.js";
 import Education from "./education.entity.js";
+import ApplicantList from "./applicantlist.entity.js";
 
 const dbContext = async () => {
   Job.hasMany(User);
@@ -19,6 +20,12 @@ const dbContext = async () => {
 
   User.hasMany(Education);
   Education.belongsTo(User);
+
+  User.hasMany(ApplicantList);
+  ApplicantList.belongsTo(User);
+
+  // Applicant List relation with Job Post required
+
   await sequelize.sync({ alter: true });
 };
 
