@@ -66,7 +66,7 @@ const WorkExperience = sequelize.define(
 );
 
 console.log(
-  "WorkExperince model created successfully:",
+  "WorkExperience model created successfully:",
   WorkExperience === sequelize.models.WorkExperience
 );
 
