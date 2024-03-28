@@ -27,11 +27,13 @@ import Job from './models/job.entity.js';
 import Post from './models/post.entity.js';
 import Resume from './models/resume.entity.js';
 import Category from './models/category.entity.js';
-import userRouter from './routes/user.router.js';
 import ChatLog from './models/chatLog.js';
 import WorkExperience from './models/workexperience.entity.js';
-import WorkExperienceRouter from './routes/workexperience.router.js';
 import Education from "./models/education.entity.js";
+import ApplicantList from "./models/applicantlist.entity.js";
+
+import userRouter from './routes/user.router.js';
+import WorkExperienceRouter from './routes/workexperience.router.js';
 import EducationRouter from "./routes/education.router.js";
 
 AdminJS.registerAdapter({
@@ -328,7 +330,7 @@ const start = async () => {
   // Middleware to parse JSON bodies
   app.use(express.json());
 
-  // Use user routes
+  // Use routes
   app.use("/api/users", userRouter);
   app.use("/api/workexperience", WorkExperienceRouter);
   app.use("/api/education", EducationRouter);
