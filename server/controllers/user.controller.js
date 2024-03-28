@@ -9,10 +9,15 @@ const UserController = {
   async createUser(req, res) {
     const { body } = req;
     try {
+      const existingUser = await User.findOne({ where: { email: body.email.toLowerCase() } });
+      if (existingUser) {
+        return res.status(400).json({ error: 'User with this email already exists' });
+      }
 
       body.password = await argon2.hash(body.password);
 
-      const newUser = await User.create(req.body);
+      const newUser = await User.create(body);
+
       return res.status(201).json(newUser);
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -86,7 +91,7 @@ const UserController = {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ error: 'User not found' });
     }
 
     res.mailer.send('email', {

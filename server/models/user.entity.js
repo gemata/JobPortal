@@ -19,17 +19,14 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
       field: 's3_key',
-      defaultValue: 'defaultIcon.png'
     },
     bucket: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: 'public'
     },
     mime: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: 'image/png'
     },
     firstName: {
       type: DataTypes.STRING,
