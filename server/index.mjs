@@ -21,6 +21,7 @@ import { DefaultAuthProvider } from "adminjs";
 import mailer from "express-mailer";
 import dotenv from "dotenv";
 import uploadFeature from '@adminjs/upload';
+import fs from 'fs';
 
 import User from './models/user.entity.js';
 import Job from './models/job.entity.js';
@@ -85,6 +86,21 @@ const authenticate = async ({ email, password }, ctx) => {
     return null;
   }
 };
+
+async function unlinkFileFromStorage(filePath) {
+  try {
+    // Check if the file exists before attempting to unlink it
+    if (fs.existsSync(filePath)) {
+      await fs.promises.unlink(filePath);
+      console.log(`File unlinked: ${filePath}`);
+    } else {
+      console.log(`File not found: ${filePath}`);
+    }
+  } catch (error) {
+    console.error(`Error unlinking file: ${filePath}`, error);
+    throw error; // Rethrow the error to handle it appropriately
+  }
+}
 
 const start = async () => {
   const app = express();
@@ -173,6 +189,69 @@ const start = async () => {
               ],
             },
           },
+          actions: {
+            delete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const resumesToDelete = await Resume.findAll({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
+                  await Promise.all(resumesToDelete.map(async resume => {
+                    const filePath = `${resume.bucket}/${resume.s3Key}`;
+                    console.log(filePath);
+                    await unlinkFileFromStorage(filePath);
+                  }));
+
+                  await Resume.destroy({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
+                  console.log("Resumes unlinked from storage");
+
+                  return originalResponse
+                } catch (error) {
+                  console.error("Error unlinking associated resumes:", error);
+                  throw new Error("Error unlinking associated resumes");
+                }
+              },
+            },
+            bulkDelete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const resumesToDelete = await Resume.findAll({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
+                  const filePaths = resumesToDelete.map(resume => `${resume.bucket}/${resume.s3Key}`);
+
+                  await Promise.all(filePaths.map(async filePath => {
+                    console.log(filePath);
+                    await unlinkFileFromStorage(filePath);
+                  }));
+
+                  await Resume.destroy({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
+                  console.log("Resumes unlinked from storage");
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking associated resumes:", error);
+                  throw new Error("Error unlinking associated resumes");
+                }
+              }
+            }
+          }
         },
         features: [
           uploadFeature({
@@ -210,8 +289,15 @@ const start = async () => {
       },
       {
         resource: Resume,
-        options: { parent: "mySQL", listProperties: ["id", "type", "UserId"] },
-        features: [importExportFeature({ componentLoader })],
+        options: { parent: "mySQL", listProperties: ["id", "UserId", "resume"], editProperties: ["UserId", "resume"] },
+        features: [
+          uploadFeature({
+            componentLoader,
+            provider: { local: { bucket: 'public/resumes' } },
+            properties: { file: 'resume', key: 's3Key', bucket: 'bucket', mimeType: 'mime' },
+            validation: { mimeTypes: ['application/msword', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] },
+          }),
+          importExportFeature({ componentLoader })],
       },
       {
         resource: WorkExperience,
@@ -220,6 +306,11 @@ const start = async () => {
       },
       {
         resource: Education,
+        options: { parent: "mySQL" },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
+        resource: ApplicantList,
         options: { parent: "mySQL" },
         features: [importExportFeature({ componentLoader })],
       },

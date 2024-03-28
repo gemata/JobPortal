@@ -9,9 +9,16 @@ const Resume = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    type: {
+    // s3Key, bucket and mime are needed for file storage and maintenance
+    s3Key: {
       type: DataTypes.STRING,
-      allowNull: false,
+      field: 's3_key',
+    },
+    bucket: {
+      type: DataTypes.STRING,
+    },
+    mime: {
+      type: DataTypes.STRING,
     },
   },
   {
