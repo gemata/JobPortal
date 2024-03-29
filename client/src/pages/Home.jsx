@@ -1,5 +1,5 @@
 import React from "react";
-import SearchSection from "../../components/Search/SearchSection";
+import SearchSection from "../components/Home/SearchSection";
 
 const Home = () => {
   return (
