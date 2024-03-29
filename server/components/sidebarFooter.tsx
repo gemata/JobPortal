@@ -5,7 +5,7 @@ const SidebarFooter: React.FC<{}> = () => {
   return (
     <>
       <Box mt='lg' mb='md' data-css='sidebar-footer' style={{ display: 'flex', justifyContent: 'center', padding: '20px', alignItems: 'center' }}>
-        <p style={{ display: 'flex', gap: '5px' }}>Made with 💙 by our team</p>
+        <p style={{ display: 'flex', gap: '5px' }}>Made with 💜 by our team</p>
       </Box>
     </>
   );

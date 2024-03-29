@@ -104,6 +104,19 @@ const StyledDiv = styled.div`
   }
 `;
 
+const StyledH3 = styled.h3`
+  margin: 0;
+  fontsize: '28px';
+  fontweight: 'bold';
+  font-size: 28px;
+  font-weight: bold;
+  font-family: TTNormsBold, Roboto;
+
+  @media (max-width: 870px) {
+    line-height: 25px;
+  }
+`;
+
 const Login: React.FC<{}> = () => {
   const [termsChecked, setTermsChecked] = useState(false);
   const { translateComponent, translateMessage } = useTranslation();
@@ -473,7 +486,7 @@ const Login: React.FC<{}> = () => {
             <div
               style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !forgotPasswordMessage && !forgotPasswordSuccessMessage ? '50px' : '0', marginTop: '15px' }}
             >
-              <h3 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Reset Password</h3>
+              <StyledH3>Reset Password</StyledH3>
               <H5 style={{ margin: 0 }}>COMPANY LOGO</H5>
             </div>
             {forgotPasswordMessage && (

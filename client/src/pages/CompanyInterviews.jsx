@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import DashboardNavSection from '../components/CompanyDashboard/DashboardNavSection';
 
-const CompanyDashboard = () => {
+const CompanyInterviews = () => {
   return (
     <>
-      <div className='companyDashboard dashboard bg-gray-100' style={{ height: '400px' }}>
+      <div className='companyInterviews dashboard bg-gray-100' style={{ height: '400px' }}>
         <DashboardNavSection />
       </div>
     </>
   );
 };
 
-export default CompanyDashboard;
+export default CompanyInterviews;

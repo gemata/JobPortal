@@ -430,7 +430,7 @@ const start = async () => {
     try {
       const dataObject = await getSessionData(req, res);
 
-      res.send(dataObject.adminUser);
+      res.send(dataObject?.adminUser);
     } catch (error) {
       console.error("Error fetching session data:", error);
       res.status(500).send("Internal Server Error");
