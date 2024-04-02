@@ -11,6 +11,7 @@ import Company from "./Company.entity.js";
 import CompanyLogo from "./CompanyLogo.entity.js";
 import InterviewList from "./InterviewList.entity.js";
 import JobPost from "./JobPost.entity.js";
+import UserImage from "./userImage.entity.js";
 
 const dbContext = async () => {
   Job.hasMany(User);
@@ -18,6 +19,9 @@ const dbContext = async () => {
 
   User.hasOne(Resume);
   Resume.belongsTo(User);
+
+  User.hasOne(UserImage);
+  UserImage.belongsTo(User);
 
   User.hasMany(WorkExperience);
   WorkExperience.belongsTo(User);

@@ -36,6 +36,7 @@ import ApplicantList from "./models/applicantlist.entity.js";
 import userRouter from './routes/user.router.js';
 import WorkExperienceRouter from './routes/workexperience.router.js';
 import EducationRouter from "./routes/education.router.js";
+import UserImage from "./models/userImage.entity.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -89,18 +90,26 @@ const authenticate = async ({ email, password }, ctx) => {
 
 async function unlinkFileFromStorage(filePath) {
   try {
-    // Check if the file exists before attempting to unlink it
     if (fs.existsSync(filePath)) {
       await fs.promises.unlink(filePath);
       console.log(`File unlinked: ${filePath}`);
+
+      const directoryPath = path.dirname(filePath);
+
+      const filesInDirectory = await fs.promises.readdir(directoryPath);
+      if (filesInDirectory.length === 0) {
+        await fs.promises.rmdir(directoryPath);
+        console.log(`Directory deleted: ${directoryPath}`);
+      }
     } else {
       console.log(`File not found: ${filePath}`);
     }
   } catch (error) {
     console.error(`Error unlinking file: ${filePath}`, error);
-    throw error; // Rethrow the error to handle it appropriately
+    throw error;
   }
 }
+
 
 const start = async () => {
   const app = express();
@@ -176,8 +185,9 @@ const start = async () => {
         options: {
           parent: "mySQL",
           listProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'role'],
-          showProperties: ['id', 'email', 'profilePic', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt', 'role'],
-          editProperties: ['email', 'profilePic', 'firstName', 'lastName', 'newPassword', 'JobId', 'role'],
+          showProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt', 'role'],
+          createProperties: ['email', 'firstName', 'lastName', 'newPassword', 'JobId', 'role', 'image', 'resume'],
+          editProperties: ['email', 'firstName', 'lastName', 'newPassword', 'JobId', 'role', 'image', 'resume'],
           properties: {
             password: { isVisible: false },
             role: {
@@ -190,10 +200,34 @@ const start = async () => {
             },
           },
           actions: {
+            new: {
+              after: async (response) => {
+                const { record } = response
+                console.log(record.params);
+
+                if (record.params?.imageS3Key) {
+                  const userImage = await UserImage.create({ s3Key: record.params.imageS3Key, bucket: record.params.imageBucket, mime: record.params.imageMime, UserId: record.params.id });
+                  console.log(userImage.toJSON());
+                }
+
+                if (record.params?.resumeS3Key) {
+                  const resume = await Resume.create({ s3Key: record.params.resumeS3Key, bucket: record.params.resumeBucket, mime: record.params.resumeMime, UserId: record.params.id });
+                  console.log(resume.toJSON());
+                }
+
+                return response;
+              }
+            },
             delete: {
               after: async (originalResponse, request, context) => {
                 try {
                   const resumesToDelete = await Resume.findAll({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
+                  const imagesToDelete = await UserImage.findAll({
                     where: {
                       UserId: null
                     }
@@ -205,13 +239,26 @@ const start = async () => {
                     await unlinkFileFromStorage(filePath);
                   }));
 
+                  await Promise.all(imagesToDelete.map(async image => {
+                    const filePath = `${image.bucket}/${image.s3Key}`;
+                    console.log(filePath);
+                    await unlinkFileFromStorage(filePath);
+                  }));
+
                   await Resume.destroy({
                     where: {
                       UserId: null
                     }
                   });
 
+                  await UserImage.destroy({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
                   console.log("Resumes unlinked from storage");
+                  console.log("User images unlinked from storage");
 
                   return originalResponse
                 } catch (error) {
@@ -229,9 +276,21 @@ const start = async () => {
                     }
                   });
 
-                  const filePaths = resumesToDelete.map(resume => `${resume.bucket}/${resume.s3Key}`);
+                  const imagesToDelete = await UserImage.findAll({
+                    where: {
+                      UserId: null
+                    }
+                  });
 
-                  await Promise.all(filePaths.map(async filePath => {
+                  const resumeFilePaths = resumesToDelete.map(resume => `${resume.bucket}/${resume.s3Key}`);
+                  const imageFilePaths = imagesToDelete.map(resume => `${resume.bucket}/${resume.s3Key}`);
+
+                  await Promise.all(resumeFilePaths.map(async filePath => {
+                    console.log(filePath);
+                    await unlinkFileFromStorage(filePath);
+                  }));
+
+                  await Promise.all(imageFilePaths.map(async filePath => {
                     console.log(filePath);
                     await unlinkFileFromStorage(filePath);
                   }));
@@ -242,7 +301,14 @@ const start = async () => {
                     }
                   });
 
+                  await UserImage.destroy({
+                    where: {
+                      UserId: null
+                    }
+                  });
+
                   console.log("Resumes unlinked from storage");
+                  console.log("User images unlinked from storage");
 
                   return originalResponse;
                 } catch (error) {
@@ -257,8 +323,14 @@ const start = async () => {
           uploadFeature({
             componentLoader,
             provider: { local: { bucket: 'public/profilePics' } },
-            properties: { file: 'profilePic', key: 's3Key', bucket: 'bucket', mimeType: 'mime' },
-            validation: { mimeTypes: ['image/png', 'application/pdf', 'audio/mpeg'] },
+            properties: { file: 'image', key: 'imageS3Key', bucket: 'imageBucket', mimeType: 'imageMime', filePath: `imageFilePath`, filesToDelete: `imageFilesToDelete` },
+            validation: { mimeTypes: ['image/jpeg', 'image/png', 'image/webp'] },
+          }),
+          uploadFeature({
+            componentLoader,
+            provider: { local: { bucket: 'public/resumes' } },
+            properties: { file: 'resume', key: 'resumeS3Key', bucket: 'resumeBucket', mimeType: 'resumeMime', filePath: `resumeFilePath`, filesToDelete: `resumeFilesToDelete` },
+            validation: { mimeTypes: ['application/msword', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] },
           }),
           passwordsFeature({
             componentLoader,
@@ -296,6 +368,18 @@ const start = async () => {
             provider: { local: { bucket: 'public/resumes' } },
             properties: { file: 'resume', key: 's3Key', bucket: 'bucket', mimeType: 'mime' },
             validation: { mimeTypes: ['application/msword', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] },
+          }),
+          importExportFeature({ componentLoader })],
+      },
+      {
+        resource: UserImage,
+        options: { parent: "mySQL", listProperties: ["id", "UserId", "image"], editProperties: ["UserId", "image"] },
+        features: [
+          uploadFeature({
+            componentLoader,
+            provider: { local: { bucket: 'public/profilePics' } },
+            properties: { file: 'image', key: 's3Key', bucket: 'bucket', mimeType: 'mime' },
+            validation: { mimeTypes: ['image/jpeg', 'image/png', 'image/webp'] },
           }),
           importExportFeature({ componentLoader })],
       },

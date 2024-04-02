@@ -14,20 +14,6 @@ const User = sequelize.define(
       allowNull: false,
       // unique: true
     },
-    // s3Key, bucket and mime are needed for file storage and maintenance
-    s3Key: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 's3_key',
-    },
-    bucket: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    mime: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     firstName: {
       type: DataTypes.STRING,
     },
