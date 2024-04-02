@@ -1,0 +1,43 @@
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/sequelize.mjs";
+
+const Invoices = sequelize.define(
+  "Invoices",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    stripe_invoice_i: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    invoice_number: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    invoice_url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    paid_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+  }
+);
+
+console.log(
+  "Invoice model created successfully:",
+  Invoices === sequelize.models.Invoices
+);
+
+export default Invoices;
