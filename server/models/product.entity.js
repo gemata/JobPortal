@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
 
-const Products = sequelize.define(
+const Product = sequelize.define(
   "Products",
   {
     id: {
@@ -29,7 +29,7 @@ const Products = sequelize.define(
 
 console.log(
   "Product model created successfully:",
-  Products === sequelize.models.Products
+  Product === sequelize.models.Product
 );
 
-export default Products;
+export default Product;
