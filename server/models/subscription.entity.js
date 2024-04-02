@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
 
-const Subscriptions = sequelize.define(
+const Subscription = sequelize.define(
   "Subscriptions",
   {
     id: {
@@ -41,7 +41,7 @@ const Subscriptions = sequelize.define(
 
 console.log(
   "Subscription model created successfully:",
-  Subscriptions === sequelize.models.Subscriptions
+  Subscription === sequelize.models.Subscription
 );
 
-export default Subscriptions;
+export default Subscription;
