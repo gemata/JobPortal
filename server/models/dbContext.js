@@ -7,6 +7,10 @@ import Resume from "./resume.entity.js";
 import WorkExperience from "./workexperience.entity.js";
 import Education from "./education.entity.js";
 import ApplicantList from "./applicantlist.entity.js";
+import Company from "./Company.entity.js";
+import CompanyLogo from "./CompanyLogo.entity.js";
+import InterviewList from "./InterviewList.entity.js";
+import JobPost from "./JobPost.entity.js";
 
 const dbContext = async () => {
   Job.hasMany(User);
@@ -24,7 +28,19 @@ const dbContext = async () => {
   User.hasMany(ApplicantList);
   ApplicantList.belongsTo(User);
 
-  // Applicant List relation with Job Post required
+  CompanyLogo.belongsTo(Company, { foreignKey: 'Company_ID' });
+  Company.hasOne(CompanyLogo);
+
+  // Company.belongsTo(Role, { foreignKey: 'Role_ID' });
+
+  InterviewList.belongsTo(JobPost, { foreignKey: 'JobPost_ID' });
+  InterviewList.belongsTo(User, { foreignKey: 'User_ID' });
+
+  JobPost.belongsTo(Company, { foreignKey: 'Company_ID' });
+  // JobPost.belongsTo(JobPosition, { foreignKey: 'JobPosition_ID' });
+
+  JobPost.hasMany(ApplicantList);
+  ApplicantList.belongsTo(JobPost);
 
   await sequelize.sync({ alter: true });
 };

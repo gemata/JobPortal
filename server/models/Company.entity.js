@@ -4,28 +4,28 @@ import sequelize from "../config/sequelize.mjs";
 import CompanyLogo from "./CompanyLogo.entity.js";
 
 const Company = sequelize.define(
-    "Company",
-{
+  "Company",
+  {
     ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
     },
-    
+
     // s3Key, bucket and mime are needed for file storage and maintenance
     s3Key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        field: 's3_key',
-      },
-      bucket: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      mime: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 's3_key',
+    },
+    bucket: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    mime: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
 
     Email: {
       type: DataTypes.STRING(255),
@@ -39,23 +39,6 @@ const Company = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    Role_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Role,
-        key: 'ID'
-      }
-    },
-    CompanyLogo_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: CompanyLogo,
-        key: 'ID'
-      }
-      
-    },
     FreeJobPosted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -65,9 +48,5 @@ const Company = sequelize.define(
     sequelize
   }
 );
-
-// Define associations
-Company.belongsTo(CompanyLogo, { foreignKey: 'CompanyLogo_ID' });
-Company.belongsTo(Role, { foreignKey: 'Role_ID' });
 
 export default Company;
