@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
 
-const Invoices = sequelize.define(
+const Invoice = sequelize.define(
   "Invoices",
   {
     id: {
@@ -37,7 +37,7 @@ const Invoices = sequelize.define(
 
 console.log(
   "Invoice model created successfully:",
-  Invoices === sequelize.models.Invoices
+  Invoice === sequelize.models.Invoice
 );
 
-export default Invoices;
+export default Invoice;
