@@ -24,10 +24,7 @@ import uploadFeature from '@adminjs/upload';
 import fs from 'fs';
 
 import User from './models/user.entity.js';
-import Job from './models/job.entity.js';
-import Post from './models/post.entity.js';
 import Resume from './models/resume.entity.js';
-import Category from './models/category.entity.js';
 import ChatLog from './models/chatLog.js';
 import WorkExperience from './models/workexperience.entity.js';
 import Education from "./models/education.entity.js";
@@ -184,10 +181,10 @@ const start = async () => {
         resource: User,
         options: {
           parent: "mySQL",
-          listProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'role'],
-          showProperties: ['id', 'email', 'firstName', 'lastName', 'JobId', 'createdAt', 'updatedAt', 'role'],
-          createProperties: ['email', 'firstName', 'lastName', 'newPassword', 'JobId', 'role', 'image', 'resume'],
-          editProperties: ['email', 'firstName', 'lastName', 'newPassword', 'JobId', 'role', 'image', 'resume'],
+          listProperties: ['id', 'email', 'firstName', 'lastName', 'role'],
+          showProperties: ['id', 'email', 'firstName', 'lastName', 'createdAt', 'updatedAt', 'role'],
+          createProperties: ['email', 'firstName', 'lastName', 'newPassword', 'role', 'image', 'resume'],
+          editProperties: ['email', 'firstName', 'lastName', 'newPassword', 'role', 'image', 'resume'],
           properties: {
             password: { isVisible: false },
             role: {
@@ -218,6 +215,42 @@ const start = async () => {
                 return response;
               }
             },
+            edit: {
+              after: async (response) => {
+
+                const { record } = response
+
+                if (record.params?.imageS3Key) {
+                  let userImage = await UserImage.findOne({ where: { UserId: record.params.id } });
+
+                  if (userImage) {
+                    const filePath = `${userImage.bucket}/${userImage.s3Key}`;
+                    await unlinkFileFromStorage(filePath);
+
+                    userImage.set({ s3Key: record.params.imageS3Key, bucket: record.params.imageBucket, mime: record.params.imageMime, UserId: record.params.id });
+                    await userImage.save();
+                  } else {
+                    userImage = await UserImage.create({ s3Key: record.params.imageS3Key, bucket: record.params.imageBucket, mime: record.params.imageMime, UserId: record.params.id });
+                  }
+                }
+
+                if (record.params?.resumeS3Key) {
+                  let resume = await Resume.findOne({ where: { UserId: record.params.id } });
+
+                  if (resume) {
+                    const filePath = `${resume.bucket}/${resume.s3Key}`;
+                    await unlinkFileFromStorage(filePath);
+
+                    resume.set({ s3Key: record.params.resumeS3Key, bucket: record.params.resumeBucket, mime: record.params.resumeMime, UserId: record.params.id });
+                    await resume.save();
+                  } else {
+                    resume = await Resume.create({ s3Key: record.params.resumeS3Key, bucket: record.params.resumeBucket, mime: record.params.resumeMime, UserId: record.params.id });
+                  }
+                }
+
+                return response;
+              }
+            },
             delete: {
               after: async (originalResponse, request, context) => {
                 try {
@@ -235,13 +268,11 @@ const start = async () => {
 
                   await Promise.all(resumesToDelete.map(async resume => {
                     const filePath = `${resume.bucket}/${resume.s3Key}`;
-                    console.log(filePath);
                     await unlinkFileFromStorage(filePath);
                   }));
 
                   await Promise.all(imagesToDelete.map(async image => {
                     const filePath = `${image.bucket}/${image.s3Key}`;
-                    console.log(filePath);
                     await unlinkFileFromStorage(filePath);
                   }));
 
@@ -251,13 +282,14 @@ const start = async () => {
                     }
                   });
 
+                  console.log("Resumes unlinked from storage");
+
                   await UserImage.destroy({
                     where: {
                       UserId: null
                     }
                   });
 
-                  console.log("Resumes unlinked from storage");
                   console.log("User images unlinked from storage");
 
                   return originalResponse
@@ -286,12 +318,10 @@ const start = async () => {
                   const imageFilePaths = imagesToDelete.map(resume => `${resume.bucket}/${resume.s3Key}`);
 
                   await Promise.all(resumeFilePaths.map(async filePath => {
-                    console.log(filePath);
                     await unlinkFileFromStorage(filePath);
                   }));
 
                   await Promise.all(imageFilePaths.map(async filePath => {
-                    console.log(filePath);
                     await unlinkFileFromStorage(filePath);
                   }));
 
@@ -301,13 +331,14 @@ const start = async () => {
                     }
                   });
 
+                  console.log("Resumes unlinked from storage");
+
                   await UserImage.destroy({
                     where: {
                       UserId: null
                     }
                   });
 
-                  console.log("Resumes unlinked from storage");
                   console.log("User images unlinked from storage");
 
                   return originalResponse;
@@ -342,22 +373,6 @@ const start = async () => {
           }),
           importExportFeature({ componentLoader }),
         ],
-      },
-      {
-        resource: Job,
-        options: {
-          parent: "mySQL",
-          listProperties: ["id", "name", "createdAt", "updatedAt"],
-        },
-        features: [importExportFeature({ componentLoader })],
-      },
-      {
-        resource: Post,
-        options: {
-          parent: "mySQL",
-          listProperties: ["id", "name", "createdAt", "updatedAt"],
-        },
-        features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Resume,
@@ -401,15 +416,6 @@ const start = async () => {
 
       //MongoDB Models
       //Default id is "_id"
-      {
-        resource: Category,
-        options: {
-          parent: "mongoDB",
-          listProperties: ["_id", "title", "createdAt", "updatedAt"],
-          editProperties: ["title"],
-        },
-        features: [importExportFeature({ componentLoader })],
-      },
       {
         resource: ChatLog,
         options: {
