@@ -7,7 +7,7 @@ const NavBarContainer = () => {
       <div className="container mx-auto ">
         <ul className="flex gap-7 p-3 text-black font-semibold flex-wrap">
           <li>
-            <NavLink to="/dashboard" className="flex items-center">
+            <NavLink to="/profile/dashboard" className="flex items-center">
               {/* Dashboard icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ const NavBarContainer = () => {
           </li>
           <li>
             <NavLink
-              to="/user/Dashboad/myprofile"
+              to="/profile/detail"
               className="flex items-center"
             >
               {/* My Profile icon */}
@@ -43,7 +43,7 @@ const NavBarContainer = () => {
           </li>
           <li>
             <NavLink
-              to="/user/Dashboad/jobtracker"
+              to="/profile/job-tracker"
               className="flex items-center"
             >
               {/* JobTracker icon */}
@@ -64,7 +64,7 @@ const NavBarContainer = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="user/Dashboad/mygoals" className="flex items-center">
+            <NavLink to="/profile/my-goals" className="flex items-center">
               {/* My Goals icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@ const NavBarContainer = () => {
           </li>
           <li>
             <NavLink
-              to="/user/Dashboad/jobalerts"
+              to="/profile/job-alerts"
               className="flex items-center"
             >
               {/* Job Alerts icon */}
@@ -104,7 +104,7 @@ const NavBarContainer = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/user/Dashboad/myjobs" className="flex items-center">
+            <NavLink to="/profile/listed-jobs" className="flex items-center">
               {/* My Jobs icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ const NavBarContainer = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/user/Dashboad/settings" className="flex items-center">
+            <NavLink to="/profile/settings" className="flex items-center">
               {/* Setting icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
