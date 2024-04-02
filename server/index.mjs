@@ -48,6 +48,7 @@ const PORT = 5000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+console.log(__dirname);
 dotenv.config({ path: "../.env" });
 console.log("Loaded MongoDB URI:", process.env.MONGODB_URI);
 
@@ -120,7 +121,7 @@ const start = async () => {
     })
   );
 
-  app.use(express.static(path.join(__dirname, '../public')));
+  app.use(express.static(path.join(__dirname, '/public')));
 
   mailer.extend(app, {
     from: "jobhorizonsite@gmail.com",
@@ -170,6 +171,9 @@ const start = async () => {
   const admin = new AdminJS({
     defaultTheme: light.id,
     availableThemes: [dark, light],
+    assets: {
+      styles: ["/admin.css"],
+    },
     dashboard: {
       component: Components.Dashboard,
       handler: dashboardHandler,
@@ -477,7 +481,6 @@ const start = async () => {
         next();
       } else {
         return res.redirect("/admin/login");
-        // return res.status(403).send('Forbidden');
       }
     } catch (error) {
       console.error("Error checking admin status:", error);

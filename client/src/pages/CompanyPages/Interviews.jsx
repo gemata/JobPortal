@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DashboardNavSection from '../components/CompanyDashboard/DashboardNavSection';
+import DashboardNavSection from '../../components/CompanyComponents/DashboardNavSection';
 
 const CompanyInterviews = () => {
   return (

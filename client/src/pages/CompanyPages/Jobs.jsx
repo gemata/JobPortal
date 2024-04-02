@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import DashboardNavSection from '../components/CompanyDashboard/DashboardNavSection';
-import LowerJobSection from '../components/CompanyJobs/LowerJobSection';
-import JobTableSection from '../components/CompanyJobs/JobTable';
+import DashboardNavSection from '../../components/CompanyComponents/DashboardNavSection';
+import LowerJobSection from '../../components/CompanyComponents/Jobs/LowerJobSection';
+import JobTableSection from '../../components/CompanyComponents/Jobs/JobTable';
 
 const CompanyJobs = () => {
   return (

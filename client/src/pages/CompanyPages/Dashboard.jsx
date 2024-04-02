@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import DashboardNavSection from '../components/CompanyDashboard/DashboardNavSection';
+import DashboardNavSection from '../../components/CompanyComponents/DashboardNavSection';
 
 const CompanyDashboard = () => {
   return (

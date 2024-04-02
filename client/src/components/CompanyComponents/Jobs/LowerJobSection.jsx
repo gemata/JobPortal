@@ -11,7 +11,9 @@ export default function LowerJobSection() {
               <h5 className='text-left font-semibold'>Messages (0)</h5>
               <hr className='h-px my-3 bg-gray-400 border-0' />
 
-              <p>No messages to review!</p>
+              <div className='flex justify-center items-center h-fit'>
+                <p>No messages to review!</p>
+              </div>
             </div>
             <div className='billingInfo border-2 bg-white border-gray-400 rounded-lg p-5 w-1/2'>
               <h5 className='text-left font-semibold'>Manage billing details</h5>
