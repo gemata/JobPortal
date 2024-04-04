@@ -9,41 +9,39 @@ const Education = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    DegreeType: {
+    degreeType: {
       type: DataTypes.CHAR,
       allowNull: false,
     },
-    DegreeName: {
+    degreeName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    Country: {
+    country: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    City: {
+    city: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    JobType: {
+    jobType: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    CurrentlyWorkingHere: {
+    currentlyWorkingHere: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    StartDate: {
+    startDate: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    EndDate: {
+    endDate: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    Description: {
+    description: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },

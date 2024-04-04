@@ -194,7 +194,6 @@ const start = async () => {
             role: {
               availableValues: [
                 { value: "User", label: "User" },
-                { value: "Company", label: "Company" },
                 { value: "Admin", label: "Admin" },
                 { value: "Editor", label: "Editor" },
               ],
@@ -204,16 +203,16 @@ const start = async () => {
             new: {
               after: async (response) => {
                 const { record } = response
-                console.log(record.params);
+                // console.log(record.params);
 
                 if (record.params?.imageS3Key) {
                   const userImage = await UserImage.create({ s3Key: record.params.imageS3Key, bucket: record.params.imageBucket, mime: record.params.imageMime, UserId: record.params.id });
-                  console.log(userImage.toJSON());
+                  // console.log(userImage.toJSON());
                 }
 
                 if (record.params?.resumeS3Key) {
                   const resume = await Resume.create({ s3Key: record.params.resumeS3Key, bucket: record.params.resumeBucket, mime: record.params.resumeMime, UserId: record.params.id });
-                  console.log(resume.toJSON());
+                  // console.log(resume.toJSON());
                 }
 
                 return response;

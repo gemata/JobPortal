@@ -9,7 +9,7 @@ const JobPosition = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    Position: {
+    position: {
       type: DataTypes.STRING,
       allowNull: false,
     },

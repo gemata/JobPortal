@@ -4,28 +4,28 @@ import sequelize from "../config/sequelize.mjs";
 const InterviewList = sequelize.define(
   "InterviewList",
   {
-    ID: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    Address: {
+    address: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    OnlineLink: {
+    onlineLink: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    Time: {
+    time: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    Stage: {
+    stage: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    Is_Selected: {
+    is_Selected: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },

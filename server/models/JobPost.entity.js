@@ -10,67 +10,59 @@ const JobPost = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    // JobPosition_ID: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: {
-    //     model: JobPosition,
-    //     key: 'ID'
-    //   }
-    // },
-    JobDescription: {
+    jobDescription: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    JobSummary: {
+    jobSummary: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    Experience_min: {
+    experience_min: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    Is_Active: {
+    is_Active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    StartAt: {
+    startAt: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    EndAt: {
+    endAt: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    InterviewMethod: {
+    interviewMethod: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    AnnualSalary_from: {
+    annualSalary_from: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    AnnualSalary_to: {
+    annualSalary_to: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    JobLocation: {
+    jobLocation: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    Education: {
+    education: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    Natonality: {
+    natonality: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    JobType: {
+    jobType: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    Likes: {
+    likes: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

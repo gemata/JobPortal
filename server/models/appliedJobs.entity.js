@@ -9,13 +9,13 @@ const AppliedJobs = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    Status:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false,
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
     },
-    AppliedAt:{
-        type:DataTypes.DATE,
-        allowNull:false,
+    appliedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
     }
 
   },

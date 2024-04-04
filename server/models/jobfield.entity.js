@@ -10,7 +10,7 @@ const JobField = sequelize.define(
       primaryKey: true,
     },
 
-    Field: {
+    field: {
       type: DataTypes.STRING,
       allowNull: false,
     },

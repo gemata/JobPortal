@@ -11,22 +11,6 @@ const Company = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-
-    // s3Key, bucket and mime are needed for file storage and maintenance
-    s3Key: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 's3_key',
-    },
-    bucket: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    mime: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-
     Email: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -35,8 +19,13 @@ const Company = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    Password_Hash: {
-      type: DataTypes.STRING(255),
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "User"
+    },
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     FreeJobPosted: {

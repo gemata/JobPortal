@@ -10,9 +10,16 @@ const CompanyLogo = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    Image: {
-      type: DataTypes.BLOB,
-      allowNull: false,
+    // s3Key, bucket and mime are needed for file storage and maintenance
+    s3Key: {
+      type: DataTypes.STRING,
+      field: 's3_key',
+    },
+    bucket: {
+      type: DataTypes.STRING,
+    },
+    mime: {
+      type: DataTypes.STRING,
     },
   },
   {

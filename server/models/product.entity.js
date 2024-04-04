@@ -13,11 +13,11 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Offer: {
+    offer: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Description: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },

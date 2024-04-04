@@ -9,24 +9,23 @@ const UserProfile = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    Sex: {
+    sex: {
       type: DataTypes.CHAR,
       allowNull: false,
     },
-    FullName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    PhoneNumber: {
+    fullName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    EmailNotificationAc: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-
-    DateOfBirth: {
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    emailNotification_ac: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    dateOfBirth: {
       type: DataTypes.DATE,
       allowNull: false,
     },

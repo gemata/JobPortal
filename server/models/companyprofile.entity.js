@@ -9,34 +9,27 @@ const CompanyProfile = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    CompanyID: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    Description: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    PhoneNumber: {
+    phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    EmailNotification_ac: {
+    emailNotification_ac: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Addres: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    CompanyEmail: {
+    companyEmail: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Website: {
+    website: {
       type: DataTypes.STRING,
       allowNull: false,
     },

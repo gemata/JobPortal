@@ -9,53 +9,47 @@ const WorkExperience = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    CompanyName: {
+    companyName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    JobTitle: {
+    jobTitle: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    SchoolName: {
+    schoolName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    Country: {
+    country: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    City: {
+    city: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    SchoolName: {
+    schoolName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    JobType: {
+    jobType: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    SchoolName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    CurrentlyStudyHere: {
+    currentlyStudyHere: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    StartDate: {
+    startDate: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    EndDate: {
+    endDate: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    Description: {
+    description: {
       type: DataTypes.TEXT("long"),
       allowNull: false,
     },
