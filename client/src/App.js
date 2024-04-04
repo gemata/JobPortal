@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Header from "./components/Header";
 import CompanyInterviews from "./pages/CompanyPages/Interviews";
 import CompanyJobs from "./pages/CompanyPages/Jobs";
@@ -47,7 +47,7 @@ function App() {
         <Route path="/profile/dashboard" element={<Dashboard />} />
         <Route path="/profile/job-tracker" element={<JobTracker />} />
         <Route path="/profile/my-goals" element={<MyGoals />} />
-        <Route path="/profile/job-alerts" element={<JobAlerts/>} />
+        <Route path="/profile/job-alerts" element={<JobAlerts />} />
         <Route path="/profile/listed-jobs" element={<ListedJobs />} />
         <Route path="/profile/settings" element={<Settings />} />
         <Route path="/profile/messages" element={<Messages />} />
