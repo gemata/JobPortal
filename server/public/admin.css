@@ -99,3 +99,18 @@ input:focus,
 .ciPFfW>svg {
   stroke: rgb(180, 51, 200) !important;
 }
+
+.grTLTH {
+  border: 1px solid rgb(180, 51, 200) !important;
+  background-color: rgb(180, 51, 200) !important;
+}
+
+a[data-testid="action-bulkDelete"] {
+  background: #f8f9fe !important;
+  padding: 5px 16px;
+}
+
+a[data-testid="action-bulkDelete"]:hover {
+  background: #f8f9fe !important;
+  opacity: .8 !important;
+}
