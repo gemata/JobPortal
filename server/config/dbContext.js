@@ -80,7 +80,12 @@ const dbContext = async () => {
   Product.hasOne(Price);
   Price.belongsTo(Product);
 
-  // We should figure out Job Post FK relations
+  JobField.hasOne(JobPosition);
+  JobPosition.belongsTo(JobField);
+
+  JobPost.belongsTo(JobPosition);
+  JobPosition.hasMany(JobPost);
+
   // We should figure out Work experience and Education models
   // We can create a role model, or just keep it as a field
 

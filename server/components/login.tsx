@@ -360,6 +360,7 @@ const Login: React.FC<{}> = () => {
                   }}
                   id='toggleWindows'
                   type='button'
+                  className='ignoreButtonStyle'
                   onClick={(e) => handleWindow(e, 'forgotPassword')}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.textDecoration = 'underline';
@@ -378,6 +379,7 @@ const Login: React.FC<{}> = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', alignItems: 'center' }}>
               <Button
                 style={{ width: '100%', padding: '10px 0px', marginTop: '20px', backgroundColor: '#6e46ae' }}
+                className='ignoreButtonStyle'
                 variant='contained'
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#8060b6';
@@ -395,6 +397,7 @@ const Login: React.FC<{}> = () => {
                 style={{ width: '100%', padding: '10px 0px', borderColor: '#b869b3', color: '#b869b3' }}
                 id='toggleWindows'
                 type='button'
+                className='ignoreButtonStyle'
                 variant='button'
                 onClick={(e) => handleWindow(e, 'register')}
                 onMouseEnter={(e) => {
@@ -448,7 +451,14 @@ const Login: React.FC<{}> = () => {
               </Label>
             </FormGroup>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', alignItems: 'center' }}>
-              <Button id='registerSubmitBtn' type='submit' style={{ width: '100%', padding: '10px 0px', background: '#cccccc' }} variant='contained' disabled>
+              <Button
+                id='registerSubmitBtn'
+                type='submit'
+                className='ignoreButtonStyle'
+                style={{ width: '100%', padding: '10px 0px', background: '#cccccc' }}
+                variant='contained'
+                disabled
+              >
                 Create Account
               </Button>
               <OrContainer />
@@ -456,6 +466,7 @@ const Login: React.FC<{}> = () => {
                 style={{ width: '100%', padding: '10px 0px', transition: 'all 0.2s ease-in', borderColor: '#b869b3', color: '#b869b3' }}
                 id='toggleWindows'
                 type='button'
+                className='ignoreButtonStyle'
                 variant='button'
                 onClick={(e) => handleWindow(e, 'login')}
                 onMouseEnter={(e) => {
@@ -506,6 +517,7 @@ const Login: React.FC<{}> = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', alignItems: 'center' }}>
               <Button
                 type='submit'
+                className='ignoreButtonStyle'
                 style={{ width: '100%', padding: '10px 0px', marginTop: '20px', backgroundColor: '#6e46ae', color: 'white', cursor: 'pointer' }}
                 variant='contained'
                 onMouseEnter={(e) => {
@@ -523,6 +535,7 @@ const Login: React.FC<{}> = () => {
               <Button
                 style={{ width: '100%', padding: '10px 0px', borderColor: '#b869b3', color: '#b869b3' }}
                 id='toggleWindows'
+                className='ignoreButtonStyle'
                 type='button'
                 variant='button'
                 onClick={(e) => handleWindow(e, 'login')}
@@ -542,6 +555,7 @@ const Login: React.FC<{}> = () => {
               <Button
                 style={{ width: '100%', padding: '10px 0px', borderColor: '#b869b3', color: '#b869b3' }}
                 id='toggleWindows'
+                className='ignoreButtonStyle'
                 type='button'
                 variant='button'
                 onClick={(e) => handleWindow(e, 'register')}

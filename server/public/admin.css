@@ -1,33 +1,101 @@
-/* :root {
-  --topbar-color: white;
-  --sidebar-bg-color: darkgray;
-  --sidebar-color: white;
-  --sidebar-link-color: orange;
+:root {}
+
+a[data-css="sidebar-logo"]:hover h1 {
+  color: purple !important;
 }
 
-section[data-css="sidebar"] {
-  background-color: var(--sidebar-bg-color) !important;
-  color: var(--sidebar-color);
-  border: none;
+.hJUERu {
+  background: rgba(150, 38, 164, 0.2) !important;
+  color: rgb(152, 38, 170) !important;
 }
 
-section[data-css="sidebar"] svg {
-  fill: var(--sidebar-color) !important;
+label::before {
+  color: purple !important;
 }
 
-a[data-css="sidebar-logo"] {
-  background-color: var(--sidebar-bg-color) !important;
+.adminjs_Button[type="submit"]:not(.ignoreButtonStyle),
+.adminjs_InfoBox button {
+  background-color: rgb(184, 105, 179) !important;
+  border-color: rgb(184, 105, 179) !important;
 }
 
-section[data-css="sidebar-resources"] {
-  background: var(--sidebar-bg-color) !important;
+.adminjs_Button[type="submit"]:not(.ignoreButtonStyle):hover,
+.adminjs_InfoBox button:hover {
+  background-color: rgb(157, 90, 153) !important;
+  border-color: rgb(157, 90, 153) !important;
 }
 
-[data-css="sidebar"] section a {
-  background: var(--sidebar-bg-color) !important;
-  color: var(--sidebar-color);
+.adminjs_Button:not(.ignoreButtonStyle),
+.adminjs_Button[type="button"]:not(.ignoreButtonStyle) {
+  color: purple;
 }
 
-[data-css="sidebar"] a:hover {
-  color: var(--sidebar-link-color);
-} */
+.adminjs_Button[type="button"]:not(.ignoreButtonStyle):hover,
+.adminjs_Button[type="button"]:not(.ignoreButtonStyle):active,
+.adminjs_Button[type="button"]:not(.ignoreButtonStyle):focus {
+  background-color: rgba(200, 48, 214, 0.1) !important;
+}
+
+.adminjs_Button[type="button"]:not(.ignoreButtonStyle) svg circle {
+  fill: none !important;
+}
+
+.adminjs_ButtonGroupItem {
+  border-color: purple !important;
+  color: purple !important;
+}
+
+.adminjs_ButtonGroupItem:hover {
+  background-color: rgba(200, 48, 214, 0.1) !important;
+}
+
+section[data-css="sidebar"] {}
+
+:not(div[data-css="notice-wrapper"]) svg circle {
+  fill: violet !important;
+}
+
+input:focus,
+.gfWdHp:hover,
+.css-1u4nhqf-control:hover {
+  border-color: rgb(152, 38, 170) !important;
+}
+
+.adminjs_Breadcrumbs a:hover {
+  color: rgb(152, 38, 170) !important;
+}
+
+.cvvOAe {
+  background-color: violet !important;
+}
+
+.adminjs_Button[type="submit"].ignoreButtonStyle:not([disabled]) {
+  color: white !important;
+  border: 1px solid rgb(110, 70, 174) !important;
+}
+
+.adminjs_Button[type="submit"].ignoreButtonStyle:not([disabled]):hover {
+  background: rgb(128, 96, 182) !important;
+  border-color: rgb(128, 96, 182) !important;
+}
+
+.fqGemd {
+  color: white !important;
+}
+
+.fqGemd:hover:not([disabled]) {
+  border-color: rgb(128, 96, 182) !important;
+}
+
+.adminjs_TableCaption {
+  background: rgb(180, 51, 200) !important;
+}
+
+*:focus-visible {
+  outline: 2px solid rgb(128, 96, 182);
+  border-radius: 3px;
+}
+
+.ciPFfW>svg {
+  stroke: rgb(180, 51, 200) !important;
+}

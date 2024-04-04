@@ -94,7 +94,7 @@ const UserController = {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    res.mailer.send('email', {
+    res.mailer.send('forgotPassword', {
       to: email, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
       subject: 'Reset Password', // REQUIRED.
       email: email // Pass the email as data
