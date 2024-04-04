@@ -6,7 +6,7 @@ import mongooseConnection from "./config/mongoose.js";
 import cors from "cors";
 import * as AdminJSSequelize from "@adminjs/sequelize";
 import * as AdminJSMongoose from "@adminjs/mongoose";
-import dbContext from "./models/dbContext.js";
+import dbContext from "./config/dbContext.js";
 import argon2 from "argon2";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
@@ -23,17 +23,48 @@ import dotenv from "dotenv";
 import uploadFeature from '@adminjs/upload';
 import fs from 'fs';
 
-import User from './models/user.entity.js';
-import Resume from './models/resume.entity.js';
-import ChatLog from './models/chatLog.js';
-import WorkExperience from './models/workexperience.entity.js';
-import Education from "./models/education.entity.js";
 import ApplicantList from "./models/applicantlist.entity.js";
-
-import userRouter from './routes/user.router.js';
-import WorkExperienceRouter from './routes/workexperience.router.js';
-import EducationRouter from "./routes/education.router.js";
+import AppliedJobs from "./models/appliedJobs.entity.js";
+import Company from "./models/Company.entity.js";
+import CompanyLogo from "./models/CompanyLogo.entity.js";
+import CompanyProfile from "./models/companyprofile.entity.js";
+import Education from "./models/education.entity.js";
+import InterviewList from "./models/InterviewList.entity.js";
+import JobField from "./models/jobfield.entity.js";
+import JobPosition from "./models/jobposition.entity.js";
+import JobPost from "./models/JobPost.entity.js";
+import LikedJobs from "./models/likedJobs.entity.js";
+import Price from "./models/price.entity.js";
+import Product from "./models/product.entity.js";
+import Subscription from "./models/subscription.entity.js";
+import Invoice from "./models/invoice.entity.js";
+import User from "./models/user.entity.js";
+import UserProfile from "./models/userProfile.entity.js";
 import UserImage from "./models/userImage.entity.js";
+import Resume from "./models/resume.entity.js";
+import WorkExperience from "./models/workexperience.entity.js";
+import ChatLog from "./models/chatLog.js";
+
+import ApplicantlistRouter from './routes/applicantlist.router.js';
+import AppliedJobsRouter from './routes/appliedJobs.router.js';
+import CompanyRouter from './routes/company.router.js';
+import CompanyLogoRouter from "./routes/companylogo.router.js";
+import CompanyProfileRouter from "./routes/companyprofile.router.js";
+import EducationRouter from "./routes/education.router.js";
+import InterviewListRouter from "./routes/education.router.js";
+import InvoiceRouter from "./routes/invoice.router.js";
+import JobFieldRouter from "./routes/jobfield.router.js";
+import JobPositionRouter from "./routes/jobposition.router.js";
+import JobPostRouter from "./routes/jobpost.router.js";
+import LikedJobsRouter from "./routes/likedJobs.router.js";
+import PriceRouter from "./routes/price.router.js";
+import ProductRouter from "./routes/product.router.js";
+import ResumeRouter from "./routes/resume.router.js";
+import SubscriptionRouter from "./routes/subscription.router.js";
+import userRouter from './routes/user.router.js';
+import userImageRouter from "./routes/userImage.router.js";
+import userProfileRouter from "./routes/userProfile.router.js";
+import WorkExperienceRouter from "./routes/workexperience.router.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,

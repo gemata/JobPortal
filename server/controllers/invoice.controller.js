@@ -1,4 +1,4 @@
-import Invoice from "../models/invoice.entity";
+import Invoice from "../models/invoice.entity.js";
 
 const InvoiceController = {
   async createInvoice(req, res) {

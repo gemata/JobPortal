@@ -1,4 +1,4 @@
-import Price from "../models/price.entity";
+import Price from "../models/price.entity.js";
 
 const PriceController = {
   async createPrice(req, res) {

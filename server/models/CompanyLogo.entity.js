@@ -5,7 +5,7 @@ const CompanyLogo = sequelize.define(
   "CompanyLogo",
 
   {
-    ID: {
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,

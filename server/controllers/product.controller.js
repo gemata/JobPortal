@@ -1,4 +1,4 @@
-import Product from "../models/product.entity";
+import Product from "../models/product.entity.js";
 
 const ProductController = {
   async createProduct(req, res) {

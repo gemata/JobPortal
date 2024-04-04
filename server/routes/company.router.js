@@ -5,7 +5,7 @@ const CompanyRouter = express.Router();
 
 CompanyRouter.post('/', CompanyController.createCompany);
 
-CompanyRouter.get('/', CompanyController.getCompanys);
+CompanyRouter.get('/', CompanyController.getCompanies);
 
 CompanyRouter.get('/:id', CompanyController.getCompanyById);
 

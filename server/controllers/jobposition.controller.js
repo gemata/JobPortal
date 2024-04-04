@@ -1,4 +1,4 @@
-import JobPosition from "../models/jobposition.entity";
+import JobPosition from "../models/jobposition.entity.js";
 
 const JobPositionController = {
   async createJobPosition(req, res) {

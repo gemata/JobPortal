@@ -1,4 +1,4 @@
-import Subscription from "../models/subscription.entity";
+import Subscription from "../models/subscription.entity.js";
 
 const SubscriptionController = {
   async createSubscription(req, res) {
