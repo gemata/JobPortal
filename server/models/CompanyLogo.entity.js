@@ -7,7 +7,7 @@ const CompanyLogo = sequelize.define(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     // s3Key, bucket and mime are needed for file storage and maintenance

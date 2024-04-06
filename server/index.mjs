@@ -538,13 +538,212 @@ const start = async () => {
       },
       {
         resource: Models.Company,
-        options: { parent: "mySQL" },
-        features: [importExportFeature({ componentLoader })],
+        options: {
+          parent: "mySQL",
+          listProperties: [
+            "ID",
+            "Email",
+            "CompanyName",
+            "FreeJobPosted",
+            "createdAt",
+            "updatedAt",
+          ],
+          showProperties: [
+            "ID",
+            "Email",
+            "CompanyName",
+            "FreeJobPosted",
+            "createdAt",
+            "updatedAt",
+          ],
+          createProperties: [
+            "Email",
+            "CompanyName",
+            "FreeJobPosted",
+            "newPassword",
+            "role",
+            "image",
+          ],
+          editProperties: [
+            "Email",
+            "CompanyName",
+            "FreeJobPosted",
+            "newPassword",
+            "role",
+            "image",
+          ],
+          properties: {
+            password: { isVisible: false },
+            role: {
+              availableValues: [
+                { value: "Company", label: "Company" },
+              ],
+            },
+          },
+          actions: {
+            new: {
+              after: async (response) => {
+                const { record } = response;
+
+                if (record.params?.s3Key) {
+                  const companyLogo = await Models.CompanyLogo.create({
+                    s3Key: record.params.s3Key,
+                    bucket: record.params.bucket,
+                    mime: record.params.mime,
+                    CompanyID: record.params.ID,
+                  });
+                  // console.log(companyLogo.toJSON());
+                }
+                return response;
+              },
+            },
+            edit: {
+              after: async (response) => {
+                const { record } = response;
+
+                if (record.params?.s3Key) {
+                  let companyLogo = await Models.CompanyLogo.findOne({
+                    where: { CompanyID: record.params.ID },
+                  });
+
+                  if (companyLogo) {
+                    const filePath = `${companyLogo.bucket}/${companyLogo.s3Key}`;
+                    await unlinkFileFromStorage(filePath);
+
+                    companyLogo.set({
+                      s3Key: record.params.s3Key,
+                      bucket: record.params.bucket,
+                      mime: record.params.mime,
+                      CompanyID: record.params.ID,
+                    });
+                    await companyLogo.save();
+                  } else {
+                    companyLogo = await Models.CompanyLogo.create({
+                      s3Key: record.params.s3Key,
+                      bucket: record.params.bucket,
+                      mime: record.params.mime,
+                      CompanyID: record.params.ID,
+                    });
+                  }
+                }
+
+                return response;
+              },
+            },
+            delete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const imagesToDelete = await Models.CompanyLogo.findAll({
+                    where: {
+                      CompanyID: null,
+                    },
+                  });
+
+                  await Promise.all(
+                    imagesToDelete.map(async (image) => {
+                      const filePath = `${image.bucket}/${image.s3Key}`;
+                      await unlinkFileFromStorage(filePath);
+                    })
+                  );
+
+                  await Models.CompanyLogo.destroy({
+                    where: {
+                      CompanyID: null,
+                    },
+                  });
+
+                  console.log("Company logos unlinked from storage");
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking associated logos:", error);
+                  throw new Error("Error unlinking associated logos");
+                }
+              },
+            },
+            bulkDelete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const imagesToDelete = await Models.CompanyLogo.findAll({
+                    where: {
+                      CompanyID: null,
+                    },
+                  });
+
+                  const imageFilePaths = imagesToDelete.map(
+                    (resume) => `${resume.bucket}/${resume.s3Key}`
+                  );
+
+                  await Promise.all(
+                    imageFilePaths.map(async (filePath) => {
+                      await unlinkFileFromStorage(filePath);
+                    })
+                  );
+
+                  await Models.CompanyLogo.destroy({
+                    where: {
+                      CompanyID: null,
+                    },
+                  });
+
+                  console.log("Company logos unlinked from storage");
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking associated logos:", error);
+                  throw new Error("Error unlinking associated logos");
+                }
+              },
+            },
+          },
+        },
+        features: [
+          passwordsFeature({
+            componentLoader,
+            properties: {
+              password: "newPassword",
+              encryptedPassword: "password",
+            },
+            hash: argon2.hash,
+          }),
+          uploadFeature({
+            componentLoader,
+            provider: { local: { bucket: "public/companyLogos" } },
+            properties: {
+              file: "image",
+              key: "s3Key",
+              bucket: "bucket",
+              mimeType: "mime",
+            },
+            validation: {
+              mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+            },
+          }),
+          importExportFeature({ componentLoader })],
       },
       {
         resource: Models.CompanyLogo,
-        options: { parent: "mySQL" },
-        features: [importExportFeature({ componentLoader })],
+        options: {
+          parent: "mySQL",
+          listProperties: ["id", "CompanyID", "image"],
+          editProperties: ["CompanyID", "image"],
+        },
+        features: [
+          uploadFeature({
+            componentLoader,
+            provider: { local: { bucket: "public/companyLogos" } },
+            properties: {
+              file: "image",
+              key: "s3Key",
+              bucket: "bucket",
+              mimeType: "mime",
+            },
+            validation: {
+              mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+            },
+          }),
+          importExportFeature({ componentLoader }),
+        ],
       },
       {
         resource: Models.CompanyProfile,

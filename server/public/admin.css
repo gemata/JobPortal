@@ -112,5 +112,16 @@ a[data-testid="action-bulkDelete"] {
 
 a[data-testid="action-bulkDelete"]:hover {
   background: #f8f9fe !important;
-  opacity: .8 !important;
+  opacity: 0.8 !important;
+}
+
+.jrbaWY .adminjs_Button {
+  color: white !important;
+  background: #b869b3 !important;
+  border-color: #b869b3 !important;
+}
+
+.jrbaWY .adminjs_Button:hover {
+  background-color: rgb(157, 90, 153) !important;
+  border-color: rgb(157, 90, 153) !important;
 }

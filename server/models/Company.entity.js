@@ -8,7 +8,7 @@ const Company = sequelize.define(
   {
     ID: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     Email: {
@@ -21,8 +21,7 @@ const Company = sequelize.define(
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "User"
+      defaultValue: "Company"
     },
     password: {
       type: DataTypes.STRING,
@@ -30,7 +29,6 @@ const Company = sequelize.define(
     },
     FreeJobPosted: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
   },
   {
