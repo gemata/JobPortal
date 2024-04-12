@@ -78,7 +78,15 @@ const authenticate = async ({ email, password }, ctx) => {
   }
 };
 
-async function unlinkFileFromStorage(filePath) {
+const userUploadPath = (record, filename) => {
+  return `${record.params.UserId}/${filename}`;
+};
+
+const companyUploadPath = (record, filename) => {
+  return `${record.params.CompanyID}/${filename}`;
+};
+
+const unlinkFileFromStorage = async (filePath) => {
   try {
     if (fs.existsSync(filePath)) {
       await fs.promises.unlink(filePath);
@@ -97,6 +105,19 @@ async function unlinkFileFromStorage(filePath) {
   } catch (error) {
     console.error(`Error unlinking file: ${filePath}`, error);
     throw error;
+  }
+}
+
+const cleanUpFolder = async (directoryPath) => {
+  try {
+    const filesInDirectory = await fs.promises.readdir(directoryPath);
+
+    if (filesInDirectory.length === 0) {
+      await fs.promises.rmdir(directoryPath);
+      console.log(`Directory deleted: ${directoryPath}`);
+    }
+  } catch (err) {
+    console.error(`Error cleaning up folder ${directoryPath}: ${err}`);
   }
 }
 
@@ -140,7 +161,7 @@ const start = async () => {
   (async () => {
     try {
       await dbContext();
-      console.log("dbContext have been set up successfully.");
+      console.log("dbContext has been set up successfully.");
     } catch (error) {
       console.error("Error setting up dbContext:", error);
     }
@@ -175,7 +196,7 @@ const start = async () => {
       {
         resource: Models.User,
         options: {
-          parent: "mySQL",
+          parent: "User Models",
           listProperties: ["id", "email", "firstName", "lastName", "role"],
           showProperties: [
             "id",
@@ -462,9 +483,43 @@ const start = async () => {
       {
         resource: Models.Resume,
         options: {
-          parent: "mySQL",
+          parent: "User Models",
           listProperties: ["id", "UserId", "resume"],
           editProperties: ["UserId", "resume"],
+          actions: {
+            delete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const { record } = originalResponse;
+
+                  const folderPath = `${record?.params.bucket}/${record?.params.UserId}`;
+                  await cleanUpFolder(folderPath);
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking:", error);
+                  throw new Error("Error unlinking");
+                }
+              }
+            },
+            bulkDelete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const { records } = originalResponse;
+
+                  for (const record of records) {
+                    const folderPath = `${record?.params.bucket}/${record?.params.UserId}`;
+                    await cleanUpFolder(folderPath);
+                  }
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking:", error);
+                  throw new Error("Error unlinking");
+                }
+              }
+            }
+          },
         },
         features: [
           uploadFeature({
@@ -476,6 +531,7 @@ const start = async () => {
               bucket: "bucket",
               mimeType: "mime",
             },
+            uploadPath: userUploadPath,
             validation: {
               mimeTypes: [
                 "application/msword",
@@ -490,9 +546,43 @@ const start = async () => {
       {
         resource: Models.UserImage,
         options: {
-          parent: "mySQL",
+          parent: "User Models",
           listProperties: ["id", "UserId", "image"],
           editProperties: ["UserId", "image"],
+          actions: {
+            delete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const { record } = originalResponse;
+
+                  const folderPath = `${record?.params.bucket}/${record?.params.UserId}`;
+                  await cleanUpFolder(folderPath);
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking:", error);
+                  throw new Error("Error unlinking");
+                }
+              }
+            },
+            bulkDelete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const { records } = originalResponse;
+
+                  for (const record of records) {
+                    const folderPath = `${record?.params.bucket}/${record?.params.UserId}`;
+                    await cleanUpFolder(folderPath);
+                  }
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking:", error);
+                  throw new Error("Error unlinking");
+                }
+              }
+            }
+          },
         },
         features: [
           uploadFeature({
@@ -504,6 +594,7 @@ const start = async () => {
               bucket: "bucket",
               mimeType: "mime",
             },
+            uploadPath: userUploadPath,
             validation: {
               mimeTypes: ["image/jpeg", "image/png", "image/webp"],
             },
@@ -513,33 +604,33 @@ const start = async () => {
       },
       {
         resource: Models.UserProfile,
-        options: { parent: "mySQL" },
+        options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.WorkExperience,
-        options: { parent: "mySQL" },
+        options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.Education,
-        options: { parent: "mySQL" },
+        options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.ApplicantList,
-        options: { parent: "mySQL" },
+        options: { parent: "Job Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.AppliedJobs,
-        options: { parent: "mySQL" },
+        options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.Company,
         options: {
-          parent: "mySQL",
+          parent: "Company Models",
           listProperties: [
             "ID",
             "Email",
@@ -724,9 +815,43 @@ const start = async () => {
       {
         resource: Models.CompanyLogo,
         options: {
-          parent: "mySQL",
+          parent: "Company Models",
           listProperties: ["id", "CompanyID", "image"],
           editProperties: ["CompanyID", "image"],
+          actions: {
+            delete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const { record } = originalResponse;
+
+                  const folderPath = `${record?.params.bucket}/${record?.params.CompanyID}`;
+                  await cleanUpFolder(folderPath);
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking:", error);
+                  throw new Error("Error unlinking");
+                }
+              }
+            },
+            bulkDelete: {
+              after: async (originalResponse, request, context) => {
+                try {
+                  const { records } = originalResponse;
+
+                  for (const record of records) {
+                    const folderPath = `${record?.params.bucket}/${record?.params.CompanyID}`;
+                    await cleanUpFolder(folderPath);
+                  }
+
+                  return originalResponse;
+                } catch (error) {
+                  console.error("Error unlinking:", error);
+                  throw new Error("Error unlinking");
+                }
+              }
+            }
+          },
         },
         features: [
           uploadFeature({
@@ -738,6 +863,7 @@ const start = async () => {
               bucket: "bucket",
               mimeType: "mime",
             },
+            uploadPath: companyUploadPath,
             validation: {
               mimeTypes: ["image/jpeg", "image/png", "image/webp"],
             },
@@ -747,52 +873,52 @@ const start = async () => {
       },
       {
         resource: Models.CompanyProfile,
-        options: { parent: "mySQL" },
+        options: { parent: "Company Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.InterviewList,
-        options: { parent: "mySQL" },
+        options: { parent: "Job Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.Invoice,
-        options: { parent: "mySQL" },
+        options: { parent: "Payment Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.JobField,
-        options: { parent: "mySQL" },
+        options: { parent: "Job Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.JobPosition,
-        options: { parent: "mySQL" },
+        options: { parent: "Job Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.JobPost,
-        options: { parent: "mySQL" },
+        options: { parent: "Job Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.LikedJobs,
-        options: { parent: "mySQL" },
+        options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.Price,
-        options: { parent: "mySQL" },
+        options: { parent: "Payment Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.Product,
-        options: { parent: "mySQL" },
+        options: { parent: "Payment Models" },
         features: [importExportFeature({ componentLoader })],
       },
       {
         resource: Models.Subscription,
-        options: { parent: "mySQL" },
+        options: { parent: "Payment Models" },
         features: [importExportFeature({ componentLoader })],
       },
 
@@ -802,7 +928,7 @@ const start = async () => {
       {
         resource: Models.ChatLog,
         options: {
-          parent: "mongoDB",
+          parent: "Non-relational Models",
           listProperties: ["_id", "sender", "receiver", "createdAt"],
           editProperties: ["sender", "receiver", "message"],
         },

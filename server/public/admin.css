@@ -52,7 +52,7 @@ label::before {
 section[data-css="sidebar"] {}
 
 :not(div[data-css="notice-wrapper"]) svg circle {
-  fill: violet !important;
+  fill: #6a0a76 !important;
 }
 
 input:focus,
@@ -66,7 +66,7 @@ input:focus,
 }
 
 .cvvOAe {
-  background-color: violet !important;
+  background-color: #6a0a76 !important;
 }
 
 .adminjs_Button[type="submit"].ignoreButtonStyle:not([disabled]) {
