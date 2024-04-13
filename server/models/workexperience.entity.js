@@ -17,10 +17,6 @@ const WorkExperience = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    schoolName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     country: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,15 +25,11 @@ const WorkExperience = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    schoolName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     jobType: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    currentlyStudyHere: {
+    currentlyWorkingHere: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },

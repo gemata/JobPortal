@@ -1,5 +1,3 @@
-:root {}
-
 a[data-css="sidebar-logo"]:hover h1 {
   color: purple !important;
 }
@@ -51,7 +49,7 @@ label::before {
 
 section[data-css="sidebar"] {}
 
-:not(div[data-css="notice-wrapper"]) svg circle {
+:not(.adminjs_Icon)>svg circle {
   fill: #6a0a76 !important;
 }
 

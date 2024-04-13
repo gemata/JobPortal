@@ -22,6 +22,7 @@ import mailer from "express-mailer";
 import dotenv from "dotenv";
 import uploadFeature from "@adminjs/upload";
 import fs from "fs";
+import { Icon } from '@adminjs/design-system'
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
@@ -196,7 +197,10 @@ const start = async () => {
       {
         resource: Models.User,
         options: {
-          parent: "User Models",
+          parent: {
+            name: "User Models",
+            icon: "User"
+          },
           listProperties: ["id", "email", "firstName", "lastName", "role"],
           showProperties: [
             "id",
@@ -619,7 +623,12 @@ const start = async () => {
       },
       {
         resource: Models.ApplicantList,
-        options: { parent: "Job Models" },
+        options: {
+          parent: {
+            name: "Job Models",
+            icon: "Briefcase"
+          },
+        },
         features: [importExportFeature({ componentLoader })],
       },
       {
@@ -630,7 +639,9 @@ const start = async () => {
       {
         resource: Models.Company,
         options: {
-          parent: "Company Models",
+          parent: {
+            name: "Company Models",
+          },
           listProperties: [
             "ID",
             "Email",
@@ -883,7 +894,13 @@ const start = async () => {
       },
       {
         resource: Models.Invoice,
-        options: { parent: "Payment Models" },
+        options: {
+          parent: {
+            name: "Payment Models",
+            // icon: "DollarSign"
+            icon: "ShoppingCart"
+          },
+        },
         features: [importExportFeature({ componentLoader })],
       },
       {
@@ -922,13 +939,15 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
 
-
       //MongoDB Models
       //Default id is "_id"
       {
         resource: Models.ChatLog,
         options: {
-          parent: "Non-relational Models",
+          parent: {
+            name: "Non-relational Models",
+            icon: "None"
+          },
           listProperties: ["_id", "sender", "receiver", "createdAt"],
           editProperties: ["sender", "receiver", "message"],
         },

@@ -9,6 +9,10 @@ const Education = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    schoolName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     degreeType: {
       type: DataTypes.CHAR,
       allowNull: false,
@@ -25,11 +29,7 @@ const Education = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    jobType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    currentlyWorkingHere: {
+    currentlyStudyingHere: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
