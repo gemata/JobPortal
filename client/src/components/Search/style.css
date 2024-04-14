@@ -28,11 +28,13 @@ a {
 }
 .popular-searches {
   padding-top: 40px;
+  padding-bottom: 60px;
 }
 .popular-searches__title {
   color: white;
   text-align: left;
   margin-left: 97px;
+  padding-bottom: 15px;
 }
 .list {
   display: flex;
