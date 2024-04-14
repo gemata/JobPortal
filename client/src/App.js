@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import CompanyInterviews from "./pages/CompanyPages/Interviews";
 import CompanyJobs from "./pages/CompanyPages/Jobs";
 import CompanyDashboard from "./pages/CompanyPages/Dashboard";
