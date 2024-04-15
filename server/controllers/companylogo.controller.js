@@ -27,7 +27,7 @@ const CompanyLogoController = {
   async getCompanyLogoById(req, res) {
     const { id } = req.params;
     try {
-      const CompanyLogoRecord = await CompanyLogo.findByPk(id);
+      const CompanyLogoRecord = await CompanyLogo.findOne({ where: { CompanyID: id } });
       if (!CompanyLogoRecord) {
         return res.status(404).json({ message: "CompanyLogo not found" });
       }

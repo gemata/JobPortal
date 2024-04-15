@@ -22,15 +22,15 @@ const ResumeController = {
     }
   },
 
-  // Get a Resume by ID
+  // Get a Resume by user ID
   async getResumeById(req, res) {
     const { id } = req.params;
     try {
-      const Resume = await Resume.findByPk(id);
-      if (!Resume) {
+      const ResumeRecord = await Resume.findOne({ where: { UserId: id } });
+      if (!ResumeRecord) {
         return res.status(404).json({ message: "Resume not found" });
       }
-      return res.status(200).json(Resume);
+      return res.status(200).json(ResumeRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

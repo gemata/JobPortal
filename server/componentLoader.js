@@ -12,6 +12,8 @@ const Components = {
   Login: componentLoader.override("Login", path.join(__dirname, './components/login')),
   SidebarBranding: componentLoader.override("SidebarBranding", path.join(__dirname, './components/sidebarBranding')),
   SidebarFooter: componentLoader.override("SidebarFooter", path.join(__dirname, './components/sidebarFooter')),
+  LinkComponent: componentLoader.add("LinkComponent", path.join(__dirname, './components/linkComponent')),
+  RerouteLinks: componentLoader.add("RerouteLinks", path.join(__dirname, './components/rerouteLinks')),
 };
 
 export { componentLoader, Components };

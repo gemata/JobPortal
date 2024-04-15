@@ -7,6 +7,10 @@ import SidebarBranding from '../components/sidebarBranding'
 AdminJS.UserComponents.SidebarBranding = SidebarBranding
 import SidebarFooter from '../components/sidebarFooter'
 AdminJS.UserComponents.SidebarFooter = SidebarFooter
+import LinkComponent from '../components/linkComponent'
+AdminJS.UserComponents.LinkComponent = LinkComponent
+import RerouteLinks from '../components/rerouteLinks'
+AdminJS.UserComponents.RerouteLinks = RerouteLinks
 import UploadEditComponent from '../node_modules/@adminjs/upload/build/features/upload-file/components/UploadEditComponent'
 AdminJS.UserComponents.UploadEditComponent = UploadEditComponent
 import UploadListComponent from '../node_modules/@adminjs/upload/build/features/upload-file/components/UploadListComponent'

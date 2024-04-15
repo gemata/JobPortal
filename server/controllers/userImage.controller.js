@@ -22,15 +22,16 @@ const UserImageController = {
     }
   },
 
-  // Get a UserImage by ID
+  // Get a UserImage by User ID
   async getUserImageById(req, res) {
     const { id } = req.params;
     try {
-      const UserImage = await UserImage.findByPk(id);
-      if (!UserImage) {
+      const UserImageRecord = await UserImage.findOne({ where: { UserId: id } });
+
+      if (!UserImageRecord) {
         return res.status(404).json({ message: "UserImage not found" });
       }
-      return res.status(200).json(UserImage);
+      return res.status(200).json(UserImageRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

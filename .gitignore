@@ -15,3 +15,4 @@ yarn-error.log*
 .env
 /server/public/profilePics/*
 /server/public/resumes/*
+/server/public/companyLogos/*

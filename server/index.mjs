@@ -238,6 +238,11 @@ const start = async () => {
                 { value: "Editor", label: "Editor" },
               ],
             },
+            id: {
+              components: {
+                show: Components.LinkComponent, // this is our custom component
+              },
+            },
           },
           actions: {
             new: {
@@ -490,6 +495,19 @@ const start = async () => {
           parent: "User Models",
           listProperties: ["id", "UserId", "resume"],
           editProperties: ["UserId", "resume"],
+          showProperties: ["id", "UserId", "mime", "createdAt", "updatedAt"],
+          properties: {
+            resume: {
+              components: {
+                list: Components.RerouteLinks,
+              },
+            },
+            id: {
+              components: {
+                show: Components.LinkComponent
+              }
+            }
+          },
           actions: {
             delete: {
               after: async (originalResponse, request, context) => {
@@ -553,6 +571,19 @@ const start = async () => {
           parent: "User Models",
           listProperties: ["id", "UserId", "image"],
           editProperties: ["UserId", "image"],
+          showProperties: ["id", "UserId", "mime", "createdAt", "updatedAt"],
+          properties: {
+            image: {
+              components: {
+                list: Components.RerouteLinks,
+              },
+            },
+            id: {
+              components: {
+                show: Components.LinkComponent
+              }
+            }
+          },
           actions: {
             delete: {
               after: async (originalResponse, request, context) => {
@@ -678,6 +709,11 @@ const start = async () => {
             password: { isVisible: false },
             role: {
               availableValues: [{ value: "Company", label: "Company" }],
+            },
+            ID: {
+              components: {
+                show: Components.LinkComponent, // this is our custom component
+              },
             },
           },
           actions: {
@@ -828,6 +864,19 @@ const start = async () => {
           parent: "Company Models",
           listProperties: ["id", "CompanyID", "image"],
           editProperties: ["CompanyID", "image"],
+          showProperties: ["id", "CompanyID", "mime", "createdAt", "updatedAt"],
+          properties: {
+            image: {
+              components: {
+                list: Components.RerouteLinks,
+              },
+            },
+            id: {
+              components: {
+                show: Components.LinkComponent
+              }
+            }
+          },
           actions: {
             delete: {
               after: async (originalResponse, request, context) => {
@@ -897,7 +946,7 @@ const start = async () => {
           parent: {
             name: "Payment Models",
             // icon: "DollarSign"
-            icon: "ShoppingCart",
+            icon: "ShoppingCart"
           },
         },
         features: [importExportFeature({ componentLoader })],
@@ -1055,7 +1104,7 @@ const start = async () => {
   app.use("/api/resumes", Routes.ResumeRouter);
   app.use("/api/subscriptions", Routes.SubscriptionRouter);
   app.use("/api/users", Routes.userRouter);
-  app.use("/api/userimage", Routes.userImageRouter);
+  app.use("/api/userimages", Routes.userImageRouter);
   app.use("/api/userprofile", Routes.userProfileRouter);
   app.use("/api/workexperience", Routes.WorkExperienceRouter);
 

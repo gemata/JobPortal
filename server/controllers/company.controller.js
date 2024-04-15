@@ -29,7 +29,7 @@ const CompanyController = {
     try {
       const CompanyRecord = await Company.findByPk(id);
       if (!CompanyRecord) {
-        return res.status(404).json({ message: "CompanyRecord not found" });
+        return res.status(404).json({ message: "Company not found" });
       }
       return res.status(200).json(CompanyRecord);
     } catch (error) {
