@@ -20,6 +20,7 @@
     "@adminjs/upload": "^4.0.2",
     "adminjs": "^7.7.3",
     "argon2": "^0.40.1",
+    "chart.js": "^4.4.2",
     "connect-session-sequelize": "^7.1.7",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -29,6 +30,7 @@
     "express-mailer": "^0.3.1",
     "mongoose": "^8.2.2",
     "mysql2": "^3.9.2",
+    "react-chartjs-2": "^5.2.0",
     "sequelize": "^6.37.1",
     "styled-components": "^6.1.8",
     "yarn": "^1.22.22"

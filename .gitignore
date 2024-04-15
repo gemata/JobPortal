@@ -14,3 +14,4 @@ yarn-error.log*
 .npm/
 .env
 /server/public/profilePics/*
+/server/public/resumes/*

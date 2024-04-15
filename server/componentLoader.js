@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 const componentLoader = new ComponentLoader();
 
 const Components = {
-  // Dashboard: componentLoader.add('Dashboard', 'dashboard.jsx')
   Dashboard: componentLoader.add("Dashboard", path.join(__dirname, './components/dashboard')),
   Login: componentLoader.override("Login", path.join(__dirname, './components/login')),
   SidebarBranding: componentLoader.override("SidebarBranding", path.join(__dirname, './components/sidebarBranding')),

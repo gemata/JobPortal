@@ -4,7 +4,7 @@ export default function JobItem() {
   return (
     <>
       <div className='jobItem flex items-center justify-between gap-10 bg-white rounded-lg w-full p-5'>
-        <div class='flex items-center gap-10'>
+        <div className='flex items-center gap-10'>
           <input type='checkbox' name='' id='' />
           <div className='text-left'>
             <h5 className='text-jobportal-primary font-bold'>Senior Web Dev</h5>
