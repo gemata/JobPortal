@@ -93,7 +93,7 @@ const StyledDiv = styled.div`
     bottom: 0;
     left: 0;
     border-radius: 10px;
-    background: url(https://cdn.discordapp.com/attachments/913551851243335801/1222543030091911249/space-bg.webp?ex=661698ec&is=660423ec&hm=a38f8baa5bd338a50c41c510ffad2ba5492fcc0d044df48ad91f85b92647b6b9&);
+    background: url(http://localhost:5000/loginHeroBG.webp);
     background-size: auto 580px;
     opacity: 0.65;
     animation: ${moveBackground} 75s linear 0s infinite normal none running;
@@ -292,8 +292,7 @@ const Login: React.FC<{}> = () => {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
-          background:
-            'url(https://cdn.discordapp.com/attachments/653997513350709251/1222837853898149888/provaBG_Opaque.png?ex=6617ab7f&is=6605367f&hm=f6b9d30ba9f44ada905c32958266eabeef7774ffe3c7d3bc0b9a788fcb0cfd59&)',
+          background: 'url(http://localhost:5000/loginBG.png)',
           backgroundPosition: '50% center',
           backgroundSize: 'cover',
           inset: '0px',

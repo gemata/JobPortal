@@ -27,14 +27,7 @@ const SidebarBranding: React.FC<{}> = () => {
   return (
     <>
       <StyledLink to={'/admin'} data-css='sidebar-logo' style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <img
-          width='50px'
-          style={{ borderRadius: '50%' }}
-          src={
-            'https://cdn.discordapp.com/attachments/653997513350709251/1225428153460068423/slayylogo1.png?ex=662117e7&is=660ea2e7&hm=3d4c606dadb2d95eb0f27091d985ffadb4614c38e5f8204eba669d42f1f8d39c&'
-          }
-          alt='Logo'
-        />
+        <img width='50px' style={{ borderRadius: '50%' }} src={'http://localhost:5000/mainLogo.png'} alt='Logo' />
         <StyledH1>{'Job Horizon'}</StyledH1>
       </StyledLink>
     </>
