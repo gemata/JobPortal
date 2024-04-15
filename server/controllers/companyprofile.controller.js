@@ -27,11 +27,11 @@ const CompanyProfileController = {
   async getCompanyProfileById(req, res) {
     const { id } = req.params;
     try {
-      const CompanyProfile = await CompanyProfile.findByPk(id);
-      if (!CompanyProfile) {
+      const CompanyProfileRecord = await CompanyProfile.findByPk(id);
+      if (!CompanyProfileRecord) {
         return res.status(404).json({ message: "CompanyProfile not found" });
       }
-      return res.status(200).json(CompanyProfile);
+      return res.status(200).json(CompanyProfileRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

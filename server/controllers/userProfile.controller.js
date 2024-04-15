@@ -26,11 +26,11 @@ const UserProfileController = {
   async getUserProfileById(req, res) {
     const { id } = req.params;
     try {
-      const UserProfile = await UserProfile.findByPk(id);
-      if (!UserProfile) {
+      const UserProfileRecord = await UserProfile.findByPk(id);
+      if (!UserProfileRecord) {
         return res.status(404).json({ message: "UserProfile not found" });
       }
-      return res.status(200).json(UserProfile);
+      return res.status(200).json(UserProfileRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

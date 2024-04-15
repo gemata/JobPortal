@@ -22,11 +22,11 @@ const SubscriptionController = {
   async getSubscriptionById(req, res) {
     const { id } = req.params;
     try {
-      const Subscription = await Subscription.findByPk(id);
-      if (!Subscription) {
+      const SubscriptionRecord = await Subscription.findByPk(id);
+      if (!SubscriptionRecord) {
         return res.status(404).json({ message: "Subscription not found" });
       }
-      return res.status(200).json(Subscription);
+      return res.status(200).json(SubscriptionRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

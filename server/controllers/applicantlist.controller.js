@@ -26,11 +26,11 @@ const ApplicantListController = {
   async getApplicantListById(req, res) {
     const { id } = req.params;
     try {
-      const ApplicantList = await ApplicantList.findByPk(id);
-      if (!ApplicantList) {
-        return res.status(404).json({ message: "ApplicantList not found" });
+      const ApplicantListRecord = await ApplicantList.findByPk(id);
+      if (!ApplicantListRecord) {
+        return res.status(404).json({ message: "ApplicantListRecord not found" });
       }
-      return res.status(200).json(ApplicantList);
+      return res.status(200).json(ApplicantListRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

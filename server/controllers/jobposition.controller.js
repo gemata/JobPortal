@@ -22,11 +22,11 @@ const JobPositionController = {
   async getJobPositionById(req, res) {
     const { id } = req.params;
     try {
-      const JobPosition = await JobPosition.findByPk(id);
-      if (!JobPosition) {
+      const JobPositionRecord = await JobPosition.findByPk(id);
+      if (!JobPositionRecord) {
         return res.status(404).json({ message: "JobPosition not found" });
       }
-      return res.status(200).json(JobPosition);
+      return res.status(200).json(JobPositionRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

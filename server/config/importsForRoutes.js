@@ -1,6 +1,6 @@
 // Import route files
 import ApplicantlistRouter from '../routes/applicantlist.router.js';
-import AppliedJobsRouter from '../routes/appliedJobs.router.js';
+import AppliedJobRouter from '../routes/appliedJob.router.js';
 import CompanyRouter from '../routes/company.router.js';
 import CompanyLogoRouter from "../routes/companylogo.router.js";
 import CompanyProfileRouter from "../routes/companyprofile.router.js";
@@ -10,7 +10,7 @@ import InvoiceRouter from "../routes/invoice.router.js";
 import JobFieldRouter from "../routes/jobfield.router.js";
 import JobPositionRouter from "../routes/jobposition.router.js";
 import JobPostRouter from "../routes/jobpost.router.js";
-import LikedJobsRouter from "../routes/likedJobs.router.js";
+import LikedJobRouter from "../routes/likedJob.router.js";
 import PriceRouter from "../routes/price.router.js";
 import ProductRouter from "../routes/product.router.js";
 import ResumeRouter from "../routes/resume.router.js";
@@ -23,7 +23,7 @@ import WorkExperienceRouter from "../routes/workexperience.router.js";
 // Export all route files
 export {
   ApplicantlistRouter,
-  AppliedJobsRouter,
+  AppliedJobRouter,
   CompanyRouter,
   CompanyLogoRouter,
   CompanyProfileRouter,
@@ -33,7 +33,7 @@ export {
   JobFieldRouter,
   JobPositionRouter,
   JobPostRouter,
-  LikedJobsRouter,
+  LikedJobRouter,
   PriceRouter,
   ProductRouter,
   ResumeRouter,

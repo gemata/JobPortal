@@ -27,11 +27,11 @@ const WorkExperienceController = {
   async getWorkExperienceById(req, res) {
     const { id } = req.params;
     try {
-      const WorkExperience = await WorkExperience.findByPk(id);
-      if (!WorkExperience) {
+      const WorkExperienceRecord = await WorkExperience.findByPk(id);
+      if (!WorkExperienceRecord) {
         return res.status(404).json({ message: "WorkExperience not found" });
       }
-      return res.status(200).json(WorkExperience);
+      return res.status(200).json(WorkExperienceRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

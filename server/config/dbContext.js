@@ -1,6 +1,6 @@
 import sequelize from "./sequelize.mjs";
 import ApplicantList from "../models/applicantlist.entity.js";
-import AppliedJobs from "../models/appliedJobs.entity.js";
+import AppliedJob from "../models/appliedJob.entity.js";
 import Company from "../models/Company.entity.js";
 import CompanyLogo from "../models/CompanyLogo.entity.js";
 import CompanyProfile from "../models/companyprofile.entity.js";
@@ -9,7 +9,7 @@ import InterviewList from "../models/InterviewList.entity.js";
 import JobField from "../models/jobfield.entity.js";
 import JobPosition from "../models/jobposition.entity.js";
 import JobPost from "../models/JobPost.entity.js";
-import LikedJobs from "../models/likedJobs.entity.js";
+import LikedJob from "../models/likedJob.entity.js";
 import Price from "../models/price.entity.js";
 import Product from "../models/product.entity.js";
 import Subscription from "../models/subscription.entity.js";
@@ -56,17 +56,17 @@ const dbContext = async () => {
   User.hasMany(ApplicantList);
   ApplicantList.belongsTo(User);
 
-  User.hasMany(LikedJobs);
-  LikedJobs.belongsTo(User);
+  User.hasMany(LikedJob);
+  LikedJob.belongsTo(User);
 
-  JobPost.hasMany(LikedJobs);
-  LikedJobs.belongsTo(JobPost);
+  JobPost.hasMany(LikedJob);
+  LikedJob.belongsTo(JobPost);
 
-  JobPost.hasMany(AppliedJobs);
-  AppliedJobs.belongsTo(JobPost);
+  JobPost.hasMany(AppliedJob);
+  AppliedJob.belongsTo(JobPost);
 
-  User.hasMany(AppliedJobs);
-  AppliedJobs.belongsTo(User);
+  User.hasMany(AppliedJob);
+  AppliedJob.belongsTo(User);
 
   User.hasOne(UserProfile);
   UserProfile.belongsTo(User);

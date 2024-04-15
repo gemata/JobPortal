@@ -27,11 +27,11 @@ const InterviewListController = {
   async getInterviewListById(req, res) {
     const { id } = req.params;
     try {
-      const InterviewList = await InterviewList.findByPk(id);
-      if (!InterviewList) {
+      const InterviewListRecord = await InterviewList.findByPk(id);
+      if (!InterviewListRecord) {
         return res.status(404).json({ message: "Interview list not found" });
       }
-      return res.status(200).json(InterviewList);
+      return res.status(200).json(InterviewListRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

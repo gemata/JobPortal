@@ -22,11 +22,11 @@ const ProductController = {
   async getProductById(req, res) {
     const { id } = req.params;
     try {
-      const Product = await Product.findByPk(id);
-      if (!Product) {
+      const ProductRecord = await Product.findByPk(id);
+      if (!ProductRecord) {
         return res.status(404).json({ message: "Product not found" });
       }
-      return res.status(200).json(Product);
+      return res.status(200).json(ProductRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

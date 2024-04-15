@@ -27,11 +27,11 @@ const JobFieldController = {
   async getJobFieldById(req, res) {
     const { id } = req.params;
     try {
-      const JobField = await JobField.findByPk(id);
-      if (!JobField) {
+      const JobFieldRecord = await JobField.findByPk(id);
+      if (!JobFieldRecord) {
         return res.status(404).json({ message: "JobField not found" });
       }
-      return res.status(200).json(JobField);
+      return res.status(200).json(JobFieldRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

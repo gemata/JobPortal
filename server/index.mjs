@@ -22,7 +22,7 @@ import mailer from "express-mailer";
 import dotenv from "dotenv";
 import uploadFeature from "@adminjs/upload";
 import fs from "fs";
-import { Icon } from '@adminjs/design-system'
+import { Icon } from "@adminjs/design-system";
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
@@ -107,7 +107,7 @@ const unlinkFileFromStorage = async (filePath) => {
     console.error(`Error unlinking file: ${filePath}`, error);
     throw error;
   }
-}
+};
 
 const cleanUpFolder = async (directoryPath) => {
   try {
@@ -120,7 +120,7 @@ const cleanUpFolder = async (directoryPath) => {
   } catch (err) {
     console.error(`Error cleaning up folder ${directoryPath}: ${err}`);
   }
-}
+};
 
 const start = async () => {
   const app = express();
@@ -199,7 +199,7 @@ const start = async () => {
         options: {
           parent: {
             name: "User Models",
-            icon: "User"
+            icon: "User",
           },
           listProperties: ["id", "email", "firstName", "lastName", "role"],
           showProperties: [
@@ -504,7 +504,7 @@ const start = async () => {
                   console.error("Error unlinking:", error);
                   throw new Error("Error unlinking");
                 }
-              }
+              },
             },
             bulkDelete: {
               after: async (originalResponse, request, context) => {
@@ -521,8 +521,8 @@ const start = async () => {
                   console.error("Error unlinking:", error);
                   throw new Error("Error unlinking");
                 }
-              }
-            }
+              },
+            },
           },
         },
         features: [
@@ -567,7 +567,7 @@ const start = async () => {
                   console.error("Error unlinking:", error);
                   throw new Error("Error unlinking");
                 }
-              }
+              },
             },
             bulkDelete: {
               after: async (originalResponse, request, context) => {
@@ -584,8 +584,8 @@ const start = async () => {
                   console.error("Error unlinking:", error);
                   throw new Error("Error unlinking");
                 }
-              }
-            }
+              },
+            },
           },
         },
         features: [
@@ -626,13 +626,13 @@ const start = async () => {
         options: {
           parent: {
             name: "Job Models",
-            icon: "Briefcase"
+            icon: "Briefcase",
           },
         },
         features: [importExportFeature({ componentLoader })],
       },
       {
-        resource: Models.AppliedJobs,
+        resource: Models.AppliedJob,
         options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
@@ -677,9 +677,7 @@ const start = async () => {
           properties: {
             password: { isVisible: false },
             role: {
-              availableValues: [
-                { value: "Company", label: "Company" },
-              ],
+              availableValues: [{ value: "Company", label: "Company" }],
             },
           },
           actions: {
@@ -821,7 +819,8 @@ const start = async () => {
               mimeTypes: ["image/jpeg", "image/png", "image/webp"],
             },
           }),
-          importExportFeature({ componentLoader })],
+          importExportFeature({ componentLoader }),
+        ],
       },
       {
         resource: Models.CompanyLogo,
@@ -843,7 +842,7 @@ const start = async () => {
                   console.error("Error unlinking:", error);
                   throw new Error("Error unlinking");
                 }
-              }
+              },
             },
             bulkDelete: {
               after: async (originalResponse, request, context) => {
@@ -860,8 +859,8 @@ const start = async () => {
                   console.error("Error unlinking:", error);
                   throw new Error("Error unlinking");
                 }
-              }
-            }
+              },
+            },
           },
         },
         features: [
@@ -898,7 +897,7 @@ const start = async () => {
           parent: {
             name: "Payment Models",
             // icon: "DollarSign"
-            icon: "ShoppingCart"
+            icon: "ShoppingCart",
           },
         },
         features: [importExportFeature({ componentLoader })],
@@ -919,7 +918,7 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
       {
-        resource: Models.LikedJobs,
+        resource: Models.LikedJob,
         options: { parent: "User Models" },
         features: [importExportFeature({ componentLoader })],
       },
@@ -946,7 +945,7 @@ const start = async () => {
         options: {
           parent: {
             name: "Non-relational Models",
-            icon: "None"
+            icon: "None",
           },
           listProperties: ["_id", "sender", "receiver", "createdAt"],
           editProperties: ["sender", "receiver", "message"],
@@ -1040,17 +1039,17 @@ const start = async () => {
 
   // Use routes
   app.use("/api/applicantlists", Routes.ApplicantlistRouter);
-  app.use("/api/appliedjobs", Routes.AppliedJobsRouter);
+  app.use("/api/appliedjobs", Routes.AppliedJobRouter);
   app.use("/api/companies", Routes.CompanyRouter);
   app.use("/api/companylogos", Routes.CompanyLogoRouter);
   app.use("/api/companyprofiles", Routes.CompanyProfileRouter);
   app.use("/api/educations", Routes.EducationRouter);
   app.use("/api/interviewlists", Routes.InterviewListRouter);
   app.use("/api/invoices", Routes.InvoiceRouter);
-  app.use("/api/jobfield", Routes.JobFieldRouter);
-  app.use("/api/jobposition", Routes.JobPositionRouter);
-  app.use("/api/jobpost", Routes.JobPostRouter);
-  app.use("/api/likedjobs", Routes.LikedJobsRouter);
+  app.use("/api/jobfields", Routes.JobFieldRouter);
+  app.use("/api/jobpositions", Routes.JobPositionRouter);
+  app.use("/api/jobposts", Routes.JobPostRouter);
+  app.use("/api/likedjobs", Routes.LikedJobRouter);
   app.use("/api/prices", Routes.PriceRouter);
   app.use("/api/products", Routes.ProductRouter);
   app.use("/api/resumes", Routes.ResumeRouter);

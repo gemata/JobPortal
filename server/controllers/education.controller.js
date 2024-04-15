@@ -27,11 +27,11 @@ const EducationController = {
   async getEducationById(req, res) {
     const { id } = req.params;
     try {
-      const Education = await Education.findByPk(id);
-      if (!Education) {
+      const EducationRecord = await Education.findByPk(id);
+      if (!EducationRecord) {
         return res.status(404).json({ message: "Education not found" });
       }
-      return res.status(200).json(Education);
+      return res.status(200).json(EducationRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

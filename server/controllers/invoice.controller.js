@@ -22,11 +22,11 @@ const InvoiceController = {
   async getInvoiceById(req, res) {
     const { id } = req.params;
     try {
-      const Invoice = await Invoice.findByPk(id);
-      if (!Invoice) {
+      const InvoiceRecord = await Invoice.findByPk(id);
+      if (!InvoiceRecord) {
         return res.status(404).json({ message: "Invoice not found" });
       }
-      return res.status(200).json(Invoice);
+      return res.status(200).json(InvoiceRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

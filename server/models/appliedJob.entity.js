@@ -1,15 +1,19 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
 
-const LikedJobs = sequelize.define(
-  "LikedJobs",
+const AppliedJob = sequelize.define(
+  "AppliedJob",
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    likedAt: {
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    appliedAt: {
       type: DataTypes.DATE,
       allowNull: false,
     }
@@ -21,8 +25,8 @@ const LikedJobs = sequelize.define(
 );
 
 console.log(
-  "LikedJobs model created successfully:",
-  LikedJobs === sequelize.models.LikedJobs
+  "AppliedJob model created successfully:",
+  AppliedJob === sequelize.models.AppliedJob
 );
 
-export default LikedJobs;
+export default AppliedJob;

@@ -27,11 +27,11 @@ const CompanyController = {
   async getCompanyById(req, res) {
     const { id } = req.params;
     try {
-      const Company = await Company.findByPk(id);
-      if (!Company) {
-        return res.status(404).json({ message: "Company not found" });
+      const CompanyRecord = await Company.findByPk(id);
+      if (!CompanyRecord) {
+        return res.status(404).json({ message: "CompanyRecord not found" });
       }
-      return res.status(200).json(Company);
+      return res.status(200).json(CompanyRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
