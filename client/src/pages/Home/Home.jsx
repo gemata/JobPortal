@@ -6,32 +6,44 @@ const Home = () => {
   return (
     <div className="homepage">
       <SearchSection />
-      <div className="help-section">
-        <div className="help-section__wrapper">
-          <div className="img">
-            <img
-              src="https://image.cnbcfm.com/api/v1/image/107069627-1654086975733-gettyimages-143071319-pe0080780.jpeg?v=1688154770"
-              alt="graduate"
-            />
-          </div>
-          <ul className="help-list">
-            <div className="help-section__title">
-              Just graduated? We can help
+      <div className="help-section bg-purple-800">
+        <div className="container mx-auto py-12">
+          <div className="help-section__wrapper flex">
+            <div className="img w-1/2">
+              <img
+                src="https://image.cnbcfm.com/api/v1/image/107069627-1654086975733-gettyimages-143071319-pe0080780.jpeg?v=1688154770"
+                alt="graduate"
+                className="rounded-l-full"
+              />
             </div>
-
-            <li>
-              <a href="">Visit the new grad hub</a>
-            </li>
-            <li>
-              <a href="">Search salaries by major</a>
-            </li>
-            <li>
-              <a href="">Get a free resume assessment</a>
-            </li>
-            <li>
-              <a href="">Search entry-level jobs</a>
-            </li>
-          </ul>
+            <div className="help-list ml-8">
+              <div className="help-section__title text-white text-xl font-bold mb-6">
+                Just graduated? We can help
+              </div>
+              <ul>
+                <li className="mb-3">
+                  <a href="#" className="btn">
+                    Visit the new grad hub
+                  </a>
+                </li>
+                <li className="mb-3">
+                  <a href="#" className="btn">
+                    Search salaries by major
+                  </a>
+                </li>
+                <li className="mb-3">
+                  <a href="#" className="btn">
+                    Get a free resume assessment
+                  </a>
+                </li>
+                <li className="mb-3">
+                  <a href="#" className="btn">
+                    Search entry-level jobs
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
