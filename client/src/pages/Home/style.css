@@ -39,3 +39,81 @@ img {
   margin-left: 50px;
   width: 160%;
 }
+.arrow {
+  border: solid rgba(0, 0, 255, 0.69);
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.second-section {
+  margin-top: 50px;
+}
+.box {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 30px 0 30px;
+  height: 25rem;
+}
+.box-1 {
+  background-color: white;
+  width: 20%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box-2 {
+  background-color: white;
+  width: 20%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.box-3 {
+  background-color: white;
+  width: 20%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.box-4 {
+  background-color: white;
+  width: 20%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.img-1 {
+  border-radius: none;
+  padding: 20px;
+}
+.title-profile {
+  border: 1px solid black;
+  width: 50%;
+  background-color: rgba(62, 62, 255, 0.555);
+  border: none;
+  border-radius: 2px;
+}
+.title-profile2 {
+  border: 1px solid black;
+  width: 50%;
+  background-color: rgba(255, 255, 0, 0.421);
+  border: none;
+  border-radius: 2px;
+}
+.title-profile3 {
+  border: 1px solid black;
+  width: 50%;
+  background-color: rgba(90, 255, 90, 0.635);
+  border: none;
+  border-radius: 2px;
+}
+.title-profile4 {
+  border: 1px solid black;
+  width: 50%;
+  background-color: rgba(255, 87, 87, 0.632);
+  border: none;
+  border-radius: 2px;
+}

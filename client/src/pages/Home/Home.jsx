@@ -46,6 +46,62 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className="main">
+        <div className="section mt-4 mb-3 text-lg font-bold">
+          Top Career Advice
+        </div>
+        <div className="browse ">
+          BROWSE ADVICE <i class="arrow right"></i>
+        </div>
+      </div>
+      <div class="second-section">
+        <div class="box">
+          <div class="box-1">
+            <div class="box__1">
+              <img
+                className="img-1"
+                src="https://www.monster.com/CareerAdvice/Career-Advice-Position1@2x-01.webp"
+                alt=""
+              />{" "}
+              <p className="title-profile">ASSESSMENTS</p> <br />
+              <span>11 awesome free career self assessments</span>
+            </div>
+          </div>
+          <div class="box-2">
+            <div class="box_1">
+              <img
+                className="img-1"
+                src="https://www.monster.com/CareerAdvice/Career-Advice-Position2@2x-01.webp"
+                alt=""
+              />
+              <p className="title-profile2">JOBS</p> <br />
+              <span>How to start looking for a job?</span>
+            </div>
+          </div>
+          <div class="box-3">
+            <div class="box_1">
+              <img
+                className="img-1"
+                src="https://www.monster.com/CareerAdvice/Career-Advice-Position3@2x-01.webp"
+                alt=""
+              />{" "}
+              <p className="title-profile3">RESUME</p> <br />
+              <span>Resume samples</span>
+            </div>
+          </div>
+          <div class="box-4">
+            <div class="box_1">
+              <img
+                className="img-1"
+                src="https://www.monster.com/CareerAdvice/Career-Advice-Position5@2x-01.webp"
+                alt=""
+              />
+              <p className="title-profile4">INTERVIEW</p> <br />
+              <span>100 top interview questions be prepared</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
