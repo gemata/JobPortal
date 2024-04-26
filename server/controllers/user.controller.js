@@ -94,20 +94,56 @@ const UserController = {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    const resetToken = await argon2.hash(user.email);
+
+    const resetTokenExpire = Date.now() + 3600000;
+
+    await User.update({ resetToken: resetToken, resetTokenExpire }, { where: { email } });
+
+    const resetLink = `http://localhost:3000/reset-password?token=${encodeURIComponent(resetToken)}`;
+
     res.mailer.send('forgotPassword', {
-      to: email, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
-      subject: 'Reset Password', // REQUIRED.
-      email: email // Pass the email as data
+      to: email,
+      subject: 'Reset Password',
+      email: email,
+      resetLink: resetLink
     }, function (err, message) {
       if (err) {
         console.log(err);
-        res.send('There was an error sending the email');
-        return;
+        return res.status(500).send('There was an error sending the email');
       }
       res.header('Content-Type', 'text/plain');
-      res.send(message);
+      res.send('Password reset email sent.');
     });
-  }
+  },
+
+  async changePassword(req, res) {
+    const { body } = req;
+    const token = body.token;
+    let password = body.password;
+    try {
+      const user = await User.findOne({ where: { resetToken: token } });
+
+      if (!user) {
+        return res.status(404).json({ error: 'Token is not valid. Please request a new password reset.' });
+      }
+      const tokenExpiration = user.resetTokenExpire;
+      const now = new Date();
+      if (!tokenExpiration || tokenExpiration < now) {
+        return res.status(400).json({ error: 'Token has expired. Please request a new password reset.' });
+      }
+
+      password = await argon2.hash(password);
+
+      await User.update({ password, resetToken: null, resetTokenExpire: null }, { where: { resetToken: token } });
+
+      res.header('Content-Type', 'text/plain');
+      res.send('Password has been reset.');
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
 };
 
 export default UserController;

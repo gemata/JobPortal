@@ -1,32 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './style.css';
 
 const Header = ({ userData }) => {
-  console.log(userData);
-
   return (
-    <div className="header">
-      <div className="container">
-        <div className="top-section">
-          <div className="logo">Hello</div>
-          <div className="buttons">
-            <button className="signup">Sign up</button>
-            <button className="login">Login</button>
+    <div className='header'>
+      <div className='container'>
+        <div className='top-section'>
+          <div className='logo'>Hello</div>
+          <div className='buttons'>
+            <button className='signup'>Sign up</button>
+            <button className='login'>Login</button>
           </div>
         </div>
       </div>
-      <div className="bottom-section">
-        <div className="container">
-          <div className="nav-wrapper">
-            <div className="nav-links">
+      <div className='bottom-section'>
+        <div className='container'>
+          <div className='nav-wrapper'>
+            <div className='nav-links'>
               <li>Find Jobs</li>
               <li>Salary Tools</li>
               <li>Career Advice</li>
               <li>Resume Help</li>
               <li>Upload Resume</li>
             </div>
-            <div className="post-job">Employers/ Post Job</div>
+            <div className='post-job'>Employers/ Post Job</div>
           </div>
         </div>
       </div>

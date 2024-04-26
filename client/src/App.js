@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
 import CompanyInterviews from "./pages/CompanyPages/Interviews";
@@ -14,9 +14,11 @@ import JobAlerts from "./pages/UserPages/JobAlerts";
 import ListedJobs from "./pages/UserPages/ListedJobs";
 import Settings from "./pages/UserPages/Settings";
 import Messages from "./pages/UserPages/Messages";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [userData, setUserData] = useState([]);
+  const location = useLocation();  // Add this line to use the location hook
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,13 +39,13 @@ function App() {
 
     fetchData();
   }, []);
+
   return (
     <div className="App">
-      <Header userData={userData} />
+      {location.pathname !== "/reset-password" && <Header userData={userData} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/detail" element={<MyProfile />} />
-        <Route path="/profile/dashboard" element={<Dashboard />} />
         <Route path="/profile/dashboard" element={<Dashboard />} />
         <Route path="/profile/job-tracker" element={<JobTracker />} />
         <Route path="/profile/my-goals" element={<MyGoals />} />
@@ -51,6 +53,7 @@ function App() {
         <Route path="/profile/listed-jobs" element={<ListedJobs />} />
         <Route path="/profile/settings" element={<Settings />} />
         <Route path="/profile/messages" element={<Messages />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
