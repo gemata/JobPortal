@@ -23,6 +23,7 @@ import dotenv from "dotenv";
 import uploadFeature from "@adminjs/upload";
 import fs from "fs";
 import { Icon } from "@adminjs/design-system";
+import dashboardHandler from "./config/dashboardHandler.js";
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
@@ -176,10 +177,6 @@ const start = async () => {
       console.error("Error setting up MongoDB:", error);
     }
   })();
-
-  const dashboardHandler = async () => {
-    return { message: "Data from handler" };
-  };
 
   const admin = new AdminJS({
     defaultTheme: light.id,

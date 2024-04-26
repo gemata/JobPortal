@@ -47,10 +47,12 @@ label::before {
   background-color: rgba(200, 48, 214, 0.1) !important;
 }
 
-section[data-css="sidebar"] {}
-
 :not(.adminjs_Icon)>svg circle {
   fill: #6a0a76 !important;
+}
+
+.jSooGQ {
+  background-color: rgb(236, 230, 237) !important;
 }
 
 input:focus,
