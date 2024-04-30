@@ -125,3 +125,13 @@ a[data-testid="action-bulkDelete"]:hover {
   background-color: rgb(157, 90, 153) !important;
   border-color: rgb(157, 90, 153) !important;
 }
+
+.gGQMaR {
+  border-color: rgba(150, 38, 164, 0.2) !important;
+  background-color: rgba(150, 38, 164, 0.2) !important;
+}
+
+.cxiFPe:hover {
+  background-color: rgba(150, 38, 164, 0.1) !important;
+  ;
+}

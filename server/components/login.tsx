@@ -177,7 +177,7 @@ const Login: React.FC<{}> = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/', {
+      const response = await fetch('http://localhost:5000/api/users/pending/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -998,8 +998,24 @@ const start = async () => {
         },
         features: [importExportFeature({ componentLoader })],
       },
+      {
+        resource: Models.PendingAccount,
+        options: {
+          parent: {
+            name: "Non-relational Models",
+          },
+          listProperties: ["_id", "email", "confirmTokenExpire"],
+          showProperties: ["_id", "email", "password", "confirmToken", "confirmTokenExpire"],
+          editProperties: ["email", "password"],
+        },
+        features: [importExportFeature({ componentLoader })],
+      },
     ],
     rootPath: "/admin", // Specify the root path for AdminJS
+    branding: {
+      companyName: 'JobHorizon',
+      favicon: '/favicon.ico',
+    }
   });
 
   const authProvider = new DefaultAuthProvider({

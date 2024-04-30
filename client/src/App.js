@@ -15,6 +15,7 @@ import ListedJobs from "./pages/UserPages/ListedJobs";
 import Settings from "./pages/UserPages/Settings";
 import Messages from "./pages/UserPages/Messages";
 import ResetPassword from "./pages/ResetPassword";
+import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -42,7 +43,7 @@ function App() {
 
   return (
     <div className="App">
-      {location.pathname !== "/reset-password" && <Header userData={userData} />}
+      {location.pathname !== "/reset-password" && location.pathname !== "/confirm-account" && <Header userData={userData} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/detail" element={<MyProfile />} />
@@ -54,6 +55,7 @@ function App() {
         <Route path="/profile/settings" element={<Settings />} />
         <Route path="/profile/messages" element={<Messages />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/confirm-account" element={<ConfirmAccount />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />

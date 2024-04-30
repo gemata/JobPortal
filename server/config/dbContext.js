@@ -48,7 +48,6 @@ const dbContext = async () => {
   InterviewList.belongsTo(User);
 
   JobPost.belongsTo(Company);
-  // JobPost.belongsTo(JobPosition);
 
   JobPost.hasMany(ApplicantList);
   ApplicantList.belongsTo(JobPost);
@@ -83,14 +82,11 @@ const dbContext = async () => {
   Product.hasOne(Price);
   Price.belongsTo(Product);
 
-  JobField.hasOne(JobPosition);
+  JobField.hasMany(JobPosition);
   JobPosition.belongsTo(JobField);
 
   JobPost.belongsTo(JobPosition);
   JobPosition.hasMany(JobPost);
-
-  // We should figure out Work experience and Education models
-  // We can create a role model, or just keep it as a field
 
   await sequelize.sync({ alter: true });
 };

@@ -48,7 +48,7 @@ interface Dataset {
   hoverOffset: number;
 }
 
-const pageHeaderHeight = 300;
+const pageHeaderHeight = 250;
 const pageHeaderPaddingY = 74;
 const pageHeaderPaddingX = 250;
 

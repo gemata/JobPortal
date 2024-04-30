@@ -20,6 +20,7 @@ import UserImage from "../models/userImage.entity.js";
 import Resume from "../models/resume.entity.js";
 import WorkExperience from "../models/workexperience.entity.js";
 import ChatLog from "../models/chatLog.js";
+import PendingAccount from "../models/pendingAccount.js";
 
 // Export all model files
 export {
@@ -43,5 +44,6 @@ export {
   UserImage,
   Resume,
   WorkExperience,
-  ChatLog
+  ChatLog,
+  PendingAccount
 };
