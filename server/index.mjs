@@ -983,6 +983,32 @@ const start = async () => {
         options: { parent: "Payment Models" },
         features: [importExportFeature({ componentLoader })],
       },
+      {
+        resource: Models.UserReport,
+        options: { parent: "Reports & Ban Lists" },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
+        resource: Models.CompanyReport,
+        options: { parent: "Reports & Ban Lists" },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
+        resource: Models.JobPostReport,
+        options: { parent: "Reports & Ban Lists" },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
+        resource: Models.UserBanList,
+        options: { parent: "Reports & Ban Lists" },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
+        resource: Models.CompanyBanList,
+        options: { parent: "Reports & Ban Lists" },
+        features: [importExportFeature({ componentLoader })],
+      },
+      
 
       //MongoDB Models
       //Default id is "_id"
@@ -1120,6 +1146,11 @@ const start = async () => {
   app.use("/api/userimages", Routes.userImageRouter);
   app.use("/api/userprofile", Routes.userProfileRouter);
   app.use("/api/workexperience", Routes.WorkExperienceRouter);
+  app.use("api/userreport", Routes.UserReport);
+  app.use("api/companyreport", Routes.CompanyReport);
+  app.use("api/jobpostreport", Routes.JobPostReport);
+  app.use("api/userbanlist", Routes.UserBanList);
+  app.use("api/companybanlist", Routes.CompanyBanList);
 
   app.get("/", async (req, res) => {
     try {

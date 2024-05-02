@@ -19,6 +19,11 @@ import UserProfile from "../models/userProfile.entity.js";
 import UserImage from "../models/userImage.entity.js";
 import Resume from "../models/resume.entity.js";
 import WorkExperience from "../models/workexperience.entity.js";
+import UserReport from "../models/UserReport..entity.js";
+import CompanyReport from "../models/CompanyReport.entity.js";
+import JobPostReport from "../models/JobPostReport.entity.js";
+import UserBanList from "../models/UserBanList.entity.js";
+import CompanyBanList from "../models/CompanyBanList.entity.js";
 
 const dbContext = async () => {
   User.hasOne(Resume);
@@ -87,6 +92,26 @@ const dbContext = async () => {
 
   JobPost.belongsTo(JobPosition);
   JobPosition.hasMany(JobPost);
+
+
+  //REPORTS
+
+  UserReport.belongsTo(User, { foreignKey: 'User', as: 'ReportedUser' });
+  UserReport.belongsTo(Company, { foreignKey: 'Company', as: 'ReportedByCompany' });
+
+  CompanyReport.belongsTo(User, { foreignKey: 'User', as: 'ReportedByUser' });
+  CompanyReport.belongsTo(Company, { foreignKey: 'Company', as: 'ReportedCompany' });
+
+  JobPostReport.belongsTo(User, { foreignKey: 'User', as: 'ReportedByUser' });
+  JobPostReport.belongsTo(JobPost, { foreignKey: 'JobPost', as: 'ReportedJobPost' });
+
+  UserBanList.belongsTo(User, { foreignKey: 'UserBanned', as: 'BannedUser' });
+  UserBanList.belongsTo(User, { foreignKey: 'BannedBy', as: 'BannedBy' });
+
+  CompanyBanList.belongsTo(Company, { foreignKey: 'CompanyBanned', as: 'BannedCompany' });
+  CompanyBanList.belongsTo(User, { foreignKey: 'BannedBy', as: 'BannedBy' });
+
+
 
   await sequelize.sync({ alter: true });
 };
