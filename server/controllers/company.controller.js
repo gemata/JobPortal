@@ -1,5 +1,6 @@
 // Import the Company model and Sequelize
 import Company from "../models/Company.entity.js";
+import PendingAccount from "../models/pendingAccount.js";
 
 // Controller functions
 const CompanyController = {
@@ -7,6 +8,9 @@ const CompanyController = {
   async createCompany(req, res) {
     try {
       const newCompany = await Company.create(req.body);
+
+      await PendingAccount.deleteOne({ 'email': req.body.Email.toLowerCase() });
+
       return res.status(201).json(newCompany);
     } catch (error) {
       return res.status(500).json({ error: error.message });

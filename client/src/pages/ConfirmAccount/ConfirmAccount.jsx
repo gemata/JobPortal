@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { redirect, useLocation } from 'react-router-dom';
 import ConfirmationStep from './ConfirmationStep';
 import AccountTypeStep from './AccountTypeStep';
 import NameStep from './NameStep';
@@ -154,6 +154,7 @@ const ConfirmAccount = () => {
         }
       }
     }
+    window.location.href = 'http://localhost:5000/admin/login';
   };
 
   const nextStep = () => {

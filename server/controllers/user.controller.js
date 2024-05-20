@@ -1,5 +1,6 @@
 // Import the User model and Sequelize
 import User from '../models/user.entity.js';
+import PendingAccount from '../models/pendingAccount.js';
 import { Op } from 'sequelize';
 import argon2 from 'argon2';
 
@@ -19,6 +20,8 @@ const UserController = {
       body.password = await argon2.hash(body.password);
 
       const newUser = await User.create(body);
+
+      await PendingAccount.deleteOne({ 'email': body.email.toLowerCase() });
 
       return res.status(201).json(newUser);
     } catch (error) {
