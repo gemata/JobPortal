@@ -6,6 +6,7 @@ const CompanyProfileController = {
   // Create a new CompanyProfile
   async createCompanyProfile(req, res) {
     try {
+      req.body.emailNotification_ac = true;
       const newCompanyProfile = await CompanyProfile.create(req.body);
       return res.status(201).json(newCompanyProfile);
     } catch (error) {

@@ -5,7 +5,7 @@ export const RerouteLinks: React.FC<{ record: any }> = ({ record }) => {
 
   return (
     <>
-      {mime == 'image/png' || mime == 'image/png' || mime == 'image/webp' ? (
+      {mime == 'image/png' || mime == 'image/png' || mime == 'image/webp' || mime == 'image/svg+xml' ? (
         <img src={`http://localhost:5000/${CompanyID ? 'companyLogos' : 'profilePics'}/${s3Key}`} style={{ width: '50px', height: '50px', borderRadius: '10px' }} />
       ) : (
         <a href={`http://localhost:5000/resumes/${s3Key}`}>{s3Key}</a>

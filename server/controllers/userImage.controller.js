@@ -5,8 +5,18 @@ const UserImageController = {
   // Create a new UserImage
   async createUserImage(req, res) {
     try {
-      const newUserImage = await UserImage.create(req.body);
-      return res.status(201).json(newUserImage);
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+
+      const userImage = await UserImage.create({
+        UserId: req.body.id,
+        s3Key: `${req.body.id}/${req.file.filename}`,
+        bucket: 'public/profilePics',
+        mime: req.file.mimetype,
+      });
+
+      return res.status(201).json({ message: 'File uploaded successfully', userImage });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

@@ -19,6 +19,7 @@ import userRouter from '../routes/user.router.js';
 import userImageRouter from "../routes/userImage.router.js";
 import userProfileRouter from "../routes/userProfile.router.js";
 import WorkExperienceRouter from "../routes/workexperience.router.js";
+import PendingAccountRouter from '../routes/pendingAccount.router.js';
 
 // Export all route files
 export {
@@ -41,5 +42,6 @@ export {
   userRouter,
   userImageRouter,
   userProfileRouter,
-  WorkExperienceRouter
+  WorkExperienceRouter,
+  PendingAccountRouter,
 };

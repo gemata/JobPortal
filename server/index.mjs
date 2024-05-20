@@ -127,7 +127,6 @@ const start = async () => {
   const app = express();
 
   app.use(cookieParser());
-
   app.use(
     cors({
       origin: "http://localhost:3000",
@@ -245,7 +244,6 @@ const start = async () => {
             new: {
               after: async (response) => {
                 const { record } = response;
-                // console.log(record.params);
 
                 if (record.params?.imageS3Key) {
                   const userImage = await Models.UserImage.create({
@@ -254,7 +252,6 @@ const start = async () => {
                     mime: record.params.imageMime,
                     UserId: record.params.id,
                   });
-                  // console.log(userImage.toJSON());
                 }
 
                 if (record.params?.resumeS3Key) {
@@ -264,7 +261,6 @@ const start = async () => {
                     mime: record.params.resumeMime,
                     UserId: record.params.id,
                   });
-                  // console.log(resume.toJSON());
                 }
 
                 return response;
@@ -453,7 +449,7 @@ const start = async () => {
               filesToDelete: `imageFilesToDelete`,
             },
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
             },
           }),
           uploadFeature({
@@ -628,7 +624,7 @@ const start = async () => {
             },
             uploadPath: userUploadPath,
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
             },
           }),
           importExportFeature({ componentLoader }),
@@ -725,7 +721,6 @@ const start = async () => {
                     mime: record.params.mime,
                     CompanyID: record.params.ID,
                   });
-                  // console.log(companyLogo.toJSON());
                 }
                 return response;
               },
@@ -849,7 +844,7 @@ const start = async () => {
               mimeType: "mime",
             },
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
             },
           }),
           importExportFeature({ componentLoader }),
@@ -921,7 +916,7 @@ const start = async () => {
             },
             uploadPath: companyUploadPath,
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
             },
           }),
           importExportFeature({ componentLoader }),
@@ -1098,6 +1093,7 @@ const start = async () => {
 
   // Middleware to parse JSON bodies
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
   // Use routes
   app.use("/api/applicantlists", Routes.ApplicantlistRouter);
@@ -1118,8 +1114,9 @@ const start = async () => {
   app.use("/api/subscriptions", Routes.SubscriptionRouter);
   app.use("/api/users", Routes.userRouter);
   app.use("/api/userimages", Routes.userImageRouter);
-  app.use("/api/userprofile", Routes.userProfileRouter);
+  app.use("/api/userprofiles", Routes.userProfileRouter);
   app.use("/api/workexperience", Routes.WorkExperienceRouter);
+  app.use("/api/pendingAccounts", Routes.PendingAccountRouter);
 
   app.get("/", async (req, res) => {
     try {

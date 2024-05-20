@@ -7,8 +7,6 @@ userRouter.post('/', UserController.createUser);
 
 userRouter.get('/', UserController.getUsers);
 
-userRouter.post('/pending', UserController.createPendingAccount);
-
 userRouter.post('/forgot-password', UserController.forgotPassword);
 
 userRouter.post('/update-password', UserController.changePassword);

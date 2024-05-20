@@ -11,23 +11,19 @@ const UserProfile = sequelize.define(
     },
     sex: {
       type: DataTypes.CHAR,
-      allowNull: false,
-    },
-    fullName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     phoneNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     emailNotification_ac: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     dateOfBirth: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
 
   },
