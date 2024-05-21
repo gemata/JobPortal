@@ -16,6 +16,7 @@ import Settings from "./pages/UserPages/Settings";
 import Messages from "./pages/UserPages/Messages";
 import ResetPassword from "./pages/ResetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
+import SubscriptionHome from "./pages/Subscription/SubscriptionHome"
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -56,6 +57,8 @@ function App() {
         <Route path="/profile/messages" element={<Messages />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
+        <Route path="/subscription" element={<SubscriptionHome />} />
+        
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
