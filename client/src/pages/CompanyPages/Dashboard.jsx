@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DashboardNavSection from '../../components/CompanyComponents/DashboardNavSection';
+import LowerJobSection from '../../components/CompanyComponents/Dashboard/LowerJobSection';
+import JobTableSection from '../../components/CompanyComponents/Dashboard/JobTable';
 
 const CompanyDashboard = () => {
   return (
     <>
-      <div className='companyDashboard dashboard bg-gray-100' style={{ height: '400px' }}>
+      <div className='dashboard bg-gray-100'>
         <DashboardNavSection />
+        <JobTableSection />
+        <hr className='h-px my-8 bg-gray-300 border-0' />
+        <LowerJobSection />
       </div>
     </>
   );
