@@ -21,6 +21,7 @@ import Messages from "./pages/UserPages/Messages";
 import ResetPassword from "./pages/ResetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 import SubscriptionHome from "./pages/Subscription/SubscriptionHome"
+import ApplicantList from "./pages/CompanyPages/ApplicantList";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -67,7 +68,7 @@ function App() {
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
         <Route path="/company/interviews" element={<CompanyInterviews />} />
-        <Route path="/company/candidates" element={<CompanyCandidates />} />
+        <Route path="/company/aplicantlist" element={<ApplicantList />} />
         <Route path="/company/analytics" element={<CompanyAnalyticsOverview />} />
 
         <Route path="/company/jobs/create" element={<CompanyJobsCreate />} />
