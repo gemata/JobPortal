@@ -65,29 +65,34 @@ const RightIcon = () => {
 const PRICING_DATA = [
   {
     name: "Basic Plan",
-    price: "$10 per month",
+    price: "$100 per year",
     iconComponent: <RightIcon />,
     benefits: [
-      "Basic access to job listings"
+      "Essential job posting features",
+      "Access to candidate database",
+      "Suitable for startups and small businesses"
     ],
   },
   {
     name: "Standard Plan",
-    price: "$20 per month",
+    price: "$200 per year",
     iconComponent: <RightIcon />,
     benefits: [
-      "Access to all job listings",
-      "Additional features",
+      "Advanced job posting options",
+      "Enhanced visibility for listings",
+      "Tools to streamline hiring process",
+      "Ideal for growing companies"
     ],
   },
   {
     name: "Premium Plan",
-    price: "$30 per month",
+    price: "$300 per year",
     iconComponent: <RightIcon />,
     benefits: [
-      "All features",
-      "Premium support",
-      "Featured job listings",
+      "Access to all features",
+      "Priority job placement",
+      "Customized recruitment solutions",
+      "Tailored for enterprises and high-volume hiring"
     ],
   },
 ];
