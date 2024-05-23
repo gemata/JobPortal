@@ -6,6 +6,10 @@ import Header from "./components/Header/Header";
 import CompanyInterviews from "./pages/CompanyPages/Interviews";
 import CompanyJobs from "./pages/CompanyPages/Jobs";
 import CompanyDashboard from "./pages/CompanyPages/Dashboard";
+import CompanyCandidates from "./pages/CompanyPages/Candidates";
+import CompanyAnalyticsOverview from "./pages/CompanyPages/Analytics/Overview";
+import CompanyJobsShow from "./pages/CompanyPages/Jobs/Show";
+import CompanyJobsCreate from "./pages/CompanyPages/Jobs/Create";
 import Dashboard from "./pages/UserPages/Dashboard";
 import MyProfile from "./pages/UserPages/MyProfile";
 import JobTracker from "./pages/UserPages/JobTracker";
@@ -17,6 +21,7 @@ import Messages from "./pages/UserPages/Messages";
 import ResetPassword from "./pages/ResetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 import SubscriptionHome from "./pages/Subscription/SubscriptionHome"
+import ApplicantList from "./pages/CompanyPages/ApplicantList";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -58,11 +63,16 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
         <Route path="/subscription" element={<SubscriptionHome />} />
-        
+
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
         <Route path="/company/interviews" element={<CompanyInterviews />} />
+        <Route path="/company/aplicantlist" element={<ApplicantList />} />
+        <Route path="/company/analytics" element={<CompanyAnalyticsOverview />} />
+
+        <Route path="/company/jobs/create" element={<CompanyJobsCreate />} />
+        <Route path="/company/jobs/show/:id" element={<CompanyJobsShow />} />
       </Routes>
     </div>
   );

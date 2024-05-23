@@ -1,5 +1,6 @@
 import React from 'react';
 import JobItem from './JobItem';
+import { Link } from 'react-router-dom';
 
 export default function JobTableSection() {
   return (
@@ -22,9 +23,11 @@ export default function JobTableSection() {
                 Closed (3)
               </button>
             </div>
-            <button type='button' className='text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg text-base px-5 py-2.5 '>
-              Post a job
-            </button>
+            <Link to='/company/jobs/create'>
+              <button type='button' className='text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg text-base px-5 py-2.5 '>
+                Post a job
+              </button>
+            </Link>
           </div>
         </div>
       </section>

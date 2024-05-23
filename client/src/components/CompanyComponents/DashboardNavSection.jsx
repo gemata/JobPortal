@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function DashboardNavSection() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
   return (
     <>
       <section className='navSection bg-white'>
@@ -20,46 +23,16 @@ export default function DashboardNavSection() {
               </NavLink>
             </li>
             <li className='relative'>
-              <button id='dropdownDefaultButton' data-dropdown-toggle='dropdown' className='flex gap-2 py-5 items-center'>
+              <NavLink
+                to='/company/jobs/create'
+                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+              >
                 {/* Plus SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className='w-5 h-5 mt-[0.125rem]'>
                   <path d='M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z' />
                 </svg>
-                Create New
-                {/* Chevron Down SVG */}
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
-                  <path
-                    fillRule='evenodd'
-                    d='M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              </button>
-
-              <div id='dropdown' className='z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700'>
-                <ul className='py-2 text-sm text-gray-700 dark:text-gray-200' aria-labelledby='dropdownDefaultButton'>
-                  <li>
-                    <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                      Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                      Earnings
-                    </a>
-                  </li>
-                  <li>
-                    <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                Create New Posting
+              </NavLink>
             </li>
 
             <li>
@@ -104,8 +77,8 @@ export default function DashboardNavSection() {
                 Interviews
               </NavLink>
             </li>
-            <li>
-              <button className='flex gap-2 p-5 items-center'>
+            <li className='relative'>
+              <button onClick={toggleDropdown} className='flex gap-2 p-5 items-center'>
                 {/* Chart SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
                   <path d='M12 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-1ZM6.5 6a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V6ZM2 9a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9Z' />
@@ -120,28 +93,25 @@ export default function DashboardNavSection() {
                   />
                 </svg>
               </button>
-            </li>
-            <li>
-              <button className='flex gap-2 p-5 items-center'>
-                {/* Tools SVG */}
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
-                  <path
-                    fillRule='evenodd'
-                    d='M15 4.5A3.5 3.5 0 0 1 11.435 8c-.99-.019-2.093.132-2.7.913l-4.13 5.31a2.015 2.015 0 1 1-2.827-2.828l5.309-4.13c.78-.607.932-1.71.914-2.7L8 4.5a3.5 3.5 0 0 1 4.477-3.362c.325.094.39.497.15.736L10.6 3.902a.48.48 0 0 0-.033.653c.271.314.565.608.879.879a.48.48 0 0 0 .653-.033l2.027-2.027c.239-.24.642-.175.736.15.09.31.138.637.138.976ZM3.75 13a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
-                    clipRule='evenodd'
-                  />
-                  <path d='M11.5 9.5c.313 0 .62-.029.917-.084l1.962 1.962a2.121 2.121 0 0 1-3 3l-2.81-2.81 1.35-1.734c.05-.064.158-.158.426-.233.278-.078.639-.11 1.062-.102l.093.001ZM5 4l1.446 1.445a2.256 2.256 0 0 1-.047.21c-.075.268-.169.377-.233.427l-.61.474L4 5H2.655a.25.25 0 0 1-.224-.139l-1.35-2.7a.25.25 0 0 1 .047-.289l.745-.745a.25.25 0 0 1 .289-.047l2.7 1.35A.25.25 0 0 1 5 2.654V4Z' />
-                </svg>
-                Tools
-                {/* Chevron Down SVG */}
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
-                  <path
-                    fillRule='evenodd'
-                    d='M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              </button>
+              {isDropdownOpen && (
+                <div className='absolute right-0 w-full rounded-md shadow-lg divide-y bg-white ring-1 ring-black ring-opacity-5'>
+                  <div className='py-1'>
+                    <Link to='/company/analytics' className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'>
+                      Overview
+                    </Link>
+                  </div>
+                  <div className='py-1'>
+                    <Link to='/company/analytics/billing-history' className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'>
+                      Billing History
+                    </Link>
+                  </div>
+                  <div className='py-1'>
+                    <Link to='company/analytics/payment-method' className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'>
+                      Payment Method
+                    </Link>
+                  </div>
+                </div>
+              )}
             </li>
           </ul>
         </nav>
