@@ -1,28 +1,15 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const subscriptionPlanSchema = new mongoose.Schema({
-    planName: {
-        type: String,
-        required: true
-    },
-    planPrice: {
-        type: Number,
-        required: true
-    },
-    planDescription: {
-        type: String,
-        required: true
-    },
-    stripeSubscriptionId: {
-        type: String,
-        required: true
-    },
-    invoice: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Invoice'
-    },
-}, { timestamps: true });
+const SubscriptionPlanSchema = new Schema(
+  {
+    planName: { type: String, required: true },
+    planPrice: { type: Number, required: true },
+    planDescription: { type: String, required: true },
+    stripeSubscriptionId: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
-const SubscriptionPlan = mongoose.model('SubscriptionPlan', subscriptionPlanSchema);
+const SubscriptionPlan = model('SubscriptionPlan', SubscriptionPlanSchema);
 
-module.exports = SubscriptionPlan;
+export default SubscriptionPlan;

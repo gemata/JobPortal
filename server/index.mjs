@@ -994,6 +994,26 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
       {
+       resource: Models.InvoiceM,
+       options: {
+        parent: {
+          name: "Non-relational Models",
+          icon: "None",
+        },
+      },
+      features: [importExportFeature({ componentLoader })],
+    },
+      {
+        resource: Models.SubscriptionPlan,
+        options: {
+          parent: {
+            name: "Non-relational Models",
+            icon: "None",
+          },
+        },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
         resource: Models.PendingAccount,
         options: {
           parent: {
@@ -1104,6 +1124,7 @@ const start = async () => {
   app.use("/api/educations", Routes.EducationRouter);
   app.use("/api/interviewlists", Routes.InterviewListRouter);
   app.use("/api/invoices", Routes.InvoiceRouter);
+  app.use("/api/invoicesM", Routes.InvoiceMRouter);
   app.use("/api/jobfields", Routes.JobFieldRouter);
   app.use("/api/jobpositions", Routes.JobPositionRouter);
   app.use("/api/jobposts", Routes.JobPostRouter);
@@ -1112,6 +1133,7 @@ const start = async () => {
   app.use("/api/products", Routes.ProductRouter);
   app.use("/api/resumes", Routes.ResumeRouter);
   app.use("/api/subscriptions", Routes.SubscriptionRouter);
+  app.use("/api/subscriptionsPlan", Routes.SubscriptionPlanRouter);
   app.use("/api/users", Routes.userRouter);
   app.use("/api/userimages", Routes.userImageRouter);
   app.use("/api/userprofiles", Routes.userProfileRouter);

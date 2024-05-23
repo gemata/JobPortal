@@ -6,6 +6,7 @@ import CompanyLogo from "../models/CompanyLogo.entity.js";
 import CompanyProfile from "../models/companyprofile.entity.js";
 import Education from "../models/education.entity.js";
 import InterviewList from "../models/InterviewList.entity.js";
+import InvoiceM from '../models/invoiceMSchema.js';
 import JobField from "../models/jobfield.entity.js";
 import JobPosition from "../models/jobposition.entity.js";
 import JobPost from "../models/JobPost.entity.js";
@@ -13,6 +14,7 @@ import LikedJob from "../models/likedJob.entity.js";
 import Price from "../models/price.entity.js";
 import Product from "../models/product.entity.js";
 import Subscription from "../models/subscription.entity.js";
+import SubscriptionPlan from '../models/subscriptionPlanSchema.js';
 import Invoice from "../models/invoice.entity.js";
 import User from "../models/user.entity.js";
 import UserProfile from "../models/userProfile.entity.js";
@@ -31,6 +33,7 @@ export {
   CompanyProfile,
   Education,
   InterviewList,
+  InvoiceM,
   JobField,
   JobPosition,
   JobPost,
@@ -38,6 +41,7 @@ export {
   Price,
   Product,
   Subscription,
+  SubscriptionPlan,
   Invoice,
   User,
   UserProfile,
