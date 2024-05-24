@@ -24,6 +24,7 @@ import uploadFeature from "@adminjs/upload";
 import fs from "fs";
 import { Icon } from "@adminjs/design-system";
 import dashboardHandler from "./config/dashboardHandler.js";
+import stripeRoutes from './config/stripe.js';
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
@@ -1116,29 +1117,32 @@ const start = async () => {
   app.use(express.urlencoded({ extended: true }));
 
   // Use routes
-  app.use("/api/applicantlists", Routes.ApplicantlistRouter);
-  app.use("/api/appliedjobs", Routes.AppliedJobRouter);
-  app.use("/api/companies", Routes.CompanyRouter);
-  app.use("/api/companylogos", Routes.CompanyLogoRouter);
-  app.use("/api/companyprofiles", Routes.CompanyProfileRouter);
-  app.use("/api/educations", Routes.EducationRouter);
-  app.use("/api/interviewlists", Routes.InterviewListRouter);
-  app.use("/api/invoices", Routes.InvoiceRouter);
-  app.use("/api/invoicesM", Routes.InvoiceMRouter);
-  app.use("/api/jobfields", Routes.JobFieldRouter);
-  app.use("/api/jobpositions", Routes.JobPositionRouter);
-  app.use("/api/jobposts", Routes.JobPostRouter);
-  app.use("/api/likedjobs", Routes.LikedJobRouter);
-  app.use("/api/prices", Routes.PriceRouter);
-  app.use("/api/products", Routes.ProductRouter);
-  app.use("/api/resumes", Routes.ResumeRouter);
-  app.use("/api/subscriptions", Routes.SubscriptionRouter);
-  app.use("/api/subscriptionsPlan", Routes.SubscriptionPlanRouter);
-  app.use("/api/users", Routes.userRouter);
-  app.use("/api/userimages", Routes.userImageRouter);
-  app.use("/api/userprofiles", Routes.userProfileRouter);
-  app.use("/api/workexperience", Routes.WorkExperienceRouter);
-  app.use("/api/pendingAccounts", Routes.PendingAccountRouter);
+  app.use("/api/applicantlists",isAdmin, Routes.ApplicantlistRouter);
+  app.use("/api/appliedjobs",isAdmin, Routes.AppliedJobRouter);
+  app.use("/api/companies",isAdmin, Routes.CompanyRouter);
+  app.use("/api/companylogos",isAdmin, Routes.CompanyLogoRouter);
+  app.use("/api/companyprofiles",isAdmin, Routes.CompanyProfileRouter);
+  app.use("/api/educations",isAdmin, Routes.EducationRouter);
+  app.use("/api/interviewlists",isAdmin, Routes.InterviewListRouter);
+  app.use("/api/invoices",isAdmin, Routes.InvoiceRouter);
+  app.use("/api/invoicesM",isAdmin, Routes.InvoiceMRouter);
+  app.use("/api/jobfields",isAdmin, Routes.JobFieldRouter);
+  app.use("/api/jobpositions",isAdmin, Routes.JobPositionRouter);
+  app.use("/api/jobposts",isAdmin, Routes.JobPostRouter);
+  app.use("/api/likedjobs",isAdmin, Routes.LikedJobRouter);
+  app.use("/api/prices",isAdmin, Routes.PriceRouter);
+  app.use("/api/products",isAdmin, Routes.ProductRouter);
+  app.use("/api/resumes",isAdmin, Routes.ResumeRouter);
+  app.use("/api/subscriptions",isAdmin, Routes.SubscriptionRouter);
+  app.use("/api/subscriptionsPlan", isAdmin, Routes.SubscriptionPlanRouter);
+  app.use("/api/users",isAdmin, Routes.userRouter);
+  app.use("/api/userimages",isAdmin, Routes.userImageRouter);
+  app.use("/api/userprofiles",isAdmin, Routes.userProfileRouter);
+  app.use("/api/workexperience",isAdmin, Routes.WorkExperienceRouter);
+  app.use("/api/pendingAccounts",isAdmin, Routes.PendingAccountRouter);
+
+  
+  app.use('/api/stripe', stripeRoutes);
 
   app.get("/", async (req, res) => {
     try {
@@ -1160,5 +1164,7 @@ const start = async () => {
   if (process.env.NODE_ENV === "production") await admin.initialize();
   else admin.watch();
 };
+
+
 
 start();

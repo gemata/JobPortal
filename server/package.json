@@ -33,7 +33,7 @@
     "mysql2": "^3.9.2",
     "react-chartjs-2": "^5.2.0",
     "sequelize": "^6.37.1",
-    "stripe": "^15.1.0",
+    "stripe": "^15.7.0",
     "styled-components": "^6.1.8",
     "yarn": "^1.22.22"
   },
