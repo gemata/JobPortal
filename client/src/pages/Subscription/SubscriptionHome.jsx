@@ -1,8 +1,10 @@
-import { loadStripe } from '@stripe/stripe-js';
-import { useState } from 'react';
-import axios from 'axios';
+import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
+import axios from "axios";
 
-const stripePromise = loadStripe('pk_test_51NHPa5ItGJg7D0eNaEdK8PQIrJIwDY65vOnOkFu7mPrAR2IazfiMK6Ns5BKRjgJZBcx0q2DJJ9M9D7mRe5iVRmWY00Xya6vbgC');
+const stripePromise = loadStripe(
+  "pk_test_51NHPa5ItGJg7D0eNaEdK8PQIrJIwDY65vOnOkFu7mPrAR2IazfiMK6Ns5BKRjgJZBcx0q2DJJ9M9D7mRe5iVRmWY00Xya6vbgC"
+);
 
 const RightIcon = () => {
   return (
@@ -21,18 +23,18 @@ const RightIcon = () => {
 
 const PRICING_DATA = [
   {
-    id: 'price_1PIouUItGJg7D0eNCZlsBFae', // Replace with your actual price ID
+    id: "price_1PIouUItGJg7D0eNCZlsBFae", // Replace with your actual price ID
     name: "Basic Plan",
     price: "€100 per year",
     iconComponent: <RightIcon />,
     benefits: [
       "Essential job posting features",
       "Access to candidate database",
-      "Suitable for startups and small businesses"
+      "Suitable for startups and small businesses",
     ],
   },
   {
-    id: 'price_1PIotfItGJg7D0eNMSQQYeiK', 
+    id: "price_1PIotfItGJg7D0eNMSQQYeiK",
     name: "Standard Plan",
     price: "€200 per year",
     iconComponent: <RightIcon />,
@@ -40,11 +42,11 @@ const PRICING_DATA = [
       "Advanced job posting options",
       "Enhanced visibility for listings",
       "Tools to streamline hiring process",
-      "Ideal for growing companies"
+      "Ideal for growing companies",
     ],
   },
   {
-    id: 'price_1PIoqxItGJg7D0eNxwfB5Ntg', 
+    id: "price_1PIoqxItGJg7D0eNxwfB5Ntg",
     name: "Premium Plan",
     price: "€300 per year",
     iconComponent: <RightIcon />,
@@ -52,7 +54,7 @@ const PRICING_DATA = [
       "Access to all features",
       "Priority job placement",
       "Customized recruitment solutions",
-      "Tailored for enterprises and high-volume hiring"
+      "Tailored for enterprises and high-volume hiring",
     ],
   },
 ];
@@ -63,15 +65,17 @@ export default function Pricing() {
   const handleCheckout = async (planId) => {
     setLoading(true);
     try {
-      const response = await axios.post('/api/stripe/create-checkout-session', { planId });
+      const response = await axios.post(
+        "http://localhost:5000/api/stripe/create-checkout-session",
+        { planId }
+      );
       const { url } = response.data;
       window.location.href = url; // Redirect to the Stripe checkout session URL
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error("Error creating checkout session:", error);
     }
     setLoading(false);
   };
-  
 
   return (
     <>
@@ -113,7 +117,7 @@ export default function Pricing() {
                     onClick={() => handleCheckout(data.id)}
                     disabled={loading}
                   >
-                    {loading ? 'Processing...' : 'Choose'}
+                    {loading ? "Processing..." : "Choose"}
                   </button>
                 </div>
               </div>
