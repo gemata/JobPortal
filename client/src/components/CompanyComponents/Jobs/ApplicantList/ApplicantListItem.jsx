@@ -27,7 +27,7 @@ export default function ApplicantListItem(req) {
     createdAt: req.createdAt,
     updatedAt: req.updatedAt,
     JobPostID: req.JobPostID,
-    UserId: req.UserId
+    UserId: req.UserId,
   };
   const applicantPersonalData = {
     email: req.email,

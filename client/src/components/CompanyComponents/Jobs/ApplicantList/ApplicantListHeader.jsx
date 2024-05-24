@@ -7,9 +7,17 @@ export default function ApplicantListHeader() {
     const [applicants, setApplicants] = useState([]);
     const [sortCriteria, setSortCriteria] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        setApplicants(applicantsData);
+        const updatedApplicants = applicantsData.map((applicant, index) => {
+            return {
+                ...applicant,
+                next: index < applicantsData.length - 1 ? applicantsData[index + 1].id : null,
+                previous: index > 0 ? applicantsData[index - 1].id : null
+            };
+        });
+        setApplicants(updatedApplicants);
     }, []);
 
     const handleSortCriteriaChange = (event) => {
@@ -39,25 +47,34 @@ export default function ApplicantListHeader() {
         setApplicants(sortedApplicants);
     };
 
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredApplicants = applicants.filter(applicant => 
+        applicant.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        applicant.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <>
             <section className=''>
                 <div className='flex container mx-auto pt-10 justify-between'>
                     <div className='flex w-1/3'>
-
                         <input
                             type='text'
                             className='focus:outline-none rounded-none rounded-l-md bg-gray-50 border-2 text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 border-r-0'
                             placeholder='Search User'
+                            value={searchQuery}
+                            onChange={handleSearchChange}
                         />
                         <button
                             type='button'
                             className='inline-flex rounded-e-lg text-gray-900 items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 border-rounded border-gray-400 border-l-2'
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
-
                         </button>
                     </div>
                     <div className='flex gap-5 w-1/2'>
@@ -84,8 +101,8 @@ export default function ApplicantListHeader() {
                         <div className='flex w-1/3'>
                             <Link to='/company/jobs/create'>
                                 <button type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg text-base px-5 py-2.5 '>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
                                      <p>Create Interview</p>
                                 </button>
@@ -110,7 +127,7 @@ export default function ApplicantListHeader() {
                     </div>
                     <hr className='h-px my-2 bg-gray-300 border-0' />
                     <div className='flex flex-col gap-4 pt-1'>
-                        {applicants.map(applicant => (
+                        {filteredApplicants.map(applicant => (
                             <ApplicantListItem key={applicant.id} {...applicant} />
                         ))}
                     </div>
