@@ -33,47 +33,31 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  async (req, res) => {
+router.post("/webhook", async (req, res) => {
+  const sig = req.headers["stripe-signature"];
 
-    console.log("Const sig");
-    const sig = req.headers["stripe-signature"];
+  if (req.body.type === "invoice.payment_succeeded") {
+    const invoice = req.body.data.object;
 
+    const subscriptionPlan = invoice.lines.data[0].price.product;
+    const amountPaid = invoice.amount_paid / 100;
 
-    console.log("Let event");
-    let event;
+    console.log(subscriptionPlan);
 
-    console.log("Try catch #1");
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
-    } catch (err) {
-      console.log(`Webhook signature verification failed: ${err.message}`);
-      return res.sendStatus(400);
-    }
-
-    console.log("If event type");
-    if (event.type === "invoice.payment_succeeded") {
-      const invoice = event.data.object;
-
-      const subscriptionPlan = invoice.lines.data[0].price.product;
-      const amountPaid = invoice.amount_paid / 100;
-
-      console.log(subscriptionPlan);
-      console.log(amountPaid);
-      console.log(paymentDate);
-
-      const newInvoice = await InvoiceM.create({
+      await InvoiceM.create({
         subscriptionPlan: subscriptionPlan,
         amountPaid: amountPaid,
         isActive: true,
         paymentDate: new Date(invoice.created * 1000),
       });
+    } catch (err) {
+      console.error("Error saving invoice:", err);
+      return res.status(500).send("Error saving invoice");
     }
-
-    res.status(200).send("Received event");
   }
-);
+
+  res.status(200).send("Received event");
+});
 
 export default router;
