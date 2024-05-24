@@ -20,12 +20,13 @@ import Settings from "./pages/UserPages/Settings";
 import Messages from "./pages/UserPages/Messages";
 import ResetPassword from "./pages/ResetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
-import SubscriptionHome from "./pages/Subscription/SubscriptionHome"
+import SubscriptionHome from "./pages/Subscription/SubscriptionHome";
 import ApplicantList from "./pages/CompanyPages/ApplicantList";
+import CheckoutSuccess from "./pages/Subscription/CheckoutSuccess";
 
 function App() {
   const [userData, setUserData] = useState([]);
-  const location = useLocation();  // Add this line to use the location hook
+  const location = useLocation(); // Add this line to use the location hook
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +50,10 @@ function App() {
 
   return (
     <div className="App">
-      {location.pathname !== "/reset-password" && location.pathname !== "/confirm-account" && <Header userData={userData} />}
+      {location.pathname !== "/reset-password" &&
+        location.pathname !== "/confirm-account" && (
+          <Header userData={userData} />
+        )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/detail" element={<MyProfile />} />
@@ -63,13 +67,16 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
         <Route path="/subscription" element={<SubscriptionHome />} />
-
+        <Route path="/success" element={<CheckoutSuccess />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
         <Route path="/company/interviews" element={<CompanyInterviews />} />
         <Route path="/company/aplicantlist" element={<ApplicantList />} />
-        <Route path="/company/analytics" element={<CompanyAnalyticsOverview />} />
+        <Route
+          path="/company/analytics"
+          element={<CompanyAnalyticsOverview />}
+        />
 
         <Route path="/company/jobs/create" element={<CompanyJobsCreate />} />
         <Route path="/company/jobs/show/:id" element={<CompanyJobsShow />} />
