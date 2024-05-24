@@ -152,19 +152,17 @@ export default function ApplicantListHeader() {
                     </div>
                     <div className='flex justify-center mt-4'>
                         {currentPage == 1 ? <button
-
-
-                            className={`px-3 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}
-                        >
+                             style={{ width: "2.5rem", height: "2.5rem" }}
+                            className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}                        >
                             {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                             </svg>
                             }
                         </button> :
                             <button
-
+                                 style={{ width: "2.5rem", height: "2.5rem" }}
                                 onClick={() => handlePageChange(currentPage - 1)}
-                                className={`px-3 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
                             >
                                 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -186,10 +184,8 @@ export default function ApplicantListHeader() {
                         ))}
 
                         {currentPage == totalPages ? <button
-
-
-                            className={`px-3 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}
-                        >
+                             style={{ width: "2.5rem", height: "2.5rem" }}
+                            className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
                             {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                             </svg>
@@ -198,7 +194,8 @@ export default function ApplicantListHeader() {
                         </button> : <button
 
                             onClick={() => handlePageChange(currentPage + 1)}
-                            className={`px-3 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                            style={{ width: "2.5rem", height: "2.5rem" }}
+                            className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
                         >
                             {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
