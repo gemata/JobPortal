@@ -28,6 +28,7 @@ export default function ApplicantListItem(req) {
     updatedAt: req.updatedAt,
     JobPostID: req.JobPostID,
     UserId: req.UserId,
+    applicantNo: req.applicantNo
   };
   const applicantPersonalData = {
     email: req.email,
@@ -80,12 +81,13 @@ export default function ApplicantListItem(req) {
   return (
     <div className={`applicantListItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border-2 ${borderColor} ${backgroundGradient}`}>
       <div className='flex items-center gap-10 w-10/12'>
-        <div className='text-left w-1/4'>
+        <p className='text-gray-600 font-bold w-1/15'>{applicantData.applicantNo+1}</p>
+        <div className='text-left w-1/5'>
           <h5 className='text-jobportal-primary font-bold'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</h5>
           <p className='text-gray-600 text-sm'>Applied: {formatDateTime(applicantData.createdAt)}</p>
         </div>
-        <p className='text-gray-600 w-1/4'>{applicantPersonalData.email}</p>
-        <p className='text-gray-600 w-1/4'>{applicantData.resumeAIScore + '%'}</p>
+        <p className='text-gray-600 w-1/5'>{applicantPersonalData.email}</p>
+        <p className='text-gray-600 w-1/5'>{applicantData.resumeAIScore + '%'}</p>
       </div>
       <div className='flex items-center gap-5 w-1/6'>
       
