@@ -19,7 +19,7 @@ function formatDateTime(dateTime) {
 }
 
 export default function ApplicantListItem(req) {
-  const [applicantStatus, setApplicantStatus] = useState(0);
+  const [applicantStatus, setApplicantStatus] = useState(null);
   const applicantData = {
     id: req.id,
     isSelected: req.isSelected,
@@ -71,10 +71,10 @@ export default function ApplicantListItem(req) {
   };
 
   // Determine border color and background gradient based on applicantStatus
-  const borderColor = applicantStatus === 1 ? 'border-green-500' : applicantStatus === 2 ? 'border-red-500' : '';
+  const borderColor = applicantStatus === 1 ? 'border-green-500' : applicantStatus === 0 ? 'border-red-500' : '';
   const backgroundGradient = applicantStatus === 1 
     ? 'bg-gradient-to-r from-green-50 to-white' 
-    : applicantStatus === 2 
+    : applicantStatus === 0 
     ? 'bg-gradient-to-r from-red-50 to-white' 
     : 'bg-white';
 
@@ -105,9 +105,9 @@ export default function ApplicantListItem(req) {
           value={applicantStatus}
           onChange={handleStatusChange}
         >
-          <option value={0}>Pending</option>
+          <option >Pending</option>
           <option value={1}>Accepted</option>
-          <option value={2}>Declined</option>
+          <option value={0}>Declined</option>
         </select>
       </div>
     </div>
