@@ -76,13 +76,13 @@ const ConfirmAccount = () => {
     e.preventDefault();
 
     let requestBody = {
-      email: email,
       password: password,
     };
 
     if (selectedOption === 'User') {
       requestBody = {
         ...requestBody,
+        email: email,
         firstName: accountName,
         lastName: lastName,
         dateOfBirth: new Date(year, month - 1, day).toISOString(),
@@ -101,6 +101,9 @@ const ConfirmAccount = () => {
         companyEmail: companyEmail,
       };
     }
+
+    console.log(`http://localhost:5000/api/${selectedOption === 'User' ? 'users' : 'companies'}`);
+    console.log(requestBody);
 
     const response = await fetch(`http://localhost:5000/api/${selectedOption === 'User' ? 'users' : 'companies'}`, {
       method: 'POST',

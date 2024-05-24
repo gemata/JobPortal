@@ -58,6 +58,18 @@ const authenticate = async ({ email, password }, ctx) => {
       return DEFAULT_ADMIN;
     }
 
+    const company = await Models.Company.findOne({ where: { email } });
+
+    if (company) {
+      const passwordMatch = await argon2.verify(company.password, password);
+
+      if (!passwordMatch) {
+        return null;
+      }
+      ctx.res.redirect("http://localhost:3000/company/dashboard");
+      return company;
+    }
+
     const user = await Models.User.findOne({ where: { email } });
 
     if (!user) {
@@ -70,8 +82,8 @@ const authenticate = async ({ email, password }, ctx) => {
       return null;
     }
 
-    if (user.role === "User" || user.role === "Business") {
-      ctx.res.redirect("http://localhost:3000/");
+    if (user.role === "User") {
+      ctx.res.redirect("http://localhost:3000/profile/dashboard");
     }
 
     return user;
@@ -995,15 +1007,15 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
       {
-       resource: Models.InvoiceM,
-       options: {
-        parent: {
-          name: "Non-relational Models",
-          icon: "None",
+        resource: Models.InvoiceM,
+        options: {
+          parent: {
+            name: "Non-relational Models",
+            icon: "None",
+          },
         },
+        features: [importExportFeature({ componentLoader })],
       },
-      features: [importExportFeature({ componentLoader })],
-    },
       {
         resource: Models.SubscriptionPlan,
         options: {
@@ -1117,31 +1129,31 @@ const start = async () => {
   app.use(express.urlencoded({ extended: true }));
 
   // Use routes
-  app.use("/api/applicantlists",isAdmin, Routes.ApplicantlistRouter);
-  app.use("/api/appliedjobs",isAdmin, Routes.AppliedJobRouter);
-  app.use("/api/companies",isAdmin, Routes.CompanyRouter);
-  app.use("/api/companylogos",isAdmin, Routes.CompanyLogoRouter);
-  app.use("/api/companyprofiles",isAdmin, Routes.CompanyProfileRouter);
-  app.use("/api/educations",isAdmin, Routes.EducationRouter);
-  app.use("/api/interviewlists",isAdmin, Routes.InterviewListRouter);
-  app.use("/api/invoices",isAdmin, Routes.InvoiceRouter);
-  app.use("/api/invoicesM",isAdmin, Routes.InvoiceMRouter);
-  app.use("/api/jobfields",isAdmin, Routes.JobFieldRouter);
-  app.use("/api/jobpositions",isAdmin, Routes.JobPositionRouter);
-  app.use("/api/jobposts",isAdmin, Routes.JobPostRouter);
-  app.use("/api/likedjobs",isAdmin, Routes.LikedJobRouter);
-  app.use("/api/prices",isAdmin, Routes.PriceRouter);
-  app.use("/api/products",isAdmin, Routes.ProductRouter);
-  app.use("/api/resumes",isAdmin, Routes.ResumeRouter);
-  app.use("/api/subscriptions",isAdmin, Routes.SubscriptionRouter);
-  app.use("/api/subscriptionsPlan", isAdmin, Routes.SubscriptionPlanRouter);
-  app.use("/api/users",isAdmin, Routes.userRouter);
-  app.use("/api/userimages",isAdmin, Routes.userImageRouter);
-  app.use("/api/userprofiles",isAdmin, Routes.userProfileRouter);
-  app.use("/api/workexperience",isAdmin, Routes.WorkExperienceRouter);
-  app.use("/api/pendingAccounts",isAdmin, Routes.PendingAccountRouter);
+  app.use("/api/applicantlists", Routes.ApplicantlistRouter);
+  app.use("/api/appliedjobs", Routes.AppliedJobRouter);
+  app.use("/api/companies", Routes.CompanyRouter);
+  app.use("/api/companylogos", Routes.CompanyLogoRouter);
+  app.use("/api/companyprofiles", Routes.CompanyProfileRouter);
+  app.use("/api/educations", Routes.EducationRouter);
+  app.use("/api/interviewlists", Routes.InterviewListRouter);
+  app.use("/api/invoices", Routes.InvoiceRouter);
+  app.use("/api/invoicesM", Routes.InvoiceMRouter);
+  app.use("/api/jobfields", Routes.JobFieldRouter);
+  app.use("/api/jobpositions", Routes.JobPositionRouter);
+  app.use("/api/jobposts", Routes.JobPostRouter);
+  app.use("/api/likedjobs", Routes.LikedJobRouter);
+  app.use("/api/prices", Routes.PriceRouter);
+  app.use("/api/products", Routes.ProductRouter);
+  app.use("/api/resumes", Routes.ResumeRouter);
+  app.use("/api/subscriptions", Routes.SubscriptionRouter);
+  app.use("/api/subscriptionsPlan", Routes.SubscriptionPlanRouter);
+  app.use("/api/users", Routes.userRouter);
+  app.use("/api/userimages", Routes.userImageRouter);
+  app.use("/api/userprofiles", Routes.userProfileRouter);
+  app.use("/api/workexperience", Routes.WorkExperienceRouter);
+  app.use("/api/pendingAccounts", Routes.PendingAccountRouter);
 
-  
+
   app.use('/api/stripe', stripeRoutes);
 
   app.get("/", async (req, res) => {

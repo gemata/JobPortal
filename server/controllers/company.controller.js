@@ -1,12 +1,20 @@
 // Import the Company model and Sequelize
 import Company from "../models/Company.entity.js";
 import PendingAccount from "../models/pendingAccount.js";
+import argon2 from 'argon2';
 
 // Controller functions
 const CompanyController = {
   // Create a new Company
   async createCompany(req, res) {
     try {
+      const existingCompany = await Company.findOne({ where: { Email: req.body.Email.toLowerCase() } });
+      if (existingCompany) {
+        return res.status(400).json({ error: 'Company with this email already exists' });
+      }
+
+      req.body.password = await argon2.hash(req.body.password);
+
       const newCompany = await Company.create(req.body);
 
       await PendingAccount.deleteOne({ 'email': req.body.Email.toLowerCase() });
