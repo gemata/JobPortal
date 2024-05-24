@@ -1,10 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const InvoiceSchema = new Schema(
   {
     subscriptionPlan: {
-      type: Schema.Types.ObjectId,
-      ref: 'SubscriptionPlan',
+      type: String,
       required: true,
     },
     amountPaid: {
@@ -23,6 +22,6 @@ const InvoiceSchema = new Schema(
   { timestamps: true }
 );
 
-const InvoiceM = model('InvoiceM', InvoiceSchema);
+const InvoiceM = model("InvoiceM", InvoiceSchema);
 
 export default InvoiceM;

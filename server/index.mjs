@@ -24,7 +24,7 @@ import uploadFeature from "@adminjs/upload";
 import fs from "fs";
 import { Icon } from "@adminjs/design-system";
 import dashboardHandler from "./config/dashboardHandler.js";
-import stripeRoutes from './config/stripe.js';
+import stripeRoutes from "./config/stripe.js";
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
@@ -462,7 +462,12 @@ const start = async () => {
               filesToDelete: `imageFilesToDelete`,
             },
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
+              mimeTypes: [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/svg+xml",
+              ],
             },
           }),
           uploadFeature({
@@ -510,9 +515,9 @@ const start = async () => {
             },
             id: {
               components: {
-                show: Components.LinkComponent
-              }
-            }
+                show: Components.LinkComponent,
+              },
+            },
           },
           actions: {
             delete: {
@@ -586,9 +591,9 @@ const start = async () => {
             },
             id: {
               components: {
-                show: Components.LinkComponent
-              }
-            }
+                show: Components.LinkComponent,
+              },
+            },
           },
           actions: {
             delete: {
@@ -637,7 +642,12 @@ const start = async () => {
             },
             uploadPath: userUploadPath,
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
+              mimeTypes: [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/svg+xml",
+              ],
             },
           }),
           importExportFeature({ componentLoader }),
@@ -857,7 +867,12 @@ const start = async () => {
               mimeType: "mime",
             },
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
+              mimeTypes: [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/svg+xml",
+              ],
             },
           }),
           importExportFeature({ componentLoader }),
@@ -878,9 +893,9 @@ const start = async () => {
             },
             id: {
               components: {
-                show: Components.LinkComponent
-              }
-            }
+                show: Components.LinkComponent,
+              },
+            },
           },
           actions: {
             delete: {
@@ -929,7 +944,12 @@ const start = async () => {
             },
             uploadPath: companyUploadPath,
             validation: {
-              mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
+              mimeTypes: [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/svg+xml",
+              ],
             },
           }),
           importExportFeature({ componentLoader }),
@@ -951,7 +971,7 @@ const start = async () => {
           parent: {
             name: "Payment Models",
             // icon: "DollarSign"
-            icon: "ShoppingCart"
+            icon: "ShoppingCart",
           },
         },
         features: [importExportFeature({ componentLoader })],
@@ -1033,7 +1053,13 @@ const start = async () => {
             name: "Non-relational Models",
           },
           listProperties: ["_id", "email", "confirmTokenExpire"],
-          showProperties: ["_id", "email", "password", "confirmToken", "confirmTokenExpire"],
+          showProperties: [
+            "_id",
+            "email",
+            "password",
+            "confirmToken",
+            "confirmTokenExpire",
+          ],
           editProperties: ["email", "password"],
         },
         features: [importExportFeature({ componentLoader })],
@@ -1041,9 +1067,9 @@ const start = async () => {
     ],
     rootPath: "/admin", // Specify the root path for AdminJS
     branding: {
-      companyName: 'JobHorizon',
-      favicon: '/favicon.ico',
-    }
+      companyName: "JobHorizon",
+      favicon: "/favicon.ico",
+    },
   });
 
   const authProvider = new DefaultAuthProvider({
@@ -1153,8 +1179,11 @@ const start = async () => {
   app.use("/api/workexperience", Routes.WorkExperienceRouter);
   app.use("/api/pendingAccounts", Routes.PendingAccountRouter);
 
-
-  app.use('/api/stripe', stripeRoutes);
+  app.use(
+    "/api/stripe",
+    express.raw({ type: "application/json" }),
+    stripeRoutes
+  );
 
   app.get("/", async (req, res) => {
     try {
@@ -1176,7 +1205,5 @@ const start = async () => {
   if (process.env.NODE_ENV === "production") await admin.initialize();
   else admin.watch();
 };
-
-
 
 start();
