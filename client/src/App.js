@@ -23,6 +23,7 @@ import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 import SubscriptionHome from "./pages/Subscription/SubscriptionHome";
 import ApplicantList from "./pages/CompanyPages/ApplicantList";
 import CheckoutSuccess from "./pages/Subscription/CheckoutSuccess";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -81,6 +82,7 @@ function App() {
         <Route path="/company/jobs/create" element={<CompanyJobsCreate />} />
         <Route path="/company/jobs/show/:id" element={<CompanyJobsShow />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
