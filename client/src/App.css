@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -111,13 +111,13 @@
   text-align: start;
 }
 
-.resetPassword__decorative>* {
+.resetPassword__decorative > * {
   z-index: 1;
   position: relative;
 }
 
 .resetPassword__decorative:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -312,7 +312,7 @@
 .resetPassword__label {
   color: rgb(137, 138, 154);
   display: block;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 12px;
   line-height: 16px;
   margin-bottom: 8px;
@@ -338,7 +338,7 @@
 }
 
 .resetPassword__label:before {
-  content: '*';
+  content: "*";
   margin-right: 4px;
   color: purple !important;
 }
@@ -351,7 +351,7 @@
 }
 
 .resetPassword__orContainer::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   width: 100%;
@@ -362,7 +362,7 @@
 }
 
 .resetPassword__orContainer::after {
-  content: 'OR';
+  content: "OR";
   position: relative;
   display: inline-block;
   color: rgb(137, 138, 154);
@@ -430,7 +430,6 @@
 }
 
 @media screen and (min-width: 769px) {
-
   .resetPassword__form {
     width: 480px;
   }

@@ -6,15 +6,28 @@ const Header = ({ userData }) => {
     <div className="bg-[#f1f2f4] p-[5px]">
       <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
         <ul className="flex items-center gap-10">
-          <li>Home</li>
-          <li>Find Jobs</li>
-          <li>Salary Tools</li>
-          <li>Career Advice</li>
-          <li>Resume Help</li>
-          <li>Upload Resume</li>
+          <li className="text-blue-900">Home</li>
+          <li className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer">
+            Find Jobs
+          </li>
+          <li className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer">
+            Salary Tools
+          </li>
+          <li className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer">
+            Career Advice
+          </li>
+          <li className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer">
+            Resume Help
+          </li>
+          <li className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer">
+            Upload Resume
+          </li>
         </ul>
         <div className="flex justify-end mt-[-25px]">
-          Employers/Post Job <FaArrowRight className="mt-1.5 ml-2" />
+          <span className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer">
+            Employers/Post Job
+          </span>{" "}
+          <FaArrowRight className="mt-1.5 ml-2" />
         </div>
       </div>
     </div>
