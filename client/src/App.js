@@ -25,6 +25,8 @@ import ApplicantList from "./pages/CompanyPages/ApplicantList";
 import CheckoutSuccess from "./pages/Subscription/CheckoutSuccess";
 import Footer from "./components/Footer/Footer";
 import About from "./pages/About/About";
+import Pricing from "./pages/Pricing/Pricing";
+import Contact from "./pages/Contact/Contact";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -71,6 +73,8 @@ function App() {
         <Route path="/confirm-account" element={<ConfirmAccount />} />
         <Route path="/subscription" element={<SubscriptionHome />} />
         <Route path="/success" element={<CheckoutSuccess />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/contact" element={<Contact />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />

@@ -347,7 +347,7 @@ const Home = () => {
             </button>
           </div>
           <div className="bg-blue-600 p-6 rounded-lg text-white flex-1">
-            <h2 className="text-2xl font-bold mb-2">Become a Employers</h2>
+            <h2 className="text-2xl font-bold mb-2">Become a Employer</h2>
             <p className="mb-4">
               Cras in massa pellentesque, mollis ligula non, luctus dui. Morbi
               sed efficitur dolor. Pelque augue risus, aliqu.

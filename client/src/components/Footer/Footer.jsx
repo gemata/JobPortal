@@ -1,7 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import About from "../../pages/About/About";
+import logo from "../../pages/Home/img/mainLogo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,16 +11,8 @@ const Footer = () => {
       <div className="container max-w-[1200px] mx-auto py-10 px-[15px]">
         <div className="flex justify-between">
           <div>
-            <h2 className="text-white text-lg font-bold mb-4 flex items-center">
-              <svg
-                className="w-6 h-6 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
-              </svg>
-              MyJob
-            </h2>
+            <img src={logo} className="w-[50px] mb-[10px]" alt="" />
+
             <p className="mb-2">
               Call now:{" "}
               <a href="tel:+38349488909" className="text-white">
@@ -40,14 +32,14 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="/contact" className="hover:text-white">
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="/pricing" className="hover:text-white">
                   Pricing
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white">
