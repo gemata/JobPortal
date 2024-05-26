@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ApplicantListItem from './ApplicantListItem';
 import applicantsData from '../../../../json/applicants.json';
+import ApplicantListUserProfile from './ApplicantListUserProfile.jsx';
 
 export default function ApplicantListHeader() {
     const [applicants, setApplicants] = useState([]);
@@ -9,8 +10,8 @@ export default function ApplicantListHeader() {
     const [sortOrder, setSortOrder] = useState('desc');
     const [searchQuery, setSearchQuery] = useState('');
     const [activeProfileId, setActiveProfileId] = useState(null);
-    const [showProfile, setShowProfile] = useState(null);
-
+    const [showProfile, setShowProfile] = useState(false);
+    const [activeProfile, setActiveProfile] = useState(null);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,23 +29,56 @@ export default function ApplicantListHeader() {
         setApplicants(updatedApplicants);
     }, []);
 
-    useEffect(() => {
-
-    }, [showProfile]);
 
     const handleSortCriteriaChange = (event) => {
         setSortCriteria(event.target.value);
         sortApplicants(event.target.value, sortOrder);
     };
 
-    const handleShowProfile = (id) => {
-        setActiveProfileId(id);
-        setShowProfile(true);
+    const handleShowProfile = (UserId) => {
+
+        // !!! REPLACE WITH AN API REQUEST !!!
+        const selectedApplicant = applicants.find(applicant => applicant.UserId === UserId);
+        if (selectedApplicant) {
+            setActiveProfileId(UserId);
+            setActiveProfile(selectedApplicant);
+            setShowProfile(true);
+        }
     };
 
+
+
+    const handleNextApplicant = (nextApplicantId) => {
+
+        // !!! REPLACE WITH AN API REQUEST !!!
+        const selectedApplicant = applicants.find(applicant => applicant.id === nextApplicantId);
+        if (selectedApplicant) {
+            setActiveProfileId(nextApplicantId);
+            setActiveProfile(selectedApplicant);
+            setShowProfile(true);
+        }
+    };
+
+    const handlePreviousApplicant = (prevApplicantId) => {
+
+        // !!! REPLACE WITH AN API REQUEST !!!
+        const selectedApplicant = applicants.find(applicant => applicant.id === prevApplicantId);
+        if (selectedApplicant) {
+            setActiveProfileId(prevApplicantId);
+            setActiveProfile(selectedApplicant);
+            setShowProfile(true);
+        }
+    };
+
+
+
+
     const handleShowList = () => {
+
         setActiveProfileId(null);
+        setActiveProfile(null);
         setShowProfile(false);
+
     };
 
     const handleSortOrderChange = (event) => {
@@ -56,7 +90,7 @@ export default function ApplicantListHeader() {
         const sortedApplicants = [...applicants].sort((a, b) => {
             let comparison = 0;
             if (criteria === 'date') {
-                comparison = new Date(a.createdAt) - new Date(b.createdAt);
+                comparison = Date.parse(a.createdAt) - Date.parse(b.createdAt);
             } else if (criteria === 'name') {
                 comparison = a.firstName.localeCompare(b.firstName);
             } else if (criteria === 'email') {
@@ -92,9 +126,9 @@ export default function ApplicantListHeader() {
 
     return (
         <div>
-            {showProfile == null ? <div>
+            {showProfile == false ? (<div>
                 <section className=''>
-                    <div className='flex container mx-auto pt-10 justify-between'>
+                    <div className='flex container mx-auto pt-10 pl-5 pr-5 justify-between'>
                         <div className='flex w-1/3'>
                             <input
                                 type='text'
@@ -147,29 +181,29 @@ export default function ApplicantListHeader() {
                     </div>
                 </section>
                 <section className='Section'>
-                    <div className='container mx-auto'>
+                    <div className='container mx-auto '>
                         <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
-                            <div className='flex items-start gap-10 w-10/12'>
-                                <p className='text-gray-600 font-bold w-1/15'>Nr</p>
-                                <div className='text-left w-1/5'>
-                                    <h5 className='text-gray-600 font-bold'>Full Name</h5>
-                                </div>
-                                <p className='text-gray-600 w-1/5 font-bold'>Email</p>
-                                <p className='text-gray-600 w-1/5 font-bold' >Resume AI Score</p>
+                            <div className='flex items-start gap-10 w-11/12 pl-5 pr-5'>
+                                <p className='text-gray-600 font-bold w-1/24'>Nr</p>
+                                <p className='text-gray-600 font-bold w-3/12'> Full Name</p>
+                                <p className='text-gray-600 w-2/12 font-bold'>Email</p>
+                                <p className='text-gray-600 w-1/12 font-bold' >AI Score</p>
+                                <p className='text-gray-600 w-3/12 font-bold'>Applied At</p>
+                                <p className='text-gray-600 w-3/12 font-bold text-end'>Actions</p>
+                                
                             </div>
-                            <div className='flex items-end gap-5 w-1/6'>
-                                <p className='text-gray-600 w-1/5 font-bold'>Actions</p>
+                            <div className='emptyspace w-1/12'>
+                                <p>         </p>
                             </div>
                         </div>
                         <hr className='h-px my-2 bg-gray-300 border-0' />
                         <div className='flex flex-col gap-4 pt-1'>
                             {paginatedApplicants.map(applicant => (
-                                <div className='flex flex-row gap-4 pt-1'>
-                                    <ApplicantListItem key={applicant.id} {...applicant} />
+                                <div className='flex flex-row gap-4 pt-1 w-full'>
+                                    <ApplicantListItem className='w-11/12' key={applicant.id} {...applicant} />
                                     <button
-                                        onClick={() => handleShowProfile(applicant.id)}
-                                        style={{ width: "7rem" }}
-                                        className={`gap-5 rounded-lg w-full p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
+                                        onClick={() => handleShowProfile(applicant.UserId)}
+                                        className={`gap-5 rounded-lg w-1/12 p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
                                     >
                                         <div className='text flex flex-row items-center justify-between'>
                                             <p>View Profile</p>
@@ -194,6 +228,7 @@ export default function ApplicantListHeader() {
                         <div className='flex justify-center mt-4'>
                             {currentPage == 1 ? <button
                                 style={{ width: "2.5rem", height: "2.5rem" }}
+                                disabled={true}
                                 className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}                        >
                                 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -226,6 +261,7 @@ export default function ApplicantListHeader() {
 
                             {currentPage == totalPages ? <button
                                 style={{ width: "2.5rem", height: "2.5rem" }}
+                                disabled={true}
                                 className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
                                 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -247,16 +283,16 @@ export default function ApplicantListHeader() {
                         </div>
                     </div>
                 </section>
-            </div>
+            </div>)
 
                 :
 
                 <div>
 
                     <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
-                        <div className='flex items-start gap-10 w-10/12'>
+                        <div className='profileHeader flex items-center gap-10 w-10/12'>
                             <button
-                                onClick={() => handleShowList()}
+                                onClick={handleShowList}
                                 style={{ width: "7rem" }}
                                 className={`gap-5 rounded-lg w-full p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
                             >
@@ -264,21 +300,98 @@ export default function ApplicantListHeader() {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                     </svg>
-
                                     <p>Back</p>
-
                                 </div>
                             </button>
-                            <div className='text-left w-1/5'>
-                                <h5 className='text-gray-600 font-bold'>Full Name</h5>
-                            </div>
-                            <p className='text-gray-600 w-1/5 font-bold'>Email</p>
-                            <p className='text-gray-600 w-1/5 font-bold' >Resume AI Score</p>
+                            {activeProfile ? (<div className='text-left w-1/3'>
+                                <h5 className='text-gray-600 text-2xl '>Viewing {activeProfile.firstName + ' ' + activeProfile.lastName}'s Profile</h5>
+                            </div>) : (
+                                <p>Loading profile...</p>
+                            )}
+
                         </div>
-                        <div className='flex items-end gap-5 w-1/6'>
-                            <p className='text-gray-600 w-1/5 font-bold'>Actions</p>
+
+                    </div>
+                    <hr className='h-px my-2 bg-gray-300 border-0' />
+                    <div className='flex flex-start'>
+                    <ApplicantListUserProfile id={activeProfileId} />
+                    </div>
+                    <hr className='h-px my-2 bg-gray-300 border-0' />
+
+                    <div className='applicantButtons flex justify-items-end'>
+                        <div className='prevApplicant'>
+                            {activeProfile.previous == null ? <button
+                                style={{ height: "2.5rem" }}
+                                disabled={true}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
+                                {
+                                    <div className='text flex flex-row items-center justify-between'>
+                                        
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                        </svg>
+                                        <p className='px-1.5 py-1 mx-1 text-gray-400'> Previous Applicant</p>
+                                    </div>
+
+
+                                }
+                            </button> : <button
+
+                                onClick={() => handlePreviousApplicant(activeProfile.previous)}
+                                style={{ height: "2.5rem" }}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                            >
+                                {
+                                    <div className='text flex flex-row items-center justify-between'>
+                                        
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                        </svg>
+                                        <p className='px-1.5 py-1 mx-1'>Previous Applicant</p>
+                                    </div>
+
+                                }
+                            </button>}
+                        </div>
+
+
+
+                        <div className='nextApplicant'>
+                            {activeProfile.next == null ? <button
+                                style={{ height: "2.5rem" }}
+                                disabled={true}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
+                                {
+                                    <div className='text flex flex-row items-center justify-between'>
+                                        <p className='px-1.5 py-1 mx-1 text-gray-400'> Next Applicant</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                        </svg>
+                                    </div>
+
+
+                                }
+                            </button> : <button
+
+                                onClick={() => handleNextApplicant(activeProfile.next)}
+                                style={{ height: "2.5rem" }}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                            >
+                                {
+                                    <div className='text flex flex-row items-center justify-between'>
+                                        <p className='px-1.5 py-1 mx-1'> Next Applicant</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                        </svg>
+                                        
+                                    </div>
+
+                                }
+                            </button>}
                         </div>
                     </div>
+
+
                 </div>
             }
         </div>

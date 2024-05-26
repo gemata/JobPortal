@@ -80,16 +80,14 @@ export default function ApplicantListItem(req) {
 
   return (
     <div className={`applicantListItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border-2 ${borderColor} ${backgroundGradient}`}>
-      <div className='flex items-center gap-10 w-10/12'>
-        <p className='text-gray-600 font-bold w-1/15'>{applicantData.applicantNo+1}</p>
-        <div className='text-left w-1/5'>
-          <h5 className='text-jobportal-primary font-bold'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</h5>
-          <p className='text-gray-600 text-sm'>Applied: {formatDateTime(applicantData.createdAt)}</p>
-        </div>
-        <p className='text-gray-600 w-1/5'>{applicantPersonalData.email}</p>
-        <p className='text-gray-600 w-1/5'>{applicantData.resumeAIScore + '%'}</p>
+      <div className='flex items-center gap-10 w-full '>
+        <p className='text-gray-600 font-bold w-1/24'>{applicantData.applicantNo+1}</p>
+        <p className='text-jobportal-primary font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
+        <p className='text-gray-600 w-2/12'>{applicantPersonalData.email}</p>
+        <p className='text-gray-600 w-1/12'>{applicantData.resumeAIScore + '%'}</p>
+        <p className='text-gray-600 text-sm w-3/12'>{formatDateTime(applicantData.createdAt)}</p>
       </div>
-      <div className='flex items-center gap-5 w-1/6'>
+      <div className='Actions flex items-center gap-3 w-2/12'>
       
         <button>
           <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
@@ -110,6 +108,7 @@ export default function ApplicantListItem(req) {
           <option value={0}>Declined</option>
         </select>
       </div>
+      
     </div>
   );
 }
