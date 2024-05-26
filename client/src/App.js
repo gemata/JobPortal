@@ -24,6 +24,7 @@ import SubscriptionHome from "./pages/Subscription/SubscriptionHome";
 import ApplicantList from "./pages/CompanyPages/ApplicantList";
 import CheckoutSuccess from "./pages/Subscription/CheckoutSuccess";
 import Footer from "./components/Footer/Footer";
+import About from "./pages/About/About";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -57,6 +58,7 @@ function App() {
         )}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/profile/detail" element={<MyProfile />} />
         <Route path="/profile/dashboard" element={<Dashboard />} />
         <Route path="/profile/job-tracker" element={<JobTracker />} />

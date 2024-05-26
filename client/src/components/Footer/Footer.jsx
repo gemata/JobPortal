@@ -1,5 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import About from "../../pages/About/About";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -33,9 +35,9 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Quick Link</h3>
             <ul>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="/about" className="hover:text-white">
                   About
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white">

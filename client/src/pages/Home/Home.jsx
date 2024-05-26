@@ -2,6 +2,7 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import illustration from "./img/Illustration.svg";
 import process from "./img/Process.svg";
+import logo from "./img/mainLogo.png";
 import categoryImage1 from "./img/category1.svg";
 import categoryImage2 from "./img/category2.svg";
 import categoryImage3 from "./img/category3.svg";
@@ -105,7 +106,9 @@ const Home = () => {
       <div className="mt-5 mb-5">
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
           <div className="flex justify-between items-center">
-            <div className="logo">aaaaa</div>
+            <div className="w-[50px]">
+              <img src={logo} alt="" />
+            </div>
             <div className="relative w-[70%]">
               <FaSearch className="absolute -translate-y-2/4 text-[blue] left-2.5 top-2/4" />
               <input
