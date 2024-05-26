@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ApplicantListItem from './ApplicantListItem';
 import applicantsData from '../../../../json/applicants.json';
+import ApplicantListUserProfile from './ApplicantListUserProfile.jsx';
 
 export default function ApplicantListHeader() {
     const [applicants, setApplicants] = useState([]);
@@ -89,7 +90,7 @@ export default function ApplicantListHeader() {
         const sortedApplicants = [...applicants].sort((a, b) => {
             let comparison = 0;
             if (criteria === 'date') {
-                comparison = new Date(a.createdAt) - new Date(b.createdAt);
+                comparison = Date.parse(a.createdAt) - Date.parse(b.createdAt);
             } else if (criteria === 'name') {
                 comparison = a.firstName.localeCompare(b.firstName);
             } else if (criteria === 'email') {
@@ -127,7 +128,7 @@ export default function ApplicantListHeader() {
         <div>
             {showProfile == false ? (<div>
                 <section className=''>
-                    <div className='flex container mx-auto pt-10 justify-between'>
+                    <div className='flex container mx-auto pt-10 pl-5 pr-5 justify-between'>
                         <div className='flex w-1/3'>
                             <input
                                 type='text'
@@ -180,29 +181,29 @@ export default function ApplicantListHeader() {
                     </div>
                 </section>
                 <section className='Section'>
-                    <div className='container mx-auto'>
+                    <div className='container mx-auto '>
                         <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
-                            <div className='flex items-start gap-10 w-10/12'>
-                                <p className='text-gray-600 font-bold w-1/15'>Nr</p>
-                                <div className='text-left w-1/5'>
-                                    <h5 className='text-gray-600 font-bold'>Full Name</h5>
-                                </div>
-                                <p className='text-gray-600 w-1/5 font-bold'>Email</p>
-                                <p className='text-gray-600 w-1/5 font-bold' >Resume AI Score</p>
+                            <div className='flex items-start gap-10 w-11/12 pl-5 pr-5'>
+                                <p className='text-gray-600 font-bold w-1/24'>Nr</p>
+                                <p className='text-gray-600 font-bold w-3/12'> Full Name</p>
+                                <p className='text-gray-600 w-2/12 font-bold'>Email</p>
+                                <p className='text-gray-600 w-1/12 font-bold' >AI Score</p>
+                                <p className='text-gray-600 w-3/12 font-bold'>Applied At</p>
+                                <p className='text-gray-600 w-3/12 font-bold text-end'>Actions</p>
+                                
                             </div>
-                            <div className='flex items-end gap-5 w-1/6'>
-                                <p className='text-gray-600 w-1/5 font-bold'>Actions</p>
+                            <div className='emptyspace w-1/12'>
+                                <p>         </p>
                             </div>
                         </div>
                         <hr className='h-px my-2 bg-gray-300 border-0' />
                         <div className='flex flex-col gap-4 pt-1'>
                             {paginatedApplicants.map(applicant => (
-                                <div className='flex flex-row gap-4 pt-1'>
-                                    <ApplicantListItem key={applicant.id} {...applicant} />
+                                <div className='flex flex-row gap-4 pt-1 w-full'>
+                                    <ApplicantListItem className='w-11/12' key={applicant.id} {...applicant} />
                                     <button
                                         onClick={() => handleShowProfile(applicant.UserId)}
-                                        style={{ width: "7rem" }}
-                                        className={`gap-5 rounded-lg w-full p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
+                                        className={`gap-5 rounded-lg w-1/12 p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
                                     >
                                         <div className='text flex flex-row items-center justify-between'>
                                             <p>View Profile</p>
@@ -313,7 +314,7 @@ export default function ApplicantListHeader() {
                     </div>
                     <hr className='h-px my-2 bg-gray-300 border-0' />
                     <div className='flex flex-start'>
-                        <img src="" alt="Profile Picture" />
+                    <ApplicantListUserProfile id={activeProfileId} />
                     </div>
                     <hr className='h-px my-2 bg-gray-300 border-0' />
 
