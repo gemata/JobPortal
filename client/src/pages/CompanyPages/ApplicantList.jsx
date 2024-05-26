@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import applicants from '../../json/applicants.json'; // Adjust the import path as necessary
-import JobTableSection from '../../components/CompanyComponents/Dashboard/JobTable';
 import LowerJobSection from '../../components/CompanyComponents/Dashboard/LowerJobSection';
 import DashboardNavSection from '../../components/CompanyComponents/DashboardNavSection';
-import ApplicantListItem from '../../components/CompanyComponents/Jobs/ApplicantList/ApplicantListItem';
 import ApplicantListHeader from '../../components/CompanyComponents/Jobs/ApplicantList/ApplicantListHeader';
 const ApplicantList = () => {
   return (
