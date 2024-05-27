@@ -27,6 +27,8 @@ import About from "./pages/About/About";
 import Pricing from "./pages/Pricing/Pricing";
 import Contact from "./pages/Contact/Contact";
 import CareerAdvice from "./pages/CareerAdvice/CareerAdvice";
+import ResumeHelp from "./pages/ResumeHelp/ResumeHelp";
+import ResumeExample from "./pages/ResumeHelp/resumeexample";
 
 function App() {
   const [userData, setUserData] = useState([]);
