@@ -23,6 +23,7 @@ import man1 from '../../img/man1.svg';
 import man2 from '../../img/man2.svg';
 import man3 from '../../img/man3.svg';
 import Search from '../../components/Header/Search';
+import EmpCard from '../../components/HomePageComponents/EmpCard';
 
 const categoryData = [
   { name: 'Graphics & Design', positions: 357, image: categoryImage1 },
@@ -242,20 +243,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='container max-w-[1200px] mx-auto my-0 px-[15px]'>
-        <div className='flex space-x-4 mt-[100px] mb-[100px]'>
-          <div className='bg-gray-100 p-6 rounded-lg flex-1'>
-            <h2 className='text-2xl font-bold mb-2'>Become a Candidate</h2>
-            <p className='text-gray-700 mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus a dolor convallis efficitur.</p>
-            <button className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>Register Now →</button>
-          </div>
-          <div className='bg-blue-600 p-6 rounded-lg text-white flex-1'>
-            <h2 className='text-2xl font-bold mb-2'>Become a Employer</h2>
-            <p className='mb-4'>Cras in massa pellentesque, mollis ligula non, luctus dui. Morbi sed efficitur dolor. Pelque augue risus, aliqu.</p>
-            <button className='bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-200'>Register Now →</button>
-          </div>
-        </div>
-      </div>
+
+      <EmpCard/>
+      
     </>
   );
 };
