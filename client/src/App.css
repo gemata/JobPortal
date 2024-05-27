@@ -24,6 +24,12 @@
   color: white;
 }
 
+.full-width {
+  width: calc(100vw - 22px);
+  position: relative;
+  left: 0%;
+}
+
 .App-link {
   color: #61dafb;
 }

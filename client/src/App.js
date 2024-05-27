@@ -20,9 +20,8 @@ import Settings from "./pages/UserPages/Settings";
 import Messages from "./pages/UserPages/Messages";
 import ResetPassword from "./pages/ResetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
-import SubscriptionHome from "./pages/Subscription/SubscriptionHome";
 import ApplicantList from "./pages/CompanyPages/ApplicantList";
-import CheckoutSuccess from "./pages/Subscription/CheckoutSuccess";
+import CheckoutSuccess from "./pages/Pricing/CheckoutSuccess";
 import Footer from "./components/Footer/Footer";
 import About from "./pages/About/About";
 import Pricing from "./pages/Pricing/Pricing";
@@ -71,7 +70,6 @@ function App() {
         <Route path="/profile/messages" element={<Messages />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
-        <Route path="/subscription" element={<SubscriptionHome />} />
         <Route path="/success" element={<CheckoutSuccess />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
