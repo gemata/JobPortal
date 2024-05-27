@@ -101,7 +101,6 @@ const testimonials = [
 const Home = () => {
   return (
     <>
-      <Search />
       <div className='bg-[#f1f2f4] py-[100px]'>
         <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
           <div className='flex justify-between items-center'>

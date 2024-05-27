@@ -45,7 +45,10 @@ export default function DashboardNavSection() {
             </li>
 
             <li>
-              <NavLink to='/company/jobs' className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}>
+              <NavLink
+                to='/company/jobs'
+                className={() => `flex gap-2 p-5 items-center ${checkActive('/company/jobs', true) ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+              >
                 {/* Briefcase SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
                   <path

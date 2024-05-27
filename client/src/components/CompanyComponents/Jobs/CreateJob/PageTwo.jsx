@@ -1,139 +1,240 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
+export default function PageTwo({ nationality, setNationality, jobLocation, setJobLocation, interviewMethod, setInterviewMethod }) {
+  const handleNationalityChange = (e) => {
+    setNationality(e.target.value);
+  };
 
-const data = {
-  labels: ['$10', '', '', '$14', '', '', '', '', '', '$22'],
-  datasets: [
-    {
-      label: 'Number of Votes',
-      data: [6, 7, 8, 9, 7, 6, 5, 4, 3, 2],
-      backgroundColor: [
-        'lightgray',
-        'lightgray',
-        'lightgray',
-        'rgb(80 7 36)',
-        'lightgray',
-        'rgb(192 132 252)',
-        'rgb(192 132 252)',
-        'rgb(192 132 252)',
-        'rgb(192 132 252)',
-        'rgb(192 132 252)',
-      ],
-      barPercentage: 0.8,
-      categoryPercentage: 0.8,
-      borderRadius: 4,
-    },
-  ],
-};
+  const handleJobLocationChange = (e) => {
+    setJobLocation(e.target.value);
+  };
 
-const options = {
-  maintainAspectRatio: false,
-  legend: {
-    display: false,
-  },
-  tooltips: {
-    enabled: false,
-  },
-  scales: {
-    y: {
-      beginAtZero: true,
-      grid: {
-        display: false,
-      },
-      ticks: {
-        display: false,
-      },
-    },
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-  },
-};
+  const handleInterviewMethodChange = (e) => {
+    setInterviewMethod(e.target.value);
+  };
 
-export default function PageTwo() {
   return (
     <>
-      <div className='flex gap-5'>
-        <div className='flex flex-col gap-5 w-full justify-center'>
-          <h2 className='text-2xl text-left font-semibold'>Salary</h2>
-          <p className='text-left'>Review the salary we estimated for your job and adjust as needed. Check your local minimum wage.</p>
-          <label className='self-start' htmlFor='salaryFrom'>
-            Salary From
-          </label>
-          <div className='flex items-center'>
-            <span className='border border-r-0 rounded-s-lg h-full h-full aspect-square flex justify-center items-center bg-gray-100 font-medium select-none'>$</span>
-            <input
-              type='number'
-              name='salaryFrom'
-              className='border w-full p-3 px-5 rounded-e-lg focus:outline-none focus:ring-2 focus:ring-jobportal-pink'
-              placeholder='Salary From'
-            />
-          </div>
-          <label className='self-start' htmlFor='salaryTo'>
-            Salary To
-          </label>
-          <div className='flex items-center'>
-            <span className='border border-r-0 rounded-s-lg h-full h-full aspect-square flex justify-center items-center bg-gray-100 font-medium select-none'>$</span>
-            <input
-              type='number'
-              name='salaryTo'
-              className='border w-full p-3 px-5 rounded-e-lg focus:outline-none focus:ring-2 focus:ring-jobportal-pink'
-              placeholder='Salary To'
-            />
-          </div>
-        </div>
+      <label className='float-left' htmlFor='nationality'>
+        Nationality
+      </label>
+      <select name='nationality' value={nationality} onChange={handleNationalityChange} className='w-full p-3 px-5 rounded'>
+        <option value=''>Select Nationality</option>
+        <option value='Afghanistan'>Afghanistan</option>
+        <option value='Albania'>Albania</option>
+        <option value='Algeria'>Algeria</option>
+        <option value='Andorra'>Andorra</option>
+        <option value='Angola'>Angola</option>
+        <option value='Antigua and Barbuda'>Antigua and Barbuda</option>
+        <option value='Argentina'>Argentina</option>
+        <option value='Armenia'>Armenia</option>
+        <option value='Australia'>Australia</option>
+        <option value='Austria'>Austria</option>
+        <option value='Azerbaijan'>Azerbaijan</option>
+        <option value='Bahamas'>Bahamas</option>
+        <option value='Bahrain'>Bahrain</option>
+        <option value='Bangladesh'>Bangladesh</option>
+        <option value='Barbados'>Barbados</option>
+        <option value='Belarus'>Belarus</option>
+        <option value='Belgium'>Belgium</option>
+        <option value='Belize'>Belize</option>
+        <option value='Benin'>Benin</option>
+        <option value='Bhutan'>Bhutan</option>
+        <option value='Bolivia'>Bolivia</option>
+        <option value='Bosnia and Herzegovina'>Bosnia and Herzegovina</option>
+        <option value='Botswana'>Botswana</option>
+        <option value='Brazil'>Brazil</option>
+        <option value='Brunei'>Brunei</option>
+        <option value='Bulgaria'>Bulgaria</option>
+        <option value='Burkina Faso'>Burkina Faso</option>
+        <option value='Burundi'>Burundi</option>
+        <option value='Cabo Verde'>Cabo Verde</option>
+        <option value='Cambodia'>Cambodia</option>
+        <option value='Cameroon'>Cameroon</option>
+        <option value='Canada'>Canada</option>
+        <option value='Central African Republic'>Central African Republic</option>
+        <option value='Chad'>Chad</option>
+        <option value='Chile'>Chile</option>
+        <option value='China'>China</option>
+        <option value='Colombia'>Colombia</option>
+        <option value='Comoros'>Comoros</option>
+        <option value='Congo (Congo-Brazzaville)'>Congo (Congo-Brazzaville)</option>
+        <option value='Costa Rica'>Costa Rica</option>
+        <option value='Croatia'>Croatia</option>
+        <option value='Cuba'>Cuba</option>
+        <option value='Cyprus'>Cyprus</option>
+        <option value='Czech Republic'>Czech Republic</option>
+        <option value='Denmark'>Denmark</option>
+        <option value='Djibouti'>Djibouti</option>
+        <option value='Dominica'>Dominica</option>
+        <option value='Dominican Republic'>Dominican Republic</option>
+        <option value='Ecuador'>Ecuador</option>
+        <option value='Egypt'>Egypt</option>
+        <option value='El Salvador'>El Salvador</option>
+        <option value='Equatorial Guinea'>Equatorial Guinea</option>
+        <option value='Eritrea'>Eritrea</option>
+        <option value='Estonia'>Estonia</option>
+        <option value='Eswatini'>Eswatini</option>
+        <option value='Ethiopia'>Ethiopia</option>
+        <option value='Fiji'>Fiji</option>
+        <option value='Finland'>Finland</option>
+        <option value='France'>France</option>
+        <option value='Gabon'>Gabon</option>
+        <option value='Gambia'>Gambia</option>
+        <option value='Georgia'>Georgia</option>
+        <option value='Germany'>Germany</option>
+        <option value='Ghana'>Ghana</option>
+        <option value='Greece'>Greece</option>
+        <option value='Grenada'>Grenada</option>
+        <option value='Guatemala'>Guatemala</option>
+        <option value='Guinea'>Guinea</option>
+        <option value='Guinea-Bissau'>Guinea-Bissau</option>
+        <option value='Guyana'>Guyana</option>
+        <option value='Haiti'>Haiti</option>
+        <option value='Honduras'>Honduras</option>
+        <option value='Hungary'>Hungary</option>
+        <option value='Iceland'>Iceland</option>
+        <option value='India'>India</option>
+        <option value='Indonesia'>Indonesia</option>
+        <option value='Iran'>Iran</option>
+        <option value='Iraq'>Iraq</option>
+        <option value='Ireland'>Ireland</option>
+        <option value='Israel'>Israel</option>
+        <option value='Italy'>Italy</option>
+        <option value='Jamaica'>Jamaica</option>
+        <option value='Japan'>Japan</option>
+        <option value='Jordan'>Jordan</option>
+        <option value='Kazakhstan'>Kazakhstan</option>
+        <option value='Kenya'>Kenya</option>
+        <option value='Kiribati'>Kiribati</option>
+        <option value='Kosovo'>Kosovo</option>
+        <option value='Kuwait'>Kuwait</option>
+        <option value='Kyrgyzstan'>Kyrgyzstan</option>
+        <option value='Laos'>Laos</option>
+        <option value='Latvia'>Latvia</option>
+        <option value='Lebanon'>Lebanon</option>
+        <option value='Lesotho'>Lesotho</option>
+        <option value='Liberia'>Liberia</option>
+        <option value='Libya'>Libya</option>
+        <option value='Liechtenstein'>Liechtenstein</option>
+        <option value='Lithuania'>Lithuania</option>
+        <option value='Luxembourg'>Luxembourg</option>
+        <option value='Madagascar'>Madagascar</option>
+        <option value='Malawi'>Malawi</option>
+        <option value='Malaysia'>Malaysia</option>
+        <option value='Maldives'>Maldives</option>
+        <option value='Mali'>Mali</option>
+        <option value='Malta'>Malta</option>
+        <option value='Marshall Islands'>Marshall Islands</option>
+        <option value='Mauritania'>Mauritania</option>
+        <option value='Mauritius'>Mauritius</option>
+        <option value='Mexico'>Mexico</option>
+        <option value='Micronesia'>Micronesia</option>
+        <option value='Moldova'>Moldova</option>
+        <option value='Monaco'>Monaco</option>
+        <option value='Mongolia'>Mongolia</option>
+        <option value='Montenegro'>Montenegro</option>
+        <option value='Morocco'>Morocco</option>
+        <option value='Mozambique'>Mozambique</option>
+        <option value='Myanmar (formerly Burma)'>Myanmar (formerly Burma)</option>
+        <option value='Namibia'>Namibia</option>
+        <option value='Nauru'>Nauru</option>
+        <option value='Nepal'>Nepal</option>
+        <option value='Netherlands'>Netherlands</option>
+        <option value='New Zealand'>New Zealand</option>
+        <option value='Nicaragua'>Nicaragua</option>
+        <option value='Niger'>Niger</option>
+        <option value='Nigeria'>Nigeria</option>
+        <option value='North Korea'>North Korea</option>
+        <option value='North Macedonia'>North Macedonia</option>
+        <option value='Norway'>Norway</option>
+        <option value='Oman'>Oman</option>
+        <option value='Pakistan'>Pakistan</option>
+        <option value='Palau'>Palau</option>
+        <option value='Palestine State'>Palestine State</option>
+        <option value='Panama'>Panama</option>
+        <option value='Papua New Guinea'>Papua New Guinea</option>
+        <option value='Paraguay'>Paraguay</option>
+        <option value='Peru'>Peru</option>
+        <option value='Philippines'>Philippines</option>
+        <option value='Poland'>Poland</option>
+        <option value='Portugal'>Portugal</option>
+        <option value='Qatar'>Qatar</option>
+        <option value='Romania'>Romania</option>
+        <option value='Russia'>Russia</option>
+        <option value='Rwanda'>Rwanda</option>
+        <option value='Saint Kitts and Nevis'>Saint Kitts and Nevis</option>
+        <option value='Saint Lucia'>Saint Lucia</option>
+        <option value='Saint Vincent and the Grenadines'>Saint Vincent and the Grenadines</option>
+        <option value='Samoa'>Samoa</option>
+        <option value='San Marino'>San Marino</option>
+        <option value='Sao Tome and Principe'>Sao Tome and Principe</option>
+        <option value='Saudi Arabia'>Saudi Arabia</option>
+        <option value='Senegal'>Senegal</option>
+        <option value='Seychelles'>Seychelles</option>
+        <option value='Sierra Leone'>Sierra Leone</option>
+        <option value='Singapore'>Singapore</option>
+        <option value='Slovakia'>Slovakia</option>
+        <option value='Slovenia'>Slovenia</option>
+        <option value='Solomon Islands'>Solomon Islands</option>
+        <option value='Somalia'>Somalia</option>
+        <option value='South Africa'>South Africa</option>
+        <option value='South Korea'>South Korea</option>
+        <option value='South Sudan'>South Sudan</option>
+        <option value='Sri Lanka'>Sri Lanka</option>
+        <option value='Sudan'>Sudan</option>
+        <option value='Suriname'>Suriname</option>
+        <option value='Sweden'>Sweden</option>
+        <option value='Switzerland'>Switzerland</option>
+        <option value='Syria'>Syria</option>
+        <option value='Taiwan'>Taiwan</option>
+        <option value='Tajikistan'>Tajikistan</option>
+        <option value='Tanzania'>Tanzania</option>
+        <option value='Thailand'>Thailand</option>
+        <option value='Timor-Leste'>Timor-Leste</option>
+        <option value='Togo'>Togo</option>
+        <option value='Tonga'>Tonga</option>
+        <option value='Trinidad and Tobago'>Trinidad and Tobago</option>
+        <option value='Tunisia'>Tunisia</option>
+        <option value='Turkey'>Turkey</option>
+        <option value='Turkmenistan'>Turkmenistan</option>
+        <option value='Tuvalu'>Tuvalu</option>
+        <option value='Uganda'>Uganda</option>
+        <option value='Ukraine'>Ukraine</option>
+        <option value='United Arab Emirates'>United Arab Emirates</option>
+        <option value='United Kingdom'>United Kingdom</option>
+        <option value='United States'>United States</option>
+        <option value='Uruguay'>Uruguay</option>
+        <option value='Uzbekistan'>Uzbekistan</option>
+        <option value='Vanuatu'>Vanuatu</option>
+        <option value='Venezuela'>Venezuela</option>
+        <option value='Vietnam'>Vietnam</option>
+        <option value='Yemen'>Yemen</option>
+        <option value='Zambia'>Zambia</option>
+        <option value='Zimbabwe'>Zimbabwe</option>
+      </select>
 
-        <div className='border p-5 ps-20 flex flex-col gap-5 justify-center items-start relative w-full'>
-          <div className='resetPassword__form-message absolute top-2 left-0' style={{ width: '40px' }}>
-            <section>
-              <span style={{ backgroundColor: '#007d7f' }}>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='16'
-                  height='16'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='white'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                >
-                  <polyline points='20 6 9 17 4 12'></polyline>
-                </svg>
-              </span>
-            </section>
-          </div>
-          <h3 className='text-2xl font-medium'>Your pay is competitive</h3>
-          <p>Jobs having competitive salaries are 38% more likely to report a hire by day 7.</p>
+      <label className='float-left' htmlFor='jobLocation'>
+        Job Location
+      </label>
+      <input
+        type='text'
+        name='jobLocation'
+        value={jobLocation}
+        onChange={handleJobLocationChange}
+        className='border w-full p-3 px-5 rounded focus:outline-none focus:ring-2 focus:ring-jobportal-pink'
+        placeholder='Job Location'
+      />
 
-          <div className='flex justify-between items-center w-full gap-5 py-5'>
-            <div className='w-full m-auto'>
-              <Bar data={data} options={options} />
-            </div>
-            <div className='flex flex-col justify-start items-start w-full gap-5'>
-              <div>
-                <div className='flex gap-2 items-center'>
-                  <div className='rounded-full w-5 h-5 bg-pink-950'></div>
-                  <h3 className='text-left text-lg'>Average Pay</h3>
-                </div>
-                <p className='text-left'>$14-$15 per hour</p>
-              </div>
-              <div>
-                <div className='flex gap-2 items-center'>
-                  <div className='rounded-full w-5 h-5 bg-purple-400'></div>
-                  <h3 className='text-left text-lg'>Competitive Pay</h3>
-                </div>
-                <p className='text-left'>$16-$17+ per hour</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <label className='float-left' htmlFor='interviewMethod'>
+        Interview Method
+      </label>
+      <select name='interviewMethod' value={interviewMethod} onChange={handleInterviewMethodChange} className='w-full p-3 px-5 rounded'>
+        <option value=''>Select Interview Method</option>
+        <option value='online'>Online</option>
+        <option value='inPerson'>In Person</option>
+        <option value='hybrid'>Hybrid</option>
+      </select>
     </>
   );
 }

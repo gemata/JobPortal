@@ -29,6 +29,7 @@ import Contact from "./pages/Contact/Contact";
 
 function App() {
   const [userData, setUserData] = useState([]);
+  const [isLoggedOut, setIsLoggedOut] = useState(true);
   const location = useLocation(); // Add this line to use the location hook
 
   useEffect(() => {
@@ -40,9 +41,11 @@ function App() {
         });
         if (!response.ok) {
           throw new Error("Network response was not ok");
+        } else {
+          const responseData = await response.json();
+          setUserData(responseData);
+          setIsLoggedOut(false);
         }
-        const responseData = await response.json();
-        setUserData(responseData);
       } catch (error) {
         console.log(error);
       }
@@ -55,7 +58,7 @@ function App() {
     <div className="App">
       {location.pathname !== "/reset-password" &&
         location.pathname !== "/confirm-account" && (
-          <Header userData={userData} />
+          <Header userData={userData} setUserData={setUserData} isLoggedOut={isLoggedOut} setIsLoggedOut={setIsLoggedOut} />
         )}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -83,7 +86,7 @@ function App() {
           element={<CompanyAnalyticsOverview />}
         />
 
-        <Route path="/company/jobs/create" element={<CompanyJobsCreate />} />
+        <Route path="/company/jobs/create" element={<CompanyJobsCreate userData={userData} />} />
         <Route path="/company/jobs/show/:id" element={<CompanyJobsShow />} />
       </Routes>
       <Footer />
