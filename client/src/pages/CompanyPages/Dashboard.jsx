@@ -5,6 +5,10 @@ import LowerJobSection from '../../components/CompanyComponents/Dashboard/LowerJ
 import JobTableSection from '../../components/CompanyComponents/Dashboard/JobTable';
 
 const CompanyDashboard = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className='dashboard bg-gray-100'>

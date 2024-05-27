@@ -43,7 +43,7 @@ export default function PageOne() {
       <label className='float-left' htmlFor='jobLocation'>
         Job Location
       </label>
-      <input type='text' name='jobLocation' className='border w-full p-3 px-5 rounded' placeholder='Job Location' />
+      <input type='text' name='jobLocation' className='border w-full p-3 px-5 rounded focus:outline-none focus:ring-2 focus:ring-jobportal-pink' placeholder='Job Location' />
 
       <label className='float-left' htmlFor='interviewMethod'>
         Interview Method

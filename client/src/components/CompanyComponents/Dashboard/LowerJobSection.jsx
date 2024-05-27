@@ -5,7 +5,7 @@ export default function LowerJobSection() {
   return (
     <>
       <section className='lowerJobSection'>
-        <div className='container mx-auto'>
+        <div className='max-w-[1200px] mx-auto'>
           <div className='flex gap-10 pb-8'>
             <div className='messageBox border-2 bg-white border-gray-400 rounded-lg p-5 w-1/2'>
               <h5 className='text-left font-semibold'>Messages (0)</h5>

@@ -67,14 +67,24 @@ export default function PageTwo() {
           </label>
           <div className='flex items-center'>
             <span className='border border-r-0 rounded-s-lg h-full h-full aspect-square flex justify-center items-center bg-gray-100 font-medium select-none'>$</span>
-            <input type='number' name='salaryFrom' className='border w-full p-3 px-5 rounded-e-lg' placeholder='Salary From' />
+            <input
+              type='number'
+              name='salaryFrom'
+              className='border w-full p-3 px-5 rounded-e-lg focus:outline-none focus:ring-2 focus:ring-jobportal-pink'
+              placeholder='Salary From'
+            />
           </div>
           <label className='self-start' htmlFor='salaryTo'>
             Salary To
           </label>
           <div className='flex items-center'>
             <span className='border border-r-0 rounded-s-lg h-full h-full aspect-square flex justify-center items-center bg-gray-100 font-medium select-none'>$</span>
-            <input type='number' name='salaryTo' className='border w-full p-3 px-5 rounded-e-lg' placeholder='Salary To' />
+            <input
+              type='number'
+              name='salaryTo'
+              className='border w-full p-3 px-5 rounded-e-lg focus:outline-none focus:ring-2 focus:ring-jobportal-pink'
+              placeholder='Salary To'
+            />
           </div>
         </div>
 

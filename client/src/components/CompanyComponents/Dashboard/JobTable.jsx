@@ -6,10 +6,10 @@ export default function JobTableSection() {
   return (
     <>
       <section className='jobFilterOptions'>
-        <div className='flex container mx-auto items-center pt-5'>
+        <div className='flex max-w-[1200px] mx-auto items-center pt-5'>
           <h3 className='text-2xl font-bold'>Jobs</h3>
         </div>
-        <div className='container mx-auto'>
+        <div className='max-w-[1200px] mx-auto'>
           <div className='flex justify-between pt-5'>
             <div className='flex'>
               <button id='openJobs' type='button' className='text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-s-lg text-base px-5 py-2.5 '>
@@ -32,7 +32,7 @@ export default function JobTableSection() {
         </div>
       </section>
       <section className=''>
-        <div className='flex container mx-auto pt-10 justify-between'>
+        <div className='flex max-w-[1200px] mx-auto pt-10 justify-between'>
           <div className='flex w-1/3'>
             <button type='button' className='inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4'>
@@ -83,7 +83,7 @@ export default function JobTableSection() {
         </div>
       </section>
       <section className='Section'>
-        <div className=' container mx-auto'>
+        <div className='max-w-[1200px] mx-auto'>
           <div className='flex flex-col gap-5 pt-10'>
             <JobItem />
             <JobItem />

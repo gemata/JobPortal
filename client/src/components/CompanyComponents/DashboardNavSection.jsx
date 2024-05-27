@@ -8,8 +8,8 @@ export default function DashboardNavSection() {
   return (
     <>
       <section className='navSection bg-white'>
-        <nav className='dashboardNav container mx-auto'>
-          <ul className='flex gap-10 flex-wrap'>
+        <nav className='dashboardNav max-w-[1200px] mx-auto'>
+          <ul className='flex justify-between gap-10 flex-wrap'>
             <li>
               <NavLink
                 to='/company/dashboard'
