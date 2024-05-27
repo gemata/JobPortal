@@ -26,6 +26,7 @@ import Footer from "./components/Footer/Footer";
 import About from "./pages/About/About";
 import Pricing from "./pages/Pricing/Pricing";
 import Contact from "./pages/Contact/Contact";
+import CareerAdvice from "./pages/CareerAdvice/CareerAdvice";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -58,7 +59,12 @@ function App() {
     <div className="App">
       {location.pathname !== "/reset-password" &&
         location.pathname !== "/confirm-account" && (
-          <Header userData={userData} setUserData={setUserData} isLoggedOut={isLoggedOut} setIsLoggedOut={setIsLoggedOut} />
+          <Header
+            userData={userData}
+            setUserData={setUserData}
+            isLoggedOut={isLoggedOut}
+            setIsLoggedOut={setIsLoggedOut}
+          />
         )}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -76,6 +82,7 @@ function App() {
         <Route path="/success" element={<CheckoutSuccess />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/career-advice" element={<CareerAdvice />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
@@ -86,7 +93,10 @@ function App() {
           element={<CompanyAnalyticsOverview />}
         />
 
-        <Route path="/company/jobs/create" element={<CompanyJobsCreate userData={userData} />} />
+        <Route
+          path="/company/jobs/create"
+          element={<CompanyJobsCreate userData={userData} />}
+        />
         <Route path="/company/jobs/show/:id" element={<CompanyJobsShow />} />
       </Routes>
       <Footer />
