@@ -69,6 +69,20 @@ const EducationController = {
     }
   },
 
+  // Get all Educations by user ID
+  async getEducationsByUserId(req, res) {
+    const { UserId } = req.params;
+    try {
+      const Educations = await Education.findAll({ where: { UserId } });
+      if (!Educations.length) {
+        return res.status(404).json({ message: "No education entries found for this user" });
+      }
+      return res.status(200).json(Educations);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
 
 };
 

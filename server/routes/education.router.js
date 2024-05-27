@@ -13,4 +13,6 @@ EducationRouter.put('/:id', EducationController.updateEducation);
 
 EducationRouter.delete('/:id', EducationController.deleteEducation);
 
+EducationRouter.get('/user/:UserId', EducationController.getEducationsByUserId);
+
 export default EducationRouter;

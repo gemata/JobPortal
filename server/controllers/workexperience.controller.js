@@ -37,6 +37,20 @@ const WorkExperienceController = {
     }
   },
 
+   // Get all WorkExperiences by user ID
+   async getWorkExperiencesByUserId(req, res) {
+    const { UserId } = req.params;
+    try {
+      const WorkExperiences = await WorkExperience.findAll({ where: { UserId } });
+      if (!WorkExperiences.length) {
+        return res.status(404).json({ message: "No work experience entries found for this user" });
+      }
+      return res.status(200).json(WorkExperiences);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
   // Update a WorkExperience
   async updateWorkExperience(req, res) {
     const { id } = req.params;

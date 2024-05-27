@@ -314,7 +314,7 @@ export default function ApplicantListHeader() {
                     </div>
                     <hr className='h-px my-2 bg-gray-300 border-0' />
                     <div className='flex flex-start'>
-                    <ApplicantListUserProfile id={activeProfileId} />
+                            <ApplicantListUserProfile id={activeProfileId} />
                     </div>
                     <hr className='h-px my-2 bg-gray-300 border-0' />
 

@@ -9,6 +9,8 @@ WorkExperienceRouter.get('/', WorkExperienceController.getWorkExperiences);
 
 WorkExperienceRouter.get('/:id', WorkExperienceController.getWorkExperienceById);
 
+WorkExperienceRouter.get('/user/:UserId', WorkExperienceController.getWorkExperiencesByUserId);
+
 WorkExperienceRouter.put('/:id', WorkExperienceController.updateWorkExperience);
 
 WorkExperienceRouter.delete('/:id', WorkExperienceController.deleteWorkExperience);
