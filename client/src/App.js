@@ -28,7 +28,7 @@ import Pricing from "./pages/Pricing/Pricing";
 import Contact from "./pages/Contact/Contact";
 import CareerAdvice from "./pages/CareerAdvice/CareerAdvice";
 import ResumeHelp from "./pages/ResumeHelp/ResumeHelp";
-import ResumeExample from "./pages/ResumeHelp/resumeexample";
+import ResumeExample from "./pages/ResumeExample/ResumeExample";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -85,6 +85,8 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/career-advice" element={<CareerAdvice />} />
+        <Route path="/resume-help" element={<ResumeHelp />} />
+        <Route path="/resume-example" element={<ResumeExample />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
