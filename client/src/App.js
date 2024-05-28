@@ -30,6 +30,7 @@ import CareerAdvice from "./pages/CareerAdvice/CareerAdvice";
 import ResumeHelp from "./pages/ResumeHelp/ResumeHelp";
 import ResumeExample from "./pages/ResumeHelp/ResumeExample";
 import Salary from "./pages/Salary/Salary";
+import FindJobs from "./FindJobs/FindJobs";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -89,6 +90,7 @@ function App() {
         <Route path="/resume-help" element={<ResumeHelp />} />
         <Route path="/resume-example" element={<ResumeExample />} />
         <Route path="/salary-tools" element={<Salary />} />
+        <Route path="/find-jobs" element={<FindJobs />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
