@@ -19,7 +19,7 @@ const Salary = () => {
               </p>
             </div>
             <div className="w-[28%]">
-              <img src={money} alt="" />
+              <img src={benefit} alt="" />
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ const Salary = () => {
             </p>
           </div>
           <div className="w-[28%]">
-            <img src={benefit} alt="" />
+            <img src={money} alt="" />
           </div>
         </div>
       </div>
