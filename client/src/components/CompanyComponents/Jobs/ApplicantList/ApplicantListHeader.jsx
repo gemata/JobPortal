@@ -203,7 +203,7 @@ export default function ApplicantListHeader() {
                                     <ApplicantListItem className='w-11/12' key={applicant.id} {...applicant} />
                                     <button
                                         onClick={() => handleShowProfile(applicant.UserId)}
-                                        className={`gap-5 rounded-lg w-1/12 p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
+                                        className={`gap-5 rounded-lg w-1/12 p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
                                     >
                                         <div className='text flex flex-row items-center justify-between'>
                                             <p>View Profile</p>
@@ -290,21 +290,22 @@ export default function ApplicantListHeader() {
                 <div>
 
                     <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
-                        <div className='profileHeader flex items-center gap-10 w-10/12'>
+                        <div className='profileHeader flex items-center gap-10 w-full'>
                             <button
                                 onClick={handleShowList}
                                 style={{ width: "7rem" }}
-                                className={`gap-5 rounded-lg w-full p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:font-bold hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
+                                className={`gap-5 rounded-lg w-full p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-pink hover:text-white`}
                             >
-                                <div className='text flex flex-row items-center justify-between'>
+                                <div className='text flex items-center flex-row  justify-between'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                     </svg>
                                     <p>Back</p>
                                 </div>
                             </button>
-                            {activeProfile ? (<div className='text-left w-1/3'>
+                            {activeProfile ? (<div className='flex justify-between  w-full'>
                                 <h5 className='text-gray-600 text-2xl '>Viewing {activeProfile.firstName + ' ' + activeProfile.lastName}'s Profile</h5>
+                                <h5 className='gap-2 text-center rounded-full w-1/6 p-2 border-2 bg-white text-gray-800 border-gray-400 '>Applicant {activeProfile.applicantNo+1 + ' / ' + applicants.length}</h5>
                             </div>) : (
                                 <p>Loading profile...</p>
                             )}
