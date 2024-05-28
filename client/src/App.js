@@ -29,6 +29,7 @@ import Contact from "./pages/Contact/Contact";
 import CareerAdvice from "./pages/CareerAdvice/CareerAdvice";
 import ResumeHelp from "./pages/ResumeHelp/ResumeHelp";
 import ResumeExample from "./pages/ResumeHelp/ResumeExample";
+import Salary from "./pages/Salary/Salary";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -87,6 +88,7 @@ function App() {
         <Route path="/career-advice" element={<CareerAdvice />} />
         <Route path="/resume-help" element={<ResumeHelp />} />
         <Route path="/resume-example" element={<ResumeExample />} />
+        <Route path="/salary-tools" element={<Salary />} />
 
         <Route path="/company/dashboard" element={<CompanyDashboard />} />
         <Route path="/company/jobs" element={<CompanyJobs />} />
