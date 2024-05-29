@@ -42,14 +42,17 @@ const EducationController = {
     const { id } = req.params;
     const { body } = req;
     try {
-      const [updatedRowsCount, updatedEducation] = await Education.update(body, {
-        where: { id },
-        returning: true, // Return the updated Education object
-      });
+      const [updatedRowsCount, updatedEducation] = await Education.update(
+        body,
+        {
+          where: { id },
+          returning: true, // Return the updated Education object
+        }
+      );
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: "Education not found" });
       }
-      return res.status(200).json(updatedEducation[0]);
+      return res.status(200).json(updatedEducation);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -71,19 +74,19 @@ const EducationController = {
 
   // Get all Educations by user ID
   async getEducationsByUserId(req, res) {
-    const { UserId } = req.params;
+    const { id } = req.params;
     try {
-      const Educations = await Education.findAll({ where: { UserId } });
+      const Educations = await Education.findAll({ where: { UserId: id } });
       if (!Educations.length) {
-        return res.status(404).json({ message: "No education entries found for this user" });
+        return res
+          .status(404)
+          .json({ message: "No education entries found for this user" });
       }
       return res.status(200).json(Educations);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
-
-
 };
 
 export default EducationController;

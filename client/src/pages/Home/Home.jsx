@@ -110,12 +110,12 @@ const Home = () => {
           <div className='flex justify-between items-center'>
             <div className='text-section'>
               <h1 className='font-semibold text-[50px]'>
-                Find a job that suits <span className='block leading-[0.8] mb-7 p-0'>your interest & skills.</span>
-              </h1>
-              <span className='text-base text-[#5e6670]'>
-                Aliquam vitae turpis in diam convillas finibus in at risus. Nullam{' '}
-                <span className='block leading-[0.8] text-base m-0 p-0'>in scelerisque leo, eget sollicitudin velit bestibulum</span>
-              </span>
+  Find a job that matches <span className='block leading-[0.8] mb-7 p-0'>your interests and skills.</span>
+</h1>
+<span className='text-base text-[#5e6670]'>
+  We aim to provide a platform where individuals can <span className='block leading-[0.8] text-base m-0 p-0'>explore opportunities tailored to their strengths and passions.</span>
+</span>
+
               <div className='flex items-center justify-center mt-5'>
                 <div className='flex items-center border rounded w-full max-w-[600px] p-[5px] border-solid border-[#ccc]'>
                   <FaSearch className='text-[1.2rem] mx-2.5 my-0 text-[purple]' />
@@ -187,7 +187,7 @@ const Home = () => {
         <div className='font-medium text-[42px] text-center mb-[100px] pt-[100px]'>How does job-pilot work ?</div>
         <div className='px-6 md:px-0 pb-[100px] flex flex-col md:flex-row justify-center gap-5'>
           <div className='rounded-xl up-arrow flex flex-col items-center py-6'>
-            <div className='p-5 bg-white aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+            <div className='p-5 bg-white aspect-square w-20  rounded-full' style={{ zIndex: 100 }}>
               <img src={userSVG} />
             </div>
             <h3 className='text-lg font-semibold mt-5'>Create account</h3>
@@ -195,21 +195,21 @@ const Home = () => {
           </div>
 
           <div className='rounded-xl down-arrow bg-white flex flex-col items-center py-6'>
-            <div className='p-5 bg-jobportal-pink aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+            <div className='p-5 bg-jobportal-pink aspect-square w-20  rounded-full' style={{ zIndex: 100 }}>
               <img src={cloudSVG} />
             </div>
             <h3 className='text-lg font-semibold mt-5'>Upload CV/Resume</h3>
             <p className='w-10/12 leading-5 text-center mt-3 text-gray-500'>Share your resume and let employers find you.</p>
           </div>
           <div className='rounded-xl up-arrow flex flex-col items-center py-6'>
-            <div className='p-6 bg-white aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+            <div className='p-6 bg-white aspect-square w-20  rounded-full' style={{ zIndex: 100 }}>
               <img src={searchSVG} />
             </div>
             <h3 className='text-lg font-semibold mt-5'>Find suitable job</h3>
             <p className='w-10/12 leading-5 text-center mt-3 text-gray-500'>Browse and discover your ideal job in minutes.</p>
           </div>
           <div className='rounded-xl flex flex-col items-center py-6'>
-            <div className='p-5 bg-white aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+            <div className='p-5 bg-white aspect-square w-20  rounded-full' style={{ zIndex: 100 }}>
               <img src={checkBadgeSVG} />
             </div>
             <h3 className='text-lg font-semibold mt-5'>Apply to job</h3>

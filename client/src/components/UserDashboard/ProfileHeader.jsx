@@ -1,10 +1,6 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 const ProfileHeader = ({ userData }) => {
-useEffect(() => {
-  console.log(userData);
-}, [userData])
-
   return (
     <div className="w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="flex items-center p-4">

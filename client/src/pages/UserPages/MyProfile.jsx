@@ -16,7 +16,7 @@ const MyProfile = ({ userData }) => {
         </div>
         <div className="flex flex-col gap-5 w-2/3">
           <ResumeUpload className="h-32" />
-          <ProfileDetail className="flex-1" />
+          <ProfileDetail userData={userData} className="flex-1" />
         </div>
       </div>
     </>

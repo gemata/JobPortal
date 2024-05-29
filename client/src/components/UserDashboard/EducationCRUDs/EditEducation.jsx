@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const AddEducation = ({ userData }) => {
+const EditEducation = ({ userData, educationDetail }) => {
   const [education, setEducation] = useState({
     schoolName: "",
     degreeType: "",
@@ -14,6 +14,26 @@ const AddEducation = ({ userData }) => {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  // Helper function to format date to yyyy-MM-dd
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  useEffect(() => {
+    if (educationDetail) {
+      setEducation({
+        ...educationDetail,
+        startDate: formatDate(educationDetail.startDate),
+        endDate: formatDate(educationDetail.endDate),
+      });
+    }
+  }, [educationDetail]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -33,14 +53,19 @@ const AddEducation = ({ userData }) => {
       UserId: userData.id,
     };
 
+    console.log(requestBody);
+
     try {
-      const response = await fetch(`http://localhost:5000/api/educations/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/educations/${education.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       const responseData = await response.json();
 
@@ -60,7 +85,6 @@ const AddEducation = ({ userData }) => {
           endDate: "",
           description: "",
         });
-
         window.location.reload();
       }
     } catch (error) {
@@ -195,4 +219,4 @@ const AddEducation = ({ userData }) => {
   );
 };
 
-export default AddEducation;
+export default EditEducation;
