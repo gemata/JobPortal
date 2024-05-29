@@ -1,15 +1,53 @@
 import React from 'react';
 
-export default function JobItem() {
+
+// Utility function to format the date and time
+function formatDateTime(dateTime) {
+  const date = new Date(dateTime);
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  };
+
+  return date.toLocaleString('en-US', options);
+}
+
+
+export default function JobItem(req) {
+  const jobData = {
+    CompanyID: req.CompanyID,
+    ID: req.ID,
+    JobPositionId: req.JobPositionId,
+    createdAt: req.createdAt,
+    education: req.education,
+    endAt: req.endAt,
+    interviewMethod: req.interviewMethod,
+    is_Active: req.is_Active,
+    jobLocation: req.jobLocation,
+    jobSummary: req.jobSummary,
+    likes: req.likes,
+    nationality: req.nationality,
+    positionName: req.positionName,
+    salaryFrom: req.salary_from,
+    salaryTo: req.salary_to,
+    startAt: req.startAt,
+    updatedAt: req.updatedAt,
+  };
   return (
     <>
-      <div className='jobItem flex items-center justify-between gap-10 bg-white rounded-lg w-full p-5'>
+      <div className='jobItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border-2 border-gray-400 bg-white'>
         <div className='flex items-center gap-10'>
-          <input type='checkbox' name='' id='' />
+        <p className='text-gray-600 font-bold w-1/24'>{jobData.ID}</p>
           <div className='text-left'>
-            <h5 className='text-jobportal-primary font-bold'>Senior Web Dev</h5>
-            <p className='text-gray-600'>London</p>
-            <p className='text-gray-600'>Posted: March 29, 2024</p>
+            <h5 className='text-jobportal-primary font-bold'>{jobData.positionName}</h5>
+            <p className='text-gray-600'>{jobData.jobLocation}</p>
+            <p className='text-gray-600'>Posted: {formatDateTime(jobData.createdAt)}</p>
           </div>
         </div>
         <div className='flex items-center gap-5 w-1/6'>

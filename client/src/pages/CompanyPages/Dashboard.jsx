@@ -16,7 +16,7 @@ const CompanyDashboard = ({ userData }) => {
         <DashboardNavSection />
         {userData.length != 0 && userData.role === 'Company' ? (
           <>
-            <JobTableSection />
+            <JobTableSection userData={userData} />
             <hr className='h-px my-8 bg-gray-300 border-0' />
             <LowerJobSection />
           </>

@@ -5,7 +5,7 @@ import applicantsData from '../../../../json/applicants.json';
 import ApplicantListUserProfile from './ApplicantListUserProfile.jsx';
 
 
-export default function ApplicantListHeader() {
+export default function ApplicantListHeader({applicantList}) {
     const [applicants, setApplicants] = useState([]);
     const [sortCriteria, setSortCriteria] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
@@ -247,7 +247,7 @@ export default function ApplicantListHeader() {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
-                                    <p>Create Interview</p>
+                                    
                                 </button>
 
                             </div>
@@ -270,7 +270,7 @@ export default function ApplicantListHeader() {
                                 <p>         </p>
                             </div>
                         </div>
-                        <hr className='h-px my-2 bg-gray-300 border-0' />
+                        
                         <div className='flex flex-col gap-4 pt-1'>
                             {paginatedApplicants.map(applicant => (
                                 <div className='flex flex-row gap-4 pt-1 w-full'>

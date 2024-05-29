@@ -98,7 +98,8 @@ function App() {
         <Route path="/company/dashboard" element={<CompanyDashboard userData={userData} />} />
         <Route path="/company/jobs" element={<CompanyJobs userData={userData} />} />
         <Route path="/company/interviews" element={<CompanyInterviews userData={userData} />} />
-        <Route path="/company/applicantlist" element={<ApplicantList userData={userData} />} />
+        <Route path="/company/applicantlist/:id" element={<ApplicantList userData={userData} />} />
+
         <Route
           path="/company/analytics"
           element={<CompanyAnalyticsOverview userData={userData} />}
