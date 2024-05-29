@@ -10,7 +10,7 @@ const CareerAdvice = () => {
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
           <div className="flex justify-between pt-[100px] pb-[70px]">
             <div className="w-6/12 justify-items-center mt-20">
-              <span className="text-[blue]">Career Advice</span>
+              <span className="text-jobportal-pink">Career Advice</span>
               <p className="paragraph">
                 Our team provides personalized career consulting to help
                 individuals enhance their career paths. We offer expert advice
@@ -29,7 +29,7 @@ const CareerAdvice = () => {
       <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
         <div className="flex justify-between flex-row-reverse mt-[100px] mb-[100px]">
           <div className="w-6/12 justify-items-center mt-20">
-            <span className="text-[blue]">Research</span>
+            <span className="text-jobportal-pink">Research</span>
             <p className="paragraph">
               Our team conducts thorough research to find the best career
               solutions for you. We analyze industry trends, job market demands,
@@ -47,13 +47,15 @@ const CareerAdvice = () => {
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
           <div className="flex justify-between pt-[100px] pb-[100px]">
             <div className="w-6/12 justify-items-center mt-20">
-              <span className="text-[blue]">Reach us</span>
+              <span className="text-jobportal-pink">Reach us</span>
               <p className="paragraph">
                 People can easily contact us through email for personalized
                 career consulting. Just send your inquiries to {""}
-                <span className="text-[blue]">jobhorizon@gmail.com</span>, and
-                our team will respond promptly to assist you with expert advice
-                and guidance.
+                <span className="text-jobportal-pink">
+                  jobhorizon@gmail.com
+                </span>
+                , and our team will respond promptly to assist you with expert
+                advice and guidance.
               </p>
             </div>
             <div className="w-1/5">

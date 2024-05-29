@@ -11,7 +11,7 @@ const ResumeHelp = () => {
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
           <div className="flex justify-between pt-[100px] pb-[70px]">
             <div className="w-6/12 justify-items-center mt-20">
-              <span className="text-[blue]">Resume Help</span>
+              <span className="text-jobportal-pink">Resume Help</span>
               <p className="paragraph">
                 Our team specializes in helping you craft the perfect resume,
                 tailored to showcase your unique skills and experiences. We
@@ -32,7 +32,7 @@ const ResumeHelp = () => {
       <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
         <div className="flex justify-between flex-row-reverse pt-[100px] pb-[70px]">
           <div className="w-[53%] justify-items-center mt-20">
-            <span className="text-[blue]">How to build a resume</span>
+            <span className="text-jobportal-pink">How to build a resume</span>
             <p className="paragraph">
               <p class="text-gray-800 mb-4">
                 Building a resume involves highlighting your key skills and
@@ -65,10 +65,13 @@ const ResumeHelp = () => {
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
           <div className="flex justify-between pt-[100px] pb-[70px]">
             <div className="w-6/12 justify-items-center mt-20">
-              <span className="text-[blue]">Resume Example</span>
+              <span className="text-jobportal-pink">Resume Example</span>
               <p className="paragraph">
                 To see a well-crafted resume, check out our{" "}
-                <Link to="/resume-example" className="text-[blue]">
+                <Link
+                  to="/resume-example"
+                  className="text-jobportal-pink hover:text-fuchsia-900"
+                >
                   resume example
                 </Link>{" "}
                 . This sample showcases the best practices for presenting your
