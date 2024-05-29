@@ -10,18 +10,14 @@ const JobPost = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    jobDescription: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
     jobSummary: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    experience_min: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    // experience_min: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    // },
     is_Active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -38,11 +34,11 @@ const JobPost = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    annualSalary_from: {
+    salary_from: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    annualSalary_to: {
+    salary_to: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -54,17 +50,13 @@ const JobPost = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    natonality: {
+    nationality: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    jobType: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
     likes: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 
@@ -55,14 +55,44 @@ const options = {
   },
 };
 
-export default function PageThree({ salaryFrom, setSalaryFrom, salaryTo, setSalaryTo }) {
+export default function PageThree({ salaryFrom, setSalaryFrom, salaryTo, setSalaryTo, successMessage, errorMessage }) {
   const handleSalaryFromChange = (e) => {
     setSalaryFrom(e.target.value);
+
+    if (e.target.value < 14) {
+      setSalaryMessage('Your pay is below average');
+      return;
+    }
+
+    if (e.target.value === 14) {
+      setSalaryMessage('Your pay is average');
+    }
+
+    if (e.target.value > 14) {
+      setSalaryMessage('Your pay is competitive');
+    }
+
+    setSalaryMessage('Your pay is below average');
   };
 
   const handleSalaryToChange = (e) => {
     setSalaryTo(e.target.value);
+
+    if (e.target.value < 15) {
+      setSalaryMessage('Your pay is below average');
+      return;
+    }
+
+    if (e.target.value === 15) {
+      setSalaryMessage('Your pay is average');
+    }
+
+    if (e.target.value > 15) {
+      setSalaryMessage('Your pay is competitive');
+    }
   };
+
+  const [salaryMessage, setSalaryMessage] = useState('Enter your salary range');
 
   return (
     <>
@@ -99,7 +129,6 @@ export default function PageThree({ salaryFrom, setSalaryFrom, salaryTo, setSala
             />
           </div>
         </div>
-
         <div className='border p-5 ps-20 flex flex-col gap-5 justify-center items-start relative w-full'>
           <div className='resetPassword__form-message absolute top-2 left-0' style={{ width: '40px' }}>
             <section>
@@ -120,7 +149,7 @@ export default function PageThree({ salaryFrom, setSalaryFrom, salaryTo, setSala
               </span>
             </section>
           </div>
-          <h3 className='text-2xl font-medium'>Enter salary</h3>
+          <h3 className='text-2xl font-medium'>{salaryMessage}</h3>
           <p>Jobs having competitive salaries are 38% more likely to report a hire by day 7.</p>
 
           <div className='flex justify-between items-center w-full gap-5 py-5'>
@@ -146,6 +175,60 @@ export default function PageThree({ salaryFrom, setSalaryFrom, salaryTo, setSala
           </div>
         </div>
       </div>
+      {successMessage ? (
+        <section className='resetPassword__form-message-container resetPassword__form-success'>
+          <div className='resetPassword__form-message'>
+            <section>
+              <span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='16'
+                  height='16'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='white'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                >
+                  <polyline points='20 6 9 17 4 12'></polyline>
+                </svg>
+              </span>
+              <div>{successMessage}</div>
+            </section>
+          </div>
+        </section>
+      ) : (
+        <></>
+      )}
+      {errorMessage ? (
+        <section className='resetPassword__form-message-container resetPassword__form-error'>
+          <div className='resetPassword__form-message'>
+            <section>
+              <span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='16'
+                  height='16'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='white'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                >
+                  <circle cx='12' cy='12' r='10'></circle>
+                  <line x1='15' y1='9' x2='9' y2='15'></line>
+                  <line x1='9' y1='9' x2='15' y2='15'></line>
+                </svg>
+              </span>
+              <div>{errorMessage}</div>
+            </section>
+          </div>
+        </section>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

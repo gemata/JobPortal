@@ -95,13 +95,13 @@ function App() {
         <Route path="/salary-tools" element={<Salary />} />
         <Route path="/find-jobs" element={<FindJobs />} />
 
-        <Route path="/company/dashboard" element={<CompanyDashboard />} />
-        <Route path="/company/jobs" element={<CompanyJobs />} />
-        <Route path="/company/interviews" element={<CompanyInterviews />} />
-        <Route path="/company/applicantlist" element={<ApplicantList />} />
+        <Route path="/company/dashboard" element={<CompanyDashboard userData={userData} />} />
+        <Route path="/company/jobs" element={<CompanyJobs userData={userData} />} />
+        <Route path="/company/interviews" element={<CompanyInterviews userData={userData} />} />
+        <Route path="/company/applicantlist" element={<ApplicantList userData={userData} />} />
         <Route
           path="/company/analytics"
-          element={<CompanyAnalyticsOverview />}
+          element={<CompanyAnalyticsOverview userData={userData} />}
         />
 
         <Route

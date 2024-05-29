@@ -19,6 +19,16 @@ const JobPositionController = {
     }
   },
 
+  async getJobPositionsByJobField(req, res) {
+    const { id } = req.params;
+    try {
+      const JobPositions = await JobPosition.findAll({ where: { JobFieldId: id } });
+      return res.status(201).json(JobPositions);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
   async getJobPositionById(req, res) {
     const { id } = req.params;
     try {

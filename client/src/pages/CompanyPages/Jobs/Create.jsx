@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PageOne from '../../../components/CompanyComponents/Jobs/CreateJob/PageOne';
 import PageTwo from '../../../components/CompanyComponents/Jobs/CreateJob/PageTwo';
 import PageThree from '../../../components/CompanyComponents/Jobs/CreateJob/PageThree';
@@ -12,12 +12,17 @@ const CompanyJobsCreate = ({ userData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobField, setJobField] = useState('');
   const [jobPosition, setJobPosition] = useState('');
+  const [jobSummary, setJobSummary] = useState('');
   const [educationLevel, setEducationLevel] = useState('');
   const [nationality, setNationality] = useState('');
   const [jobLocation, setJobLocation] = useState('');
   const [interviewMethod, setInterviewMethod] = useState('');
   const [salaryFrom, setSalaryFrom] = useState('');
   const [salaryTo, setSalaryTo] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const nextPage = () => {
     if (currentPage < 3) {
@@ -33,24 +38,71 @@ const CompanyJobsCreate = ({ userData }) => {
     }
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
     const requestBody = {
+      CompanyID: userData.ID,
       jobField: jobField,
-      jobPosition: jobPosition,
-      educationLevel: educationLevel,
+      JobPositionId: jobPosition,
+      education: educationLevel,
       nationality: nationality,
       jobLocation: jobLocation,
       interviewMethod: interviewMethod,
-      salaryFrom: salaryFrom,
-      salaryTo: salaryTo,
+      salary_from: salaryFrom,
+      salary_to: salaryTo,
+      startAt: new Date().toISOString(),
+      endAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      is_Active: true,
+      jobSummary: jobSummary,
     };
 
-    console.log(requestBody);
+    for (const [key, value] of Object.entries(requestBody)) {
+      if (value === null || value === '') {
+        setErrorMessage(`Field is missing: ${key}`);
+        return;
+      }
+    }
+
+    setJobField('');
+    setJobPosition('');
+    setJobSummary('');
+    setEducationLevel('');
+    setNationality('');
+    setJobLocation('');
+    setInterviewMethod('');
+    setSalaryFrom('');
+    setSalaryTo('');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/jobposts/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        console.error('Error:', responseData.error);
+        setSuccessMessage('');
+        setErrorMessage('Error', responseData.error);
+      } else {
+        setErrorMessage('');
+        setSuccessMessage('Job created successfully.');
+        setTimeout(() => {
+          navigate('/company/dashboard');
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setErrorMessage('Fetch error', error.message);
+    }
   };
 
   return (
     <>
-      {userData.length != 0 && userData.role === 'Company' ? (
+      {userData.length !== 0 && userData.role === 'Company' ? (
         <>
           <DashboardNavSection />
 
@@ -70,6 +122,8 @@ const CompanyJobsCreate = ({ userData }) => {
                       setJobPosition={setJobPosition}
                       educationLevel={educationLevel}
                       setEducationLevel={setEducationLevel}
+                      jobSummary={jobSummary}
+                      setJobSummary={setJobSummary}
                     />
                   )}
                   {currentPage === 2 && (
@@ -82,7 +136,16 @@ const CompanyJobsCreate = ({ userData }) => {
                       setInterviewMethod={setInterviewMethod}
                     />
                   )}
-                  {currentPage === 3 && <PageThree salaryFrom={salaryFrom} setSalaryFrom={setSalaryFrom} salaryTo={salaryTo} setSalaryTo={setSalaryTo} />}
+                  {currentPage === 3 && (
+                    <PageThree
+                      salaryFrom={salaryFrom}
+                      setSalaryFrom={setSalaryFrom}
+                      salaryTo={salaryTo}
+                      setSalaryTo={setSalaryTo}
+                      successMessage={successMessage}
+                      errorMessage={errorMessage}
+                    />
+                  )}
                 </form>
                 <div className='flex justify-between pb-5'>
                   {currentPage === 1 ? (
