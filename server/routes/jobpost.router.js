@@ -9,6 +9,8 @@ JobPostRouter.get('/', JobPostController.getJobPosts);
 
 JobPostRouter.get('/:id', JobPostController.getJobPostById);
 
+JobPostRouter.get('/company/:CompanyID', JobPostController.getJobPostByCompanyID);
+
 JobPostRouter.put('/:id', JobPostController.updateJobPost);
 
 JobPostRouter.delete('/:id', JobPostController.deleteJobPost);

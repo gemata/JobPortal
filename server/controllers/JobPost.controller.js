@@ -36,6 +36,19 @@ const JobPostController = {
       return res.status(500).json({ error: error.message });
     }
   },
+    // Get a JobPost by CompanyID
+    async getJobPostByCompanyID(req, res) {
+      const { CompanyID } = req.params;
+      try {
+        const JobPostRecords = await JobPost.findAll({where:{CompanyID}});
+        if (!JobPostRecords) {
+          return res.status(404).json({ message: "Job Post not found" });
+        }
+        return res.status(200).json(JobPostRecords);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    },
 
   // Update a JobPost
   async updateJobPost(req, res) {
