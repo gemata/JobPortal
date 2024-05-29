@@ -69,7 +69,39 @@ const JobPostController = {
     }
   },
 
+  // Like a Job Post
+  async likeJobPost(req, res) {
+    const { id } = req.params;
+    try {
+      const jobPost = await JobPost.findByPk(id);
+      if (!jobPost) {
+        return res.status(404).json({ message: "Job Post not found" });
+      }
+      jobPost.likes += 1;
+      await jobPost.save();
+      return res.status(200).json(jobPost);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Dislike a JobPost
+  async dislikeJobPost(req, res) {
+    const { id } = req.params;
+    try {
+      const jobPost = await JobPost.findByPk(id);
+      if (!jobPost) {
+        return res.status(404).json({ message: "Job Post not found" });
+      }
+      jobPost.likes -= 1;
+      await jobPost.save();
+      return res.status(200).json(jobPost);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
 
 };
+
 
 export default JobPostController;

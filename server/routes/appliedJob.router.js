@@ -11,6 +11,8 @@ AppliedJobsRouter.get('/:id', AppliedJobController.getAppliedJobById);
 
 AppliedJobsRouter.put('/:id', AppliedJobController.updateAppliedJob);
 
+AppliedJobsRouter.get('/user/:UserId', AppliedJobController.getAppliedJobsByUserId);
+
 AppliedJobsRouter.delete('/:id', AppliedJobController.deleteAppliedJob);
 
 export default AppliedJobsRouter;

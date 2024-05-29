@@ -36,6 +36,21 @@ const UserProfileController = {
     }
   },
 
+    // Get a UserProfile by User ID
+    async getUserProfileByUserId(req, res) {
+      const { UserId } = req.params;
+      try {
+        const UserProfileRecord = await UserProfile.findOne({ where: { UserId } });
+  
+        if (!UserProfileRecord) {
+          return res.status(404).json({ message: "User Profile not found" });
+        }
+        return res.status(200).json(UserProfileRecord);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    },
+
   // Update a UserProfile
   async updateUserProfile(req, res) {
     const { id } = req.params;

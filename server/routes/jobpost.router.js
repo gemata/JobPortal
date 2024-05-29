@@ -13,4 +13,9 @@ JobPostRouter.put('/:id', JobPostController.updateJobPost);
 
 JobPostRouter.delete('/:id', JobPostController.deleteJobPost);
 
+// New endpoints for liking and disliking
+JobPostRouter.post('/:id/like', JobPostController.likeJobPost);
+
+JobPostRouter.post('/:id/dislike', JobPostController.dislikeJobPost);
+
 export default JobPostRouter;

@@ -36,6 +36,20 @@ const LikedJobController = {
     }
   },
 
+  // Get all LikedJobs by user ID
+  async getLikedJobsByUserId(req, res) {
+    const { UserId } = req.params;
+    try {
+      const LikedJobs = await LikedJob.findAll({ where: { UserId } });
+      if (!LikedJobs.length) {
+        return res.status(404).json({ message: "No liked jobs found for this user" });
+      }
+      return res.status(200).json(LikedJobs);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
   // Update a LikedJob
   async updateLikedJob(req, res) {
     const { id } = req.params;

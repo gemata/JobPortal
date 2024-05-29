@@ -9,6 +9,10 @@ InterviewListRouter.get('/', InterviewListController.getInterviewLists);
 
 InterviewListRouter.get('/:id', InterviewListController.getInterviewListById);
 
+InterviewListRouter.get('/user/:UserId', InterviewListController.getInterviewListsByUserId);
+
+InterviewListRouter.get('/jobs/:JobPostID', InterviewListController.getInterviewListsByJobPostID);
+
 InterviewListRouter.put('/:id', InterviewListController.updateInterviewList);
 
 InterviewListRouter.delete('/:id', InterviewListController.deleteInterviewList);

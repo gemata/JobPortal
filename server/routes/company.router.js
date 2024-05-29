@@ -9,6 +9,8 @@ CompanyRouter.get('/', CompanyController.getCompanies);
 
 CompanyRouter.get('/:id', CompanyController.getCompanyById);
 
+
+
 CompanyRouter.put('/:id', CompanyController.updateCompany);
 
 CompanyRouter.delete('/:id', CompanyController.deleteCompany);

@@ -9,6 +9,8 @@ UserProfileRouter.get('/', UserProfileController.getUserProfiles);
 
 UserProfileRouter.get('/:id', UserProfileController.getUserProfileById);
 
+UserProfileRouter.get('/user/:UserId', UserProfileController.getUserProfileByUserId);
+
 UserProfileRouter.put('/:id', UserProfileController.updateUserProfile);
 
 UserProfileRouter.delete('/:id', UserProfileController.deleteUserProfile);

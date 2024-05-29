@@ -36,6 +36,21 @@ const AppliedJobController = {
     }
   },
 
+  // Get all AppliedJobs by user ID
+  async getAppliedJobsByUserId(req, res) {
+    const { UserId } = req.params;
+    try {
+      const AppliedJobs = await AppliedJob.findAll({ where: { UserId } });
+      if (!AppliedJobs.length) {
+        return res.status(404).json({ message: "No applied jobs found for this user" });
+      }
+      return res.status(200).json(AppliedJobs);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+
   // Update a AppliedJob
   async updateAppliedJob(req, res) {
     const { id } = req.params;

@@ -12,6 +12,8 @@ CompanyProfileRouter.get(
   CompanyProfileController.getCompanyProfileById
 );
 
+CompanyProfileRouter.get('/company/:CompanyID', CompanyProfileController.getCompanyProfileByCompanyID);
+
 CompanyProfileRouter.put("/:id", CompanyProfileController.updateCompanyProfile);
 
 CompanyProfileRouter.delete(

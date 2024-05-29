@@ -37,6 +37,37 @@ const InterviewListController = {
     }
   },
 
+  // Get all InterviewLists by user ID
+  async getInterviewListsByUserId(req, res) {
+    const { UserId } = req.params;
+    try {
+      const InterviewLists = await InterviewList.findAll({ where: { UserId } });
+      if (!InterviewLists.length) {
+        return res.status(404).json({ message: "No interviews found for this user" });
+      }
+      return res.status(200).json(InterviewLists);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+
+  // Get all InterviewLists by Job Post ID
+  async getInterviewListsByJobPostID(req, res) {
+    const { JobPostID } = req.params;
+    try {
+      const InterviewLists = await InterviewList.findAll({ where: { JobPostID } });
+      if (!InterviewLists.length) {
+        return res.status(404).json({ message: "No interviews found for job post" });
+      }
+      return res.status(200).json(InterviewLists);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+
+
   // Update a InterviewList
   async updateInterviewList(req, res) {
     const { id } = req.params;
