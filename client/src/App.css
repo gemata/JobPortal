@@ -117,7 +117,7 @@
   text-align: start;
 }
 
-.resetPassword__decorative > * {
+.resetPassword__decorative>* {
   z-index: 1;
   position: relative;
 }
@@ -425,6 +425,30 @@
   color: white;
 }
 
+.up-arrow,
+.down-arrow {
+  position: relative;
+}
+
+.up-arrow::before,
+.down-arrow::before {
+  position: absolute;
+  right: -35%;
+  opacity: 0.9;
+  transform: scaleX(1.25);
+  z-index: 99;
+}
+
+.up-arrow::before {
+  content: url(img/upArrow.svg);
+  top: -25%;
+}
+
+.down-arrow::before {
+  content: url(img/downArrow.svg);
+  top: 0%;
+}
+
 @media (max-width: 870px) {
   .resetPassword__decorative {
     display: none;
@@ -432,6 +456,23 @@
 
   .resetPassword__section {
     width: 480px;
+  }
+}
+
+@media (max-width: 765px) {
+
+  .up-arrow::before,
+  .down-arrow::before {
+    transform: scaleX(1) scaleY(1.25) rotate(90deg);
+    top: 50%;
+  }
+
+  .up-arrow::before {
+    right: -15%;
+  }
+
+  .down-arrow::before {
+    right: 70%;
   }
 }
 

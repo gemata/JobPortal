@@ -2,6 +2,10 @@ import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import illustration from '../../img/Illustration.svg';
 import process from '../../img/Process.svg';
+import userSVG from '../../img/user.svg';
+import cloudSVG from '../../img/uploadCloud.svg';
+import searchSVG from '../../img/search.svg';
+import checkBadgeSVG from '../../img/checkBadge.svg';
 import categoryImage1 from '../../img/category1.svg';
 import categoryImage2 from '../../img/category2.svg';
 import categoryImage3 from '../../img/category3.svg';
@@ -114,10 +118,10 @@ const Home = () => {
               </span>
               <div className='flex items-center justify-center mt-5'>
                 <div className='flex items-center border rounded w-full max-w-[600px] p-[5px] border-solid border-[#ccc]'>
-                  <FaSearch className='text-[1.2rem] mx-2.5 my-0 text-[blue]' />
+                  <FaSearch className='text-[1.2rem] mx-2.5 my-0 text-[purple]' />
                   <input type='text' className='flex-1 text-base p-[5px] border-[none] bg-[#f1f2f4]' placeholder='Search jobs by title or keyword' />
                 </div>
-                <button className='bg-[#007bff] text-[white] rounded cursor-pointer text-base ml-2.5 px-4 py-2.5 border-[none] hover:bg-[#0056b3] active:bg-[#004080]'>
+                <button className='bg-jobportal-pink text-[white] rounded cursor-pointer text-base ml-2.5 px-4 py-2.5 border-[none] hover:bg-[#b3009a] active:bg-[#80006d]'>
                   Search
                 </button>
               </div>
@@ -181,8 +185,36 @@ const Home = () => {
       </div>
       <div className='bg-[#f1f2f4] mt-[100px]'>
         <div className='font-medium text-[42px] text-center mb-[100px] pt-[100px]'>How does job-pilot work ?</div>
-        <div className='pb-[100px] flex justify-center'>
-          <img src={process} alt='' />
+        <div className='px-6 md:px-0 pb-[100px] flex flex-col md:flex-row justify-center gap-5'>
+          <div className='rounded-xl up-arrow flex flex-col items-center py-6'>
+            <div className='p-5 bg-white aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+              <img src={userSVG} />
+            </div>
+            <h3 className='text-lg font-semibold mt-5'>Create account</h3>
+            <p className='w-10/12 leading-5 text-center mt-3 text-gray-500'>Sign up and unlock countless job opportunities!</p>
+          </div>
+
+          <div className='rounded-xl down-arrow bg-white flex flex-col items-center py-6'>
+            <div className='p-5 bg-jobportal-pink aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+              <img src={cloudSVG} />
+            </div>
+            <h3 className='text-lg font-semibold mt-5'>Upload CV/Resume</h3>
+            <p className='w-10/12 leading-5 text-center mt-3 text-gray-500'>Share your resume and let employers find you.</p>
+          </div>
+          <div className='rounded-xl up-arrow flex flex-col items-center py-6'>
+            <div className='p-6 bg-white aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+              <img src={searchSVG} />
+            </div>
+            <h3 className='text-lg font-semibold mt-5'>Find suitable job</h3>
+            <p className='w-10/12 leading-5 text-center mt-3 text-gray-500'>Browse and discover your ideal job in minutes.</p>
+          </div>
+          <div className='rounded-xl flex flex-col items-center py-6'>
+            <div className='p-5 bg-white aspect-square w-20 rounded rounded-full' style={{ zIndex: 100 }}>
+              <img src={checkBadgeSVG} />
+            </div>
+            <h3 className='text-lg font-semibold mt-5'>Apply to job</h3>
+            <p className='w-10/12 leading-5 text-center mt-3 text-gray-500'>Apply with a click and take the next career step.</p>
+          </div>
         </div>
       </div>
       <div>
@@ -192,7 +224,7 @@ const Home = () => {
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
             {categoryData.map((category) => (
-              <div key={category.name} className='flex items-center p-4 bg-blue-50 rounded-md shadow-sm hover:shadow-lg cursor-pointer transition-shadow duration-300'>
+              <div key={category.name} className='flex items-center p-4 bg-purple-50 rounded-md shadow-sm hover:shadow-lg cursor-pointer transition-shadow duration-300'>
                 <div className='flex-shrink-0 w-16 h-16'>
                   <img src={category.image} alt={category.name} className='w-full h-full object-cover rounded-md' />
                 </div>
@@ -224,7 +256,7 @@ const Home = () => {
                 {company.featured && <div className='ml-auto text-xs text-red-500 bg-red-100 py-1 px-2 rounded-full'>Featured</div>}
               </div>
               <div>
-                <button className='w-full py-2 px-4 bg-blue-100 text-blue-500 font-medium rounded-md hover:bg-blue-200 transition-colors duration-300'>Open Position</button>
+                <button className='w-full py-2 px-4 bg-purple-100 text-purple-500 font-medium rounded-md hover:bg-purple-200 transition-colors duration-300'>Open Position</button>
               </div>
             </div>
           ))}
@@ -243,8 +275,7 @@ const Home = () => {
         </div>
       </div>
 
-      <EmpCard/>
-      
+      <EmpCard />
     </>
   );
 };
