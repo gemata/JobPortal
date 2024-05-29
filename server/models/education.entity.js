@@ -42,7 +42,7 @@ const Education = sequelize.define(
       allowNull: false,
     },
     description: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },

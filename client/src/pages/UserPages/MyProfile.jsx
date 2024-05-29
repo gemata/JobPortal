@@ -9,7 +9,7 @@ const MyProfile = ({ userData }) => {
   return (
     <>
       <NavBarContainer />
-      <div className="max-w-[1500px] mx-auto flex flex-col md:flex-row justify-center gap-8 p-4">
+      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-center gap-8 p-4 py-8">
         <div className="flex flex-col gap-5 w-1/3">
           <ProfileHeader />
           <ResumeCard />

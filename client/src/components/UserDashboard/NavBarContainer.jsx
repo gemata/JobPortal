@@ -3,11 +3,18 @@ import { NavLink } from "react-router-dom";
 
 const NavBarContainer = () => {
   return (
-    <nav className="bg-white shadow-lg"  >
-      <div className="container mx-auto ">
-        <ul className="flex gap-7 p-3 text-black font-semibold flex-wrap">
+    <nav className="bg-white shadow-lg">
+      <div className="max-w-[1200px] mx-auto ">
+        <ul className="flex justify-between gap-7 p-3 text-black font-semibold flex-wrap">
           <li>
-            <NavLink to="/profile/dashboard" className="flex items-center">
+            <NavLink
+              to="/profile/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
+            >
               {/* Dashboard icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +30,11 @@ const NavBarContainer = () => {
           <li>
             <NavLink
               to="/profile/detail"
-              className="flex items-center"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
             >
               {/* My Profile icon */}
               <svg
@@ -44,7 +55,11 @@ const NavBarContainer = () => {
           <li>
             <NavLink
               to="/profile/job-tracker"
-              className="flex items-center"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
             >
               {/* JobTracker icon */}
               <svg
@@ -64,7 +79,14 @@ const NavBarContainer = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile/my-goals" className="flex items-center">
+            <NavLink
+              to="/profile/my-goals"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
+            >
               {/* My Goals icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +106,11 @@ const NavBarContainer = () => {
           <li>
             <NavLink
               to="/profile/job-alerts"
-              className="flex items-center"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
             >
               {/* Job Alerts icon */}
               <svg
@@ -104,7 +130,14 @@ const NavBarContainer = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile/listed-jobs" className="flex items-center">
+            <NavLink
+              to="/profile/listed-jobs"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
+            >
               {/* My Jobs icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +151,14 @@ const NavBarContainer = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile/settings" className="flex items-center">
+            <NavLink
+              to="/profile/settings"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center border-b-4 border-purple-500"
+                  : "flex items-center"
+              }
+            >
               {/* Setting icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
