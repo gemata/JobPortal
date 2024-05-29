@@ -19,7 +19,7 @@ function formatDateTime(dateTime) {
 }
 
 export default function ApplicantListItem(req) {
-  const [applicantStatus, setApplicantStatus] = useState(null);
+  const [applicantStatus, setApplicantStatus] = useState(req.isSelected);
   const applicantData = {
     id: req.id,
     isSelected: req.isSelected,
