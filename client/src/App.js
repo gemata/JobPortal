@@ -73,8 +73,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile/detail" element={<MyProfile />} />
-        <Route path="/profile/dashboard" element={<Dashboard />} />
+        <Route
+          path="/profile/detail"
+          element={<MyProfile userData={userData} />}
+        />
+        <Route path="/profile/dashboard" element={<Dashboard userData={userData} />} />
         <Route path="/profile/job-tracker" element={<JobTracker />} />
         <Route path="/profile/my-goals" element={<MyGoals />} />
         <Route path="/profile/job-alerts" element={<JobAlerts />} />

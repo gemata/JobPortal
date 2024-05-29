@@ -79,9 +79,9 @@ const ResetPassword = () => {
             </div>
           </div>
           <form className='resetPassword__form' onSubmit={handleFormSubmit}>
-            <div className='resetPassword__form-title' style={{ marginBottom: errorMessage || successMessage || token == null ? '0px' : '50px' }}>
+            <div className='resetPassword__form-title' style={{ marginBottom: errorMessage || successMessage || token == null ? '0px' : '50px',alignItems:'center' }}>
               <h3>Reset Password</h3>
-              <h5>COMPANY LOGO</h5>
+              <img src="http://localhost:5000/mainLogo.png" alt="Company Logo" style={{ margin: 0, width: '50px', height: '50px', borderRadius: '50%' }} />
             </div>
             {token ? (
               <></>

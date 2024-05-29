@@ -1,21 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 
-const ProfileHeader = ({ name, position, location, user_image }) => {
+const ProfileHeader = ({ userData }) => {
+useEffect(() => {
+  console.log(userData);
+}, [userData])
+
   return (
-    <div className="max-w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="flex items-center p-4">
         <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
           {/* Dynamic profile picture */}
           <img
-            src={user_image || "https://via.placeholder.com/150"}
+            src={"https://via.placeholder.com/150"}
             alt="Profile"
             className="w-full h-full object-cover"
           />
         </div>
         <div className="flex flex-col">
-          <p className="text-xl font-bold">{`Hi, ${name}`}</p>
-          <p className="text-base text-gray-500">{position || "Position"}</p>
-          <p className="text-base text-gray-500">{location || "Location"}</p>
+          <p className="text-xl font-bold">{`Hi, hello`}</p>
+          <p className="text-base text-gray-500">{"Position"}</p>
+          <p className="text-base text-gray-500">{"Location"}</p>
         </div>
         <button
           type="button"

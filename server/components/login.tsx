@@ -331,9 +331,9 @@ const Login: React.FC<{}> = () => {
             </Text>
           </StyledDiv>
           <Box id='loginForm' as='form' onSubmit={handleLoginSubmit} method='POST' p='x3' flexGrow={1} width={['100%', '100%', '480px']}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !message ? '50px' : '0', marginTop: '15px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !message ? '50px' : '0', marginTop: '15px',alignItems:'center' }}>
               <h3 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Login</h3>
-              <H5 style={{ margin: 0 }}>COMPANY LOGO</H5>
+              <img src="http://localhost:5000/mainLogo.png" alt="Company Logo" style={{ margin: 0, width: '50px', height: '50px', borderRadius: '50%' }} />
             </div>
             {message && <MessageBox my='lg' message={message.split(' ').length > 1 ? message : translateMessage(message)} variant='danger' />}
             <FormGroup>
@@ -415,9 +415,9 @@ const Login: React.FC<{}> = () => {
             </div>
           </Box>
           <Box id='registerForm' as='form' onSubmit={handleRegisterSubmit} method='POST' p='x3' flexGrow={1} width={['100%', '100%', '480px']} style={{ display: 'none' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !registerMessage && !registerSuccessMessage ? '50px' : '0', marginTop: '15px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !registerMessage && !registerSuccessMessage ? '50px' : '0', marginTop: '15px', alignItems:'center' }}>
               <h3 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold', fontFamily: 'TTNormsBold, Roboto' }}>Register</h3>
-              <H5 style={{ margin: 0 }}>COMPANY LOGO</H5>
+              <img src="http://localhost:5000/mainLogo.png" alt="Company Logo" style={{ margin: 0, width: '50px', height: '50px', borderRadius: '50%' }} />
             </div>
             {registerMessage && <MessageBox my='lg' message={registerMessage.split(' ').length > 1 ? registerMessage : translateMessage(registerMessage)} variant='danger' />}
             {registerSuccessMessage && (
@@ -494,10 +494,10 @@ const Login: React.FC<{}> = () => {
             style={{ display: 'none' }}
           >
             <div
-              style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !forgotPasswordMessage && !forgotPasswordSuccessMessage ? '50px' : '0', marginTop: '15px' }}
+              style={{ display: 'flex', justifyContent: 'space-between', marginBottom: !forgotPasswordMessage && !forgotPasswordSuccessMessage ? '50px' : '0', marginTop: '15px', alignItems:'center' }}
             >
               <StyledH3>Reset Password</StyledH3>
-              <H5 style={{ margin: 0 }}>COMPANY LOGO</H5>
+              <img src="http://localhost:5000/mainLogo.png" alt="Company Logo" style={{ margin: 0, width: '50px', height: '50px', borderRadius: '50%' }} />
             </div>
             {forgotPasswordMessage && (
               <MessageBox my='lg' message={forgotPasswordMessage.split(' ').length > 1 ? forgotPasswordMessage : translateMessage(forgotPasswordMessage)} variant='danger' />

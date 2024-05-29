@@ -1,10 +1,8 @@
-
-
 import React from 'react';
 
 const ResumeUpload = () => {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="w-full bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="p-4 bg-gray-200">
         <div className="flex items-center space-x-4">
           <div className="p-2 border-2 border-dashed border-gray-400 rounded-full">
@@ -12,7 +10,7 @@ const ResumeUpload = () => {
               M {/* Icon placeholder */}
             </span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-grow">
             <span className="font-bold text-lg">Upload Your Resume</span>
             <span className="text-gray-700 text-sm">Upload your resume to ensure employers can easily find you</span>
           </div>
@@ -26,4 +24,3 @@ const ResumeUpload = () => {
 };
 
 export default ResumeUpload;
-
