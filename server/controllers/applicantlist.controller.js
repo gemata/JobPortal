@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 import ApplicantList from "../models/applicantlist.entity.js";
 
 // Controller functions
@@ -35,6 +36,41 @@ const ApplicantListController = {
       return res.status(500).json({ error: error.message });
     }
   },
+
+   // Get a ApplicantList by JobPostID
+   async getApplicantListByJobPostID(req, res) {
+    const { JobPostID } = req.params;
+    try {
+      const ApplicantListRecord = await ApplicantList.findAll({where: {JobPostID}});
+      if (!ApplicantListRecord) {
+        return res.status(404).json({ message: "Applicant List empty or not found" });
+      }
+      return res.status(200).json(ApplicantListRecord);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Get all selected applicants from list
+  async getSelectedApplicants(req, res) {
+    const { JobPostID } = req.params;
+    try {
+      const applicantListRecords = await ApplicantList.findAll({
+        where: {
+          isSelected: 1,
+          JobPostID: JobPostID
+        }
+      });
+      if (applicantListRecords.length === 0) {
+        return res.status(404).json({ message: "Applicant List empty or not found" });
+      }
+      return res.status(200).json(applicantListRecords);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  
 
   // Update a ApplicantList
   async updateApplicantList(req, res) {
