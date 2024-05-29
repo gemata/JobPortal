@@ -8,8 +8,8 @@ const Header = ({ userData, setUserData, isLoggedOut, setIsLoggedOut }) => {
 
   const getLinkClassName = (path) => {
     return location.pathname === path
-      ? "text-blue-900"
-      : "hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer";
+      ? "text-jobportal-pink"
+      : "hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-fuchsia-700 cursor-pointer";
   };
 
   return (
@@ -45,7 +45,7 @@ const Header = ({ userData, setUserData, isLoggedOut, setIsLoggedOut }) => {
           <div className="flex justify-end mt-[-25px]">
             <Link
               to="/company/dashboard"
-              className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-blue-900 cursor-pointer"
+              className="hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-fuchsia-700 cursor-pointer"
             >
               Employers/Post Job
             </Link>{" "}
