@@ -89,15 +89,7 @@ export default function ApplicantListItem(req) {
       </div>
       <div className='Actions flex items-center gap-3 w-2/12'>
       
-        <button>
-          <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z'
-            />
-          </svg>
-        </button>
+       
         <select
           className='focus:outline-none rounded-md bg-gray-50 border-2 text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5'
           value={applicantStatus}
@@ -107,6 +99,15 @@ export default function ApplicantListItem(req) {
           <option value={1}>Accepted</option>
           <option value={0}>Declined</option>
         </select>
+        <button>
+          <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z'
+            />
+          </svg>
+        </button>
       </div>
       
     </div>

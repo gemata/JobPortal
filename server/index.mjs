@@ -25,6 +25,7 @@ import fs from "fs";
 import { Icon } from "@adminjs/design-system";
 import dashboardHandler from "./config/dashboardHandler.js";
 import stripeRoutes from "./config/stripe.js";
+import './schedulers/jobScheduler.js'
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
