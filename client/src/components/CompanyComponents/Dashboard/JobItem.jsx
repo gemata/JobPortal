@@ -71,7 +71,7 @@ export default function JobItem({ jobData }) {
 
   return (
     <>
-      <div className='jobItem flex items-center justify-between gap-5 rounded-lg w-full pt-2 pb-2  border-2 bg-white'>
+      <div className='jobItem flex items-center justify-between gap-5 rounded-lg w-full pt-2 pb-2  border bg-white'>
       <div className='flex items-center  gap-10 w-full pl-5 pr-5'>
           <p className='text-gray-600 font-bold w-1/24'>{jobDetails.ID}</p>
           <div className='text-left w-3/12'>
@@ -86,7 +86,7 @@ export default function JobItem({ jobData }) {
         <p className='text-gray-600 w-1/24 '>{jobDetails.likes}</p>
         <p className='text-gray-600 w-1/6 '>Nr. Applicants</p>
         <div className='flex items-center gap-5 w-3/12'>
-          <select className='focus:outline-none w-8/12 rounded-md bg-gray-50 border-2 text-gray-900  text-sm border-gray-400 p-2.5 '
+          <select className='focus:outline-none w-8/12 rounded-md bg-gray-50 border text-gray-900  text-sm border-gray-400 p-2.5 '
             onChange={handleStatusChange}
             value={jobStatus}
           >
@@ -97,7 +97,7 @@ export default function JobItem({ jobData }) {
           <div className="w-2/12 flex items-center">
                 <Link to={`/company/applicantlist/${jobDetails.ID}` } >             
                 <button
-                  className={`gap-4 rounded-lg  w-full pl-5 pr-5 pt-2 pb-2 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
+                  className={`gap-4 rounded-lg  w-full pl-5 pr-5 pt-2 pb-2 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
                 >
                     <div className='text flex flex-row items-center justify-between'>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

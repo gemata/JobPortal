@@ -40,9 +40,9 @@ const ApplicantListUserProfile = ({ id }) => {
 
     return (
         <div className='container w-full'>
-            <div className='profilebasics flex flex-row rounded-lg bg-white border-2 border-grey-400 justify-between gap-5 pt-1'>
+            <div className='profilebasics flex flex-row rounded-lg bg-white border border-grey-400 justify-between gap-5 pt-1'>
                 <div className='profileBasics flex flex-row justify-between gap-5 p-5'>
-                    <div className='w-56 h-56 bg-white rounded-lg border-gray-300 border-2 shadow-lg '>
+                    <div className='w-56 h-56 bg-white rounded-lg border-gray-300 border shadow-lg '>
                         <img src="" alt="User Image" />
                     </div>
                     <div className='pr-5'>
@@ -56,7 +56,7 @@ const ApplicantListUserProfile = ({ id }) => {
                    
                    {/* Replace with reume link of the user */}
                     <Link to=''>
-                        <button type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 border-2 border-jobportal-darkpink font-bold rounded-lg text-base px-5 py-2.5 '>
+                        <button type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 border border-jobportal-darkpink font-bold rounded-lg text-base px-5 py-2.5 '>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                             </svg>
@@ -80,7 +80,7 @@ const ApplicantListUserProfile = ({ id }) => {
             
 
             <div className='education pt-2'>
-                <div className='text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border-2 bg-white text-gray-600 border-gray-300'>
+                <div className='text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border bg-white text-gray-600 border-gray-300'>
                     <p className='pl-2 pb-1 text-lg'>Education </p>
                 </div>
                 <hr className='h-px bg-gray-300 border-0' />
@@ -94,7 +94,7 @@ const ApplicantListUserProfile = ({ id }) => {
             
 
             <div className='workexperience pt-2'>
-                <div className='text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border-2 bg-white text-gray-600 border-gray-300'>
+                <div className='text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border bg-white text-gray-600 border-gray-300'>
                     <p className='pl-2 pb-1 text-lg'>Work Experience </p>
                 </div>
                 <hr className='h-px my-0 bg-gray-300 border-0' />

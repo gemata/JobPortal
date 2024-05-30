@@ -153,7 +153,7 @@ export default function ApplicantListHeader({applicantList}) {
             {showModal && (
                 <div onClick={handleModalCancel} className="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg w-96">
-                        <div className="flex flex-row items-center text-lg  p-6 rounded-tl-lg text-white text-xl rounded-tr-lg border-l-2 border-r-2 border-t-2 border-jobportal-darkpink bg-jobportal-pink font-bold ">
+                        <div className="flex flex-row items-center text-lg  p-6 rounded-tl-lg text-white text-xl rounded-tr-lg border-l border-r border-t border-jobportal-darkpink bg-jobportal-pink font-bold ">
                             {/* Warning SVG */}
                             <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='size-12'>
                                 <path
@@ -164,11 +164,11 @@ export default function ApplicantListHeader({applicantList}) {
                             </svg>
                             <p className='pl-2'>Warning</p>
                         </div>
-                        <p className="p-6 border-l-2 border-r-2 border-gray-400">There are applicants with a pending status.<br /> Proceeding will mark them as not selected.   <br /><br />Do you want to continue?</p>
-                        <div className="flex justify-end p-4 rounded-bl-lg rounded-br-lg border-l-2 border-r-2  border-b-2 border-gray-400 bg-gray-200">
+                        <p className="p-6 border-l border-r border-gray-400">There are applicants with a pending status.<br /> Proceeding will mark them as not selected.   <br /><br />Do you want to continue?</p>
+                        <div className="flex justify-end p-4 rounded-bl-lg rounded-br-lg border-l border-r  border-b border-gray-400 bg-gray-200">
                             <button
                                 onClick={handleModalCancel}
-                                className={`gap-5 rounded-lg py-2 m-2 px-4 border-2 bg-white text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
+                                className={`gap-5 rounded-lg py-2 m-2 px-4 border bg-white text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
                             >
                                 <div className='text flex flex-row items-center justify-between'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 pr-1">
@@ -184,7 +184,7 @@ export default function ApplicantListHeader({applicantList}) {
                             </button>
                             <button
                                 onClick={handleModalProceed}
-                                className={`gap-5 rounded-lg py-2 px-4 m-2 text-white border-2 border-jobportal-darkpink bg-jobportal-pink hover:opacity-90 font-bold text-base`}
+                                className={`gap-5 rounded-lg py-2 px-4 m-2 text-white border border-jobportal-darkpink bg-jobportal-pink hover:opacity-90 font-bold text-base`}
                             >
                                 <div className='text flex flex-row items-center justify-between'>
                                     <p>
@@ -206,14 +206,14 @@ export default function ApplicantListHeader({applicantList}) {
                         <div className='flex w-1/3'>
                             <input
                                 type='text'
-                                className='focus:outline-none rounded-none rounded-l-md bg-gray-50 border-2 text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 border-r-0'
+                                className='focus:outline-none rounded-none rounded-l-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 border-r-0'
                                 placeholder='Search User'
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                             />
                             <button
                                 type='button'
-                                className='inline-flex rounded-e-lg text-gray-900 items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 border-rounded border-gray-400 border-l-2 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white'
+                                className='inline-flex rounded-e-lg text-gray-900 items-center px-3 text-sm text-gray-900 bg-gray-200 border border-rounded border-gray-400 border-l hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white'
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -222,10 +222,10 @@ export default function ApplicantListHeader({applicantList}) {
                         </div>
                         <div className='flex gap-5 w-1/2'>
                             <div className='flex w-1/3'>
-                                <span className='inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
+                                <span className='inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
                                     Sort by:
                                 </span>
-                                <select className='focus:outline-none rounded-e-md bg-gray-50 border-2 text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 ' onChange={handleSortCriteriaChange}>
+                                <select className='focus:outline-none rounded-e-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 ' onChange={handleSortCriteriaChange}>
                                     <option value='date'>Date Applied</option>
                                     <option value='name'>Name</option>
                                     <option value='email'>Email</option>
@@ -233,17 +233,17 @@ export default function ApplicantListHeader({applicantList}) {
                                 </select>
                             </div>
                             <div className='flex w-1/3'>
-                                <span className='inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
+                                <span className='inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
                                     Order by:
                                 </span>
-                                <select className='focus:outline-none rounded-e-md bg-gray-50 border-2 text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 ' onChange={handleSortOrderChange}>
+                                <select className='focus:outline-none rounded-e-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 ' onChange={handleSortOrderChange}>
                                     <option value='desc'>Descending</option>
                                     <option value='asc'>Ascending</option>
                                 </select>
                             </div>
                             <div className='flex w-1/3  justify-end'>
 
-                                <button onClick={handleCreateInterviewClick} type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border-2 border-jobportal-darkpink text-base px-5 py-2.5 '>
+                                <button onClick={handleCreateInterviewClick} type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border border-jobportal-darkpink text-base px-5 py-2.5 '>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
@@ -277,7 +277,7 @@ export default function ApplicantListHeader({applicantList}) {
                                     <ApplicantListItem className='w-11/12' key={applicant.id} {...applicant} />
                                     <button
                                         onClick={() => handleShowProfile(applicant.UserId)}
-                                        className={`gap-5 rounded-lg w-1/12 p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
+                                        className={`gap-5 rounded-lg w-1/12 p-5 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
                                     >
                                         <div className='text flex flex-row items-center justify-between'>
                                             <p>View Profile</p>
@@ -303,7 +303,7 @@ export default function ApplicantListHeader({applicantList}) {
                             {currentPage == 1 ? <button
                                 style={{ width: "2.5rem", height: "2.5rem" }}
                                 disabled={true}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}                        >
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}                        >
                                 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                 </svg>
@@ -312,7 +312,7 @@ export default function ApplicantListHeader({applicantList}) {
                                 <button
                                     style={{ width: "2.5rem", height: "2.5rem" }}
                                     onClick={() => handlePageChange(currentPage - 1)}
-                                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}
                                 >
                                     {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -327,7 +327,7 @@ export default function ApplicantListHeader({applicantList}) {
                                 <button
                                     key={index}
                                     onClick={() => handlePageChange(index + 1)}
-                                    className={`px-3 py-1 mx-1 ${currentPage === index + 1 ? 'focus:outline-none rounded-md bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink' : 'focus:outline-none rounded-md bg-gray-50 border-2 text-gray-900 text-sm border-gray-400'}`}
+                                    className={`px-3 py-1 mx-1 ${currentPage === index + 1 ? 'focus:outline-none rounded-md bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink' : 'focus:outline-none rounded-md bg-gray-50 border text-gray-900 text-sm border-gray-400'}`}
                                 >
                                     {index + 1}
                                 </button>
@@ -336,7 +336,7 @@ export default function ApplicantListHeader({applicantList}) {
                             {currentPage == totalPages ? <button
                                 style={{ width: "2.5rem", height: "2.5rem" }}
                                 disabled={true}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}    >
                                 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                 </svg>
@@ -346,7 +346,7 @@ export default function ApplicantListHeader({applicantList}) {
 
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 style={{ width: "2.5rem", height: "2.5rem" }}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}
                             >
                                 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -368,7 +368,7 @@ export default function ApplicantListHeader({applicantList}) {
                             <button
                                 onClick={handleShowList}
                                 style={{ width: "7rem" }}
-                                className={`gap-5 rounded-lg w-full p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
+                                className={`gap-5 rounded-lg w-full p-5 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
                             >
                                 <div className='text flex items-center flex-row  justify-between'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -379,7 +379,7 @@ export default function ApplicantListHeader({applicantList}) {
                             </button>
                             {activeProfile ? (<div className='flex justify-between  w-full'>
                                 <h5 className='text-gray-600 text-2xl '>Viewing {activeProfile.firstName + ' ' + activeProfile.lastName}'s Profile</h5>
-                                <h5 className='gap-2 text-center rounded-full w-1/6 p-2 border-2 bg-white text-gray-800 border-gray-400 '>Applicant {activeProfile.applicantNo + 1 + ' / ' + applicants.length}</h5>
+                                <h5 className='gap-2 text-center rounded-full w-1/6 p-2 border bg-white text-gray-800 border-gray-400 '>Applicant {activeProfile.applicantNo + 1 + ' / ' + applicants.length}</h5>
                             </div>) : (
                                 <p>Loading profile...</p>
                             )}
@@ -398,7 +398,7 @@ export default function ApplicantListHeader({applicantList}) {
                             {activeProfile.previous == null ? <button
                                 style={{ height: "2.5rem" }}
                                 disabled={true}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}    >
                                 {
                                     <div className='text flex flex-row items-center justify-between'>
 
@@ -414,7 +414,7 @@ export default function ApplicantListHeader({applicantList}) {
 
                                 onClick={() => handlePreviousApplicant(activeProfile.previous)}
                                 style={{ height: "2.5rem" }}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}
                             >
                                 {
                                     <div className='text flex flex-row items-center justify-between'>
@@ -435,7 +435,7 @@ export default function ApplicantListHeader({applicantList}) {
                             {activeProfile.next == null ? <button
                                 style={{ height: "2.5rem" }}
                                 disabled={true}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}    >
                                 {
                                     <div className='text flex flex-row items-center justify-between'>
                                         <p className='px-1.5 py-1 mx-1 text-gray-400'> Next Applicant</p>
@@ -450,7 +450,7 @@ export default function ApplicantListHeader({applicantList}) {
 
                                 onClick={() => handleNextApplicant(activeProfile.next)}
                                 style={{ height: "2.5rem" }}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}
                             >
                                 {
                                     <div className='text flex flex-row items-center justify-between'>

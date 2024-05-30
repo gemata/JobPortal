@@ -22,7 +22,7 @@ export default function DashboardNavSection() {
             <li>
               <NavLink
                 to='/company/dashboard'
-                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b border-jobportal-cyan text-jobportal-cyan' : ''}`}
               >
                 {/* Squares 2x2 SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
@@ -34,7 +34,7 @@ export default function DashboardNavSection() {
             <li className='relative'>
               <NavLink
                 to='/company/jobs/create'
-                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b border-jobportal-cyan text-jobportal-cyan' : ''}`}
               >
                 {/* Plus SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className='w-5 h-5 mt-[0.125rem]'>
@@ -47,7 +47,7 @@ export default function DashboardNavSection() {
             <li>
               <NavLink
                 to='/company/jobs'
-                className={() => `flex gap-2 p-5 items-center ${checkActive('/company/jobs', true) ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+                className={() => `flex gap-2 p-5 items-center ${checkActive('/company/jobs', true) ? 'border-b border-jobportal-cyan text-jobportal-cyan' : ''}`}
               >
                 {/* Briefcase SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
@@ -64,7 +64,7 @@ export default function DashboardNavSection() {
             <li>
               <NavLink
                 to='/company/applicantlist/'
-                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b border-jobportal-cyan text-jobportal-cyan' : ''}`}
               >
                 {/* Users SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
@@ -76,7 +76,7 @@ export default function DashboardNavSection() {
             <li>
               <NavLink
                 to='/company/interviews'
-                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b-2 border-jobportal-cyan text-jobportal-cyan' : ''}`}
+                className={({ isActive }) => `flex gap-2 p-5 items-center ${isActive ? 'border-b border-jobportal-cyan text-jobportal-cyan' : ''}`}
               >
                 {/* Calendar SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>

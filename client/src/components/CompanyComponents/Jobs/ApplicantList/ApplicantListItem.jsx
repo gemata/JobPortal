@@ -79,7 +79,7 @@ export default function ApplicantListItem(req) {
     : 'bg-white';
 
   return (
-    <div className={`applicantListItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border-2 ${borderColor} ${backgroundGradient}`}>
+    <div className={`applicantListItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border ${borderColor} ${backgroundGradient}`}>
       <div className='flex items-center gap-10 w-full '>
         <p className='text-gray-600 font-bold w-1/24'>{applicantData.applicantNo+1}</p>
         <p className='text-jobportal-primary font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
@@ -91,7 +91,7 @@ export default function ApplicantListItem(req) {
       
        
         <select
-          className='focus:outline-none rounded-md bg-gray-50 border-2 text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5'
+          className='focus:outline-none rounded-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5'
           value={applicantStatus}
           onChange={handleStatusChange}
         >
