@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LowerJobSection() {
+export default function LowerJobSection({ userData }) {
   return (
     <>
       <section className='lowerJobSection'>

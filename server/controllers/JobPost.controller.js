@@ -1,5 +1,6 @@
-// Import the JobPost model and Sequelize
-import JobPost from "../models/JobPost.entity.js";
+import { Op, Sequelize } from "sequelize";
+import JobPost from '../models/JobPost.entity.js';
+import JobPosition from '../models/jobposition.entity.js';
 
 // Controller functions
 const JobPostController = {
@@ -16,8 +17,40 @@ const JobPostController = {
   // Get all JobPosts
   async getJobPosts(req, res) {
     try {
-      const JobPosts = await JobPost.findAll();
-      return res.status(200).json(JobPosts);
+      const { page = 1, limit = 10, nationality, searchQuery } = req.query;
+      const offset = (page - 1) * limit;
+
+      const filter = {};
+      if (nationality) {
+        filter.nationality = nationality;
+      }
+
+      if (searchQuery) {
+        filter[Op.or] = [
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('jobSummary')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('interviewMethod')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Job Position.position')), 'LIKE', `%${searchQuery.toLowerCase()}%`)
+        ];
+      }
+
+      const { count, rows: jobPosts } = await JobPost.findAndCountAll({
+        where: filter,
+        include: [
+          {
+            model: JobPosition,
+            as: 'Job Position',
+          }
+        ],
+        limit: parseInt(limit),
+        offset: parseInt(offset)
+      });
+
+      return res.status(200).json({
+        totalItems: count,
+        totalPages: Math.ceil(count / limit),
+        currentPage: parseInt(page),
+        jobPosts
+      });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -36,19 +69,20 @@ const JobPostController = {
       return res.status(500).json({ error: error.message });
     }
   },
-    // Get a JobPost by CompanyID
-    async getJobPostByCompanyID(req, res) {
-      const { CompanyID } = req.params;
-      try {
-        const JobPostRecords = await JobPost.findAll({where:{CompanyID}});
-        if (!JobPostRecords) {
-          return res.status(404).json({ message: "Job Post not found" });
-        }
-        return res.status(200).json(JobPostRecords);
-      } catch (error) {
-        return res.status(500).json({ error: error.message });
+
+  // Get a JobPost by CompanyID
+  async getJobPostByCompanyID(req, res) {
+    const { CompanyID } = req.params;
+    try {
+      const JobPostRecords = await JobPost.findAll({ where: { CompanyID } });
+      if (!JobPostRecords) {
+        return res.status(404).json({ message: "Job Post not found" });
       }
-    },
+      return res.status(200).json(JobPostRecords);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
 
   // Update a JobPost
   async updateJobPost(req, res) {
@@ -115,6 +149,5 @@ const JobPostController = {
   },
 
 };
-
 
 export default JobPostController;

@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../../img/mainLogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export default function Search({ userData, setUserData, isLoggedOut, setIsLoggedOut }) {
   const handleLogout = () => {
     setUserData([]);
     setIsLoggedOut(true);
+
+    Cookies.remove('userSessionToken');
   };
+
+  const location = useLocation();
 
   return (
     <>
@@ -19,14 +24,16 @@ export default function Search({ userData, setUserData, isLoggedOut, setIsLogged
                 <img className='rounded-full' src={logo} alt='logo' />
               </div>
 
-              <div className='relative max-w-[773px] w-full'>
-                <FaSearch className='absolute -translate-y-2/4 text-purple-700 left-2.5 top-2/4' />
-                <input
-                  className='w-full border rounded pl-[50px] pr-2.5 py-2.5 border border-jobportal-pink focus:outline-none focus:ring focus:ring-1 focus:ring-jobportal-pink'
-                  type='text'
-                  placeholder='Job title, keyword, company'
-                />
-              </div>
+              {location.pathname !== '/find-jobs' && (
+                <div className='relative max-w-[773px] w-full'>
+                  <FaSearch className='absolute -translate-y-2/4 text-purple-700 left-2.5 top-2/4' />
+                  <input
+                    className='w-full border rounded pl-[50px] pr-2.5 py-2.5 border border-jobportal-pink focus:outline-none focus:ring focus:ring-1 focus:ring-jobportal-pink'
+                    type='text'
+                    placeholder='Job title, keyword, company'
+                  />
+                </div>
+              )}
             </div>
             {userData.length != 0 || !isLoggedOut ? (
               <>

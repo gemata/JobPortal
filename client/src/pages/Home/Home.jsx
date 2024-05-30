@@ -110,16 +110,21 @@ const Home = () => {
           <div className='flex justify-between items-center'>
             <div className='text-section'>
               <h1 className='font-semibold text-[50px]'>
-  Find a job that matches <span className='block leading-[0.8] mb-7 p-0'>your interests and skills.</span>
-</h1>
-<span className='text-base text-[#5e6670]'>
-  We aim to provide a platform where individuals can <span className='block leading-[0.8] text-base m-0 p-0'>explore opportunities tailored to their strengths and passions.</span>
-</span>
+                Find a job that matches <span className='block leading-[0.8] mb-7 p-0'>your interests and skills.</span>
+              </h1>
+              <span className='text-base text-[#5e6670]'>
+                We aim to provide a platform where individuals can{' '}
+                <span className='block leading-[0.8] text-base m-0 p-0'>explore opportunities tailored to their strengths and passions.</span>
+              </span>
 
               <div className='flex items-center justify-center mt-5'>
                 <div className='flex items-center border rounded w-full max-w-[600px] p-[5px] border-solid border-[#ccc]'>
                   <FaSearch className='text-[1.2rem] mx-2.5 my-0 text-[purple]' />
-                  <input type='text' className='flex-1 text-base p-[5px] border-[none] bg-[#f1f2f4]' placeholder='Search jobs by title or keyword' />
+                  <input
+                    type='text'
+                    className='flex-1 text-base shadow-none p-[5px] border-none outline-none focus:outline-none focus:border-none focus:ring-0 ring-0 bg-[#f1f2f4]'
+                    placeholder='Search jobs by title or keyword'
+                  />
                 </div>
                 <button className='bg-jobportal-pink text-[white] rounded cursor-pointer text-base ml-2.5 px-4 py-2.5 border-[none] hover:bg-[#b3009a] active:bg-[#80006d]'>
                   Search
