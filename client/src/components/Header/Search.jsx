@@ -20,9 +20,13 @@ export default function Search({ userData, setUserData, isLoggedOut, setIsLogged
         <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
           <div className='flex justify-between items-center'>
             <div className='w-full flex gap-5 items-center'>
-              <div className='w-[50px] mr-[11%]'>
-                <img className='rounded-full' src={logo} alt='logo' />
+            <div className="w-[50px] mr-[11%]">
+              <a href='http://localhost:3000/' onClick={(e) => e.stopPropagation()} className="flex items-center">
+            <img className='rounded-full h-15 w-15' src={logo} alt='logo' />
+            <span className="ml-2 text-purple-800 font-bold text-lg italic">Job Horizon</span>
+        </a>
               </div>
+
 
               {location.pathname !== '/find-jobs' && (
                 <div className='relative max-w-[773px] w-full'>

@@ -11,7 +11,12 @@ const Footer = () => {
       <div className='container max-w-[1200px] mx-auto py-10 px-[15px]'>
         <div className='flex justify-between'>
           <div>
-            <img src={logo} className='w-[50px] mb-[10px] rounded-full' alt='' />
+          <div className="w-[50px] mb-[4%]">
+              <a href='http://localhost:3000/' onClick={(e) => e.stopPropagation()} className="flex items-center">
+            <img className='rounded-full h-15 w-15' src={logo} alt='logo' />
+            <span className="ml-2 text-white font-bold text-lg italic">Job Horizon</span>
+        </a>
+              </div>
 
             <p className='mb-2'>
               Call now:{' '}
