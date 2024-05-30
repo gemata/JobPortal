@@ -13,6 +13,8 @@ export default function JobTableSection({ userData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Number of items per page
 
+  const [showOpenJobs, setShowOpenJobs] = useState(true);
+
 
 
 
@@ -74,40 +76,37 @@ export default function JobTableSection({ userData }) {
     setCurrentPage(1); // Reset to the first page on search
   };
 
-  // Filtered and paginated jobDatas
-  const filteredJobPosts = jobData.filter(jobData =>
-    jobData.positionName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+// Filtered and paginated jobData
+const filteredJobPosts = jobData
+.filter(job => job.positionName.toLowerCase().includes(searchQuery.toLowerCase()))
+.filter(job => job.is_Active === showOpenJobs);
 
-  const totalPages = Math.ceil(filteredJobPosts.length / itemsPerPage);
-  const paginatedJobPosts = filteredJobPosts.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+const totalPages = Math.ceil(filteredJobPosts.length / itemsPerPage);
+const paginatedJobPosts = filteredJobPosts.slice(
+(currentPage - 1) * itemsPerPage,
+currentPage * itemsPerPage
+);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
+  const handleToggleJobs = (isOpen) => {
+    setShowOpenJobs(isOpen);
+    setCurrentPage(1); // Reset to the first page on toggle
+  };
+
+
+
+
   return (
     <>
-  
+
       <section className=''>
-      <div className='flex justify-between p-5 max-w-[1200px] mx-auto items-center pt-5'>
-            <div className='flex'>
-              <button id='openJobs' type='button' className='text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-s-lg text-base px-5 py-2.5 '>
-                Open (1)
-              </button>
-              <button
-                id='closedJobs'
-                type='button'
-                className='text-jobportal-pink bg-white hover:opacity-90 font-bold rounded-e-lg text-base px-5 py-2.5 border-2 border-jobportal-pink border-l-0'
-              >
-                Closed (3)
-              </button>
-            </div>
-          </div>
-        <div className='flex container mx-auto pt-10 pl-5 pr-5 justify-between'>
+        <div className='flex justify-between p-5 max-w-[1200px] mx-auto items-center pt-5'>
+
+        </div>
+        <div className='flex container mx-auto w-full gap-5 justify-between'>
           <div className='flex w-1/3'>
             <input
               type='text'
@@ -125,8 +124,28 @@ export default function JobTableSection({ userData }) {
               </svg>
             </button>
           </div>
-          <div className='flex gap-5 w-1/2'>
-            <div className='flex w-1/3'>
+          <div className='flex gap-5 w-2/3  pl-10'>
+          <div className='flex w-1/4 justify-start'>
+              <button
+                id='openJobs'
+                type='button'
+                className={` ${showOpenJobs ? ' text-white bg-jobportal-pink border-2 border-jobportal-darkpink rounded-s-lg  text-base px-5 py-2.5' : 'border-2 border-r-0 bg-gray-200 text-gray-800 border-gray-400 rounded-s-lg text-base px-5 py-2.5'} `}
+                onClick={() => handleToggleJobs(true)}
+              >
+                Open
+              </button>
+              <button
+                id='closedJobs'
+                type='button'
+                className={`${!showOpenJobs ? 'text-white bg-jobportal-pink border-2 border-jobportal-darkpink rounded-r-lg text-base px-5 py-2.5' : 'border-2 border-l-0 bg-gray-200 text-gray-800 border-gray-400 rounded-r-lg text-base px-5 py-2.5'}`}
+                onClick={() => handleToggleJobs(false)}
+              >
+                Closed
+              </button>
+            </div>
+            <div className='flex w-1/4 justify-end'>
+
+
               <span className='inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
                 Sort by:
               </span>
@@ -138,7 +157,7 @@ export default function JobTableSection({ userData }) {
                 <option value='salaryto'>Salary From</option>
               </select>
             </div>
-            <div className='flex w-1/3'>
+            <div className='flex w-1/4 justify-end'>
               <span className='inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border-2 rounded-e-0 border-gray-400 border-e-0 rounded-s-md'>
                 Order by:
               </span>
@@ -147,15 +166,15 @@ export default function JobTableSection({ userData }) {
                 <option value='asc'>Ascending</option>
               </select>
             </div>
-            <div className='flex w-1/3'>
+            <div className='flex w-1/4 '>
               <Link to='/company/jobs/create' >
-                
+
                 <button type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border-2 border-jobportal-darkpink text-base px-5 py-2.5 '>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                  
-                <p>Post a job</p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+
+                  <p>Post a job</p>
                 </button>
               </Link>
             </div>
@@ -164,26 +183,27 @@ export default function JobTableSection({ userData }) {
         </div>
       </section>
       <section>
-        
-        <div className='container mx-auto '>
-          <div className='flex flex-col gap-4 pt-1'>
-            {paginatedJobPosts.map(jobData => (
-              <div className='flex flex-row gap-4 pt-7 w-full'>
-                <JobItem className='w-11/12' key={jobData.ID} {...jobData} />
-                
-                <Link to={`/company/applicantlist/${jobData.ID}` } className="w-1/12">
-                <button
-                  className={`gap-5 rounded-lg  p-5 border-2 bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
-                >
-                    <div className='text flex flex-row items-center justify-between'>
-                      <p>View Applicants</p>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
-                      </svg>
 
-                    </div>
-                </button>
-                </Link>
+        <div className='container mx-auto '>
+          <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
+            <div className='flex items-start gap-10 w-full pl-5 pr-5'>
+              <p className='text-gray-600 font-bold w-1/24'>Nr</p>
+              <p className='text-gray-600 font-bold w-3/12'> Details</p>
+              <p className='text-gray-600 w-1/12 font-bold'>Start Date</p>
+              <p className='text-gray-600 w-1/12 font-bold' >End Date</p>
+              <p className='text-gray-600 w-2/12 font-bold'>Salary</p>
+              <p className='text-gray-600 w-1/24 font-bold'>Likes</p>
+              <p className='text-gray-600 w-1/6 font-bold'>Nr. Applicants</p>
+              <p className='text-gray-600 w-3/12 font-bold '>Actions</p>
+
+            </div>
+          </div>
+          <hr className='h-px my-2 bg-gray-300 border-0' />
+          <div className='flex flex-col '>
+            {paginatedJobPosts.map(jobData => (
+              <div className='flex flex-row pt-2 gap-5 w-full'>
+                <JobItem className='w-12/12' key={jobData.ID} jobData={jobData} />
+
               </div>
             ))}
 
@@ -191,66 +211,61 @@ export default function JobTableSection({ userData }) {
 
 
           <div className='flex justify-center mt-4'>
-                            {currentPage == 1 ? <button
-                                style={{ width: "2.5rem", height: "2.5rem" }}
-                                disabled={true}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}                        >
-                                {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                                </svg>
-                                }
-                            </button> :
-                                <button
-                                    style={{ width: "2.5rem", height: "2.5rem" }}
-                                    onClick={() => handlePageChange(currentPage - 1)}
-                                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
-                                >
-                                    {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                                    </svg>
-                                    }
-                                </button>
+            {currentPage == 1 ? <button
+              style={{ width: "2.5rem", height: "2.5rem" }}
+              disabled={true}
+              className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}                        >
+              {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+              </svg>
+              }
+            </button> :
+              <button
+                style={{ width: "2.5rem", height: "2.5rem" }}
+                onClick={() => handlePageChange(currentPage - 1)}
+                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+              >
+                {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+                }
+              </button>
 
-                            }
-
-
-                            {Array.from({ length: totalPages }, (_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => handlePageChange(index + 1)}
-                                    className={`px-3 py-1 mx-1 ${currentPage === index + 1 ? 'focus:outline-none rounded-md bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink' : 'focus:outline-none rounded-md bg-gray-50 border-2 text-gray-900 text-sm border-gray-400'}`}
-                                >
-                                    {index + 1}
-                                </button>
-                            ))}
-
-                            {currentPage == totalPages ? <button
-                                style={{ width: "2.5rem", height: "2.5rem" }}
-                                disabled={true}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
-                                {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                                </svg>
-
-                                }
-                            </button> : <button
-
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                style={{ width: "2.5rem", height: "2.5rem" }}
-                                className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
-                            >
-                                {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                                </svg>
-                                }
-                            </button>}
-
-                        </div>
+            }
 
 
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                className={`px-3 py-1 mx-1 ${currentPage === index + 1 ? 'focus:outline-none rounded-md bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink' : 'focus:outline-none rounded-md bg-gray-50 border-2 text-gray-900 text-sm border-gray-400'}`}
+              >
+                {index + 1}
+              </button>
+            ))}
 
+            {currentPage == totalPages ? <button
+              style={{ width: "2.5rem", height: "2.5rem" }}
+              disabled={true}
+              className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border-2 text-grey-200 font-bold text-sm border-grey-200 `}    >
+              {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" strokeOpacity="0.2" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
 
+              }
+            </button> : <button
 
+              onClick={() => handlePageChange(currentPage + 1)}
+              style={{ width: "2.5rem", height: "2.5rem" }}
+              className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border-2 text-white font-bold text-sm border-jobportal-pink `}
+            >
+              {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+              }
+            </button>}
+
+          </div>
         </div>
       </section>
     </>

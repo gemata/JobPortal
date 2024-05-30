@@ -151,7 +151,7 @@ export default function ApplicantListHeader({applicantList}) {
     return (
         <div>
             {showModal && (
-                <div className="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                <div onClick={handleModalCancel} className="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg w-96">
                         <div className="flex flex-row items-center text-lg  p-6 rounded-tl-lg text-white text-xl rounded-tr-lg border-l-2 border-r-2 border-t-2 border-jobportal-darkpink bg-jobportal-pink font-bold ">
                             {/* Warning SVG */}
@@ -202,7 +202,7 @@ export default function ApplicantListHeader({applicantList}) {
             )}
             {showProfile == false ? (<div>
                 <section className=''>
-                    <div className='flex container mx-auto pt-10 pl-5 pr-5 justify-between'>
+                    <div className='flex container mx-auto pt-10  justify-between'>
                         <div className='flex w-1/3'>
                             <input
                                 type='text'
@@ -241,13 +241,13 @@ export default function ApplicantListHeader({applicantList}) {
                                     <option value='asc'>Ascending</option>
                                 </select>
                             </div>
-                            <div className='flex w-1/3'>
+                            <div className='flex w-1/3  justify-end'>
 
                                 <button onClick={handleCreateInterviewClick} type='button' className='inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border-2 border-jobportal-darkpink text-base px-5 py-2.5 '>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
-                                    
+                                    <p>Create Interview</p>
                                 </button>
 
                             </div>
