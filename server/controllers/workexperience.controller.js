@@ -37,13 +37,17 @@ const WorkExperienceController = {
     }
   },
 
-   // Get all WorkExperiences by user ID
-   async getWorkExperiencesByUserId(req, res) {
+  // Get all WorkExperiences by user ID
+  async getWorkExperiencesByUserId(req, res) {
     const { UserId } = req.params;
     try {
-      const WorkExperiences = await WorkExperience.findAll({ where: { UserId } });
+      const WorkExperiences = await WorkExperience.findAll({
+        where: { UserId },
+      });
       if (!WorkExperiences.length) {
-        return res.status(404).json({ message: "No work experience entries found for this user" });
+        return res
+          .status(404)
+          .json({ message: "No work experience entries found for this user" });
       }
       return res.status(200).json(WorkExperiences);
     } catch (error) {
@@ -56,14 +60,15 @@ const WorkExperienceController = {
     const { id } = req.params;
     const { body } = req;
     try {
-      const [updatedRowsCount, updatedWorkExperience] = await WorkExperience.update(body, {
-        where: { id },
-        returning: true, // Return the updated WorkExperience object
-      });
+      const [updatedRowsCount, updatedWorkExperience] =
+        await WorkExperience.update(body, {
+          where: { id },
+          returning: true,
+        });
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: "WorkExperience not found" });
       }
-      return res.status(200).json(updatedWorkExperience[0]);
+      return res.status(200).json(updatedWorkExperience);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -82,7 +87,6 @@ const WorkExperienceController = {
       return res.status(500).json({ error: error.message });
     }
   },
-
 };
 
 export default WorkExperienceController;

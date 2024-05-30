@@ -39,11 +39,11 @@ const WorkExperience = sequelize.define(
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     description: {
       type: DataTypes.TEXT("long"),
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
