@@ -58,6 +58,12 @@ const JobPost = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    
+    nrApplicants: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: true,
+    },
   },
   {
     sequelize

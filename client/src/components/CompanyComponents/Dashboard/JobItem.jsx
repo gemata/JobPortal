@@ -71,7 +71,7 @@ export default function JobItem({ jobData }) {
 
   return (
     <>
-      <div className='jobItem flex items-center justify-between gap-5 rounded-lg w-full pt-2 pb-2  border-2 border-gray-400 bg-white'>
+      <div className='jobItem flex items-center justify-between gap-5 rounded-lg w-full pt-2 pb-2  border-2 bg-white'>
       <div className='flex items-center  gap-10 w-full pl-5 pr-5'>
           <p className='text-gray-600 font-bold w-1/24'>{jobDetails.ID}</p>
           <div className='text-left w-3/12'>

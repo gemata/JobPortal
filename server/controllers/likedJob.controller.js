@@ -1,4 +1,5 @@
 import LikedJob from "../models/likedJob.entity.js";
+import JobPost from "../models/JobPost.entity.js";
 
 // Controller functions
 const LikedJobController = {
@@ -6,6 +7,13 @@ const LikedJobController = {
   async createLikedJob(req, res) {
     try {
       const newLikedJob = await LikedJob.create(req.body);
+
+      // Increment nrApplicants for the related JobPost
+      const jobPost = await JobPost.findByPk(req.body.JobPostID);
+      if (jobPost) {
+        jobPost.likes += 1;
+        await jobPost.save();
+      }
       return res.status(201).json(newLikedJob);
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -75,6 +83,11 @@ const LikedJobController = {
       const deletedRowCount = await LikedJob.destroy({ where: { id } });
       if (deletedRowCount === 0) {
         return res.status(404).json({ message: "LikedJob not found" });
+      }
+      const jobPost = await JobPost.findByPk(req.body.JobPostID);
+      if (jobPost) {
+        jobPost.likes -= 1;
+        await jobPost.save();
       }
       return res.status(204).end(); // No content response
     } catch (error) {

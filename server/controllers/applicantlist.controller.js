@@ -1,5 +1,6 @@
 import { where } from "sequelize";
 import ApplicantList from "../models/applicantlist.entity.js";
+import JobPost from "../models/JobPost.entity.js";
 
 // Controller functions
 const ApplicantListController = {
@@ -7,6 +8,14 @@ const ApplicantListController = {
   async createApplicantList(req, res) {
     try {
       const newApplicantList = await ApplicantList.create(req.body);
+
+      // Increment nrApplicants for the related JobPost
+      const jobPost = await JobPost.findByPk(req.body.JobPostID);
+      if (jobPost) {
+        jobPost.nrApplicants += 1;
+        await jobPost.save();
+      }
+
       return res.status(201).json(newApplicantList);
     } catch (error) {
       return res.status(500).json({ error: error.message });
