@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FindJobsSearchbar from '../../components/CompanyComponents/Jobs/FindJobs/FindJobsSearchbar';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import DOMPurify from 'dompurify';
 import grayLogo from '../../img/grayLogo.png';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +19,14 @@ const FindJobs = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data && data.jobPosts) {
-          setJobPosts(data.jobPosts);
+          
+          // Sanitize the job summary for each job post
+          const sanitizedJobPosts = data.jobPosts.map((jobPost) => ({
+            ...jobPost,
+            jobSummary: DOMPurify.sanitize(jobPost.jobSummary),
+          }));
+
+          setJobPosts(sanitizedJobPosts);
           setTotalPages(Array.from({ length: data.totalPages }, (_, i) => i + 1));
         } else {
           console.error('No job posts found in response:', data);
@@ -27,7 +35,6 @@ const FindJobs = () => {
       })
       .catch((error) => console.error('Error fetching job posts:', error));
   };
-
   const handlePageChange = (page) => {
     let newPage;
 
@@ -61,7 +68,6 @@ const FindJobs = () => {
         return;
       }
     }
-
     setCurrentJob(job);
     setJobOpened(true);
   };
@@ -251,7 +257,7 @@ const FindJobs = () => {
                 <hr />
                 <div className='px-10 py-5 flex gap-3 flex-col'>
                   <h3 className='text-xl font-semibold'>Job Summary</h3>
-                  <div className='mt-3 text-gray-600'>{currentJob.jobSummary}</div>
+                  <div className='mt-3 text-gray-600' dangerouslySetInnerHTML={{ __html: currentJob.jobSummary }}></div>
                 </div>
                 <div className='px-10'>
                   <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>Report Job</button>

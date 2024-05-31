@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import PageOne from '../../../components/CompanyComponents/Jobs/CreateJob/PageOne';
 import PageTwo from '../../../components/CompanyComponents/Jobs/CreateJob/PageTwo';
 import PageThree from '../../../components/CompanyComponents/Jobs/CreateJob/PageThree';
@@ -39,6 +40,8 @@ const CompanyJobsCreate = ({ userData }) => {
   };
 
   const handleFormSubmit = async () => {
+    const sanitizedJobSummary = DOMPurify.sanitize(jobSummary);
+
     const requestBody = {
       CompanyID: userData.ID,
       jobField: jobField,
@@ -52,7 +55,7 @@ const CompanyJobsCreate = ({ userData }) => {
       startAt: new Date().toISOString(),
       endAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       is_Active: true,
-      jobSummary: jobSummary,
+      jobSummary: sanitizedJobSummary,
     };
 
     for (const [key, value] of Object.entries(requestBody)) {

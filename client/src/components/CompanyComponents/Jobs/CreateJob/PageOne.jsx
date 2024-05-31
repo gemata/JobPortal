@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+
 
 export default function PageOne({ jobField, setJobField, jobPosition, setJobPosition, educationLevel, setEducationLevel, jobSummary, setJobSummary }) {
   const [jobFields, setJobFields] = useState([]);
   const [jobPositions, setJobPositions] = useState([]);
+  const [range, setRange] = useState();
+  const [lastChange, setLastChange] = useState();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/jobfields/')
@@ -36,8 +41,8 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
     setEducationLevel(e.target.value);
   };
 
-  const handleJobSummaryChange = (e) => {
-    setJobSummary(e.target.value);
+  const handleJobSummaryChange = (value) => {
+    setJobSummary(value);
   };
 
   return (
@@ -65,17 +70,24 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
           </option>
         ))}
       </select>
-
-      <label className='float-left' htmlFor='jobLocation'>
+        
+      <label className='float-left' htmlFor='jobSummary'>
         Job Summary
       </label>
-      <input
-        type='text'
-        name='jobSummary'
+      <ReactQuill
         value={jobSummary}
         onChange={handleJobSummaryChange}
-        className='border w-full p-3 px-5 rounded focus:outline-none focus:ring-2 focus:ring-jobportal-pink'
+        className='w-full  rounded focus:outline-none pt-10 focus:ring-2 focus:ring-jobportal-pink'
         placeholder='Job Summary'
+        modules={{
+          toolbar: [
+            [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+            [{size: []}],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}],
+            ['clean']                                         
+          ],
+        }}
       />
 
       <label className='float-left' htmlFor='education'>
