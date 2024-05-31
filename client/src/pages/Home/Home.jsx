@@ -82,6 +82,13 @@ const Home = () => {
   const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     navigate(`/find-jobs?q=${encodeURIComponent(searchQuery)}`);
@@ -272,7 +279,7 @@ const Home = () => {
                 {company.featured && <div className='ml-auto text-xs text-red-500 bg-red-100 py-1 px-2 rounded-full'>Featured</div>}
               </div>
               <div>
-                <button className='w-full py-2 px-4 bg-purple-100 text-purple-500 font-medium rounded-md hover:bg-purple-200 transition-colors duration-300'>Open Position</button>
+                <button className='w-full py-2 px-4 bg-purple-100 text-fuchsia-700 font-medium rounded-md hover:bg-purple-200 transition-colors duration-300'>Open Position</button>
               </div>
             </div>
           ))}

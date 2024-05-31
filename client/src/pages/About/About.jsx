@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import b1 from '../../img/b1.svg';
 import b2 from '../../img/b2.svg';
 import b3 from '../../img/b3.svg';
@@ -15,6 +15,13 @@ import EmpCard from '../../components/HomePageComponents/EmpCard';
 const logos = [amazon, google, microsoft, meta, tesla, snap];
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
+
   return (
     <>
       <div className='bg-gray-100'>
@@ -22,7 +29,7 @@ const About = () => {
           <div className='flex flex-col md:flex-row items-start md:items-center justify-between p-8 py-20'>
             <div className='md:w-1/2'>
               <div className='who-we-are-container'>
-                <h4 className='text-purple-500 mb-2'>Who we are</h4>
+                <h4 className='text-fuchsia-700 mb-2 font-semibold'>Who we are</h4>
                 <h1 className='text-4xl font-bold mb-4'>We're a highly skilled and professional team.</h1>
                 <p className='text-gray-500'>
                   We pride ourselves on being a team of experts dedicated to excellence. With our diverse skills and commitment to quality, we deliver exceptional results and
@@ -72,7 +79,7 @@ const About = () => {
           <div className='flex flex-col md:flex-row items-center p-8 mt-[100px]'>
             <div className='md:w-1/2 p-4'>
               <div className='mission-container'>
-                <h2 className='text-purple-600 text-lg font-semibold'>Our Mission</h2>
+                <h2 className='text-fuchsia-700 text-lg font-semibold'>Our Mission</h2>
                 <h1 className='text-4xl font-bold mt-2'>Our mission is to help people find the perfect job.</h1>
                 <p className='text-gray-500 mt-4'>
                   We are dedicated to providing a platform that connects individuals with their ideal career opportunities. Our goal is to simplify the job search process and

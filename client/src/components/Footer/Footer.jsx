@@ -9,14 +9,14 @@ const Footer = () => {
   return (
     <footer className='bg-[#271820] text-gray-400'>
       <div className='container max-w-[1200px] mx-auto py-10 px-[15px]'>
-        <div className='flex justify-between'>
-          <div>
-          <div className="w-[50px] mb-[4%]">
-              <a href='http://localhost:3000/' onClick={(e) => e.stopPropagation()} className="flex items-center">
-            <img className='rounded-full h-15 w-15' src={logo} alt='logo' />
-            <span className="ml-2 text-white font-bold text-lg italic">Job Horizon</span>
-        </a>
-              </div>
+        <div className='flex flex-wrap gap-5 md:gap-0 justify-between'>
+          <div className='w-full md:w-auto'>
+            <div className='w-[50px] mb-[4%]'>
+              <Link to='/' className='flex items-center'>
+                <img className='rounded-full h-15 w-15' src={logo} alt='logo' />
+                <span className='ml-2 text-white font-bold leading-5 text-lg'>Job Horizon</span>
+              </Link>
+            </div>
 
             <p className='mb-2'>
               Call now:{' '}

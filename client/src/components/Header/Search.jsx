@@ -29,14 +29,14 @@ export default function Search({ userData, setUserData, isLoggedOut, setIsLogged
     <>
       <div className='mt-5 mb-5'>
         <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
-          <div className='flex justify-between items-center'>
-            <div className='w-full flex gap-5 items-center'>
-              <div className='w-[50px] mr-[11%]'>
-                <a href='http://localhost:3000/' onClick={(e) => e.stopPropagation()} className='flex items-center'>
+          <div className='flex flex-wrap justify-between gap-5 items-center'>
+            <div className='w-full flex flex-wrap md:flex-nowrap md:flex-1 gap-5 items-center'>
+              <Link to='/' onClick={(e) => e.stopPropagation()} className='w-[50px] mr-[11%]'>
+                <div className='flex items-center'>
                   <img className='rounded-full h-15 w-15' src={logo} alt='logo' />
-                  <span className='ml-2 text-purple-800 font-bold text-lg italic'>Job Horizon</span>
-                </a>
-              </div>
+                  <span className='ml-2 text-fuchsia-700 leading-5 font-bold text-lg'>Job Horizon</span>
+                </div>
+              </Link>
 
               {location.pathname !== '/find-jobs' && (
                 <div className='relative max-w-[773px] w-full'>
@@ -57,27 +57,36 @@ export default function Search({ userData, setUserData, isLoggedOut, setIsLogged
             </div>
             {userData.length != 0 || !isLoggedOut ? (
               <>
-                <div className='flex gap-2.5 w-[250px] justify-end'>
+                <div className='flex gap-2.5 w-full md:w-[250px] justify-end'>
                   {userData.role === 'Company' ? (
-                    <Link to='/company/dashboard' className='px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'>
+                    <Link
+                      to='/company/dashboard'
+                      className='w-full md:w-auto text-center px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'
+                    >
                       Profile
                     </Link>
                   ) : (
-                    <Link to='/profile/dashboard' className='px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'>
+                    <Link
+                      to='/profile/dashboard'
+                      className='w-full md:w-auto text-center px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'
+                    >
                       Profile
                     </Link>
                   )}
-                  <button onClick={handleLogout} className='px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'>
+                  <button
+                    onClick={handleLogout}
+                    className='w-full md:w-auto px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'
+                  >
                     Log Out
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <div className='flex gap-2.5'>
+                <div className='w-full md:w-auto flex gap-2.5'>
                   <a
                     href='http://localhost:5000/admin/login'
-                    className='px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'
+                    className='w-full md:w-auto text-center px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700'
                   >
                     Login
                   </a>

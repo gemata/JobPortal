@@ -404,6 +404,10 @@
   /* outline: 1px solid lime; */
 }
 
+html {
+  overflow-x: hidden;
+}
+
 .confirmAccount__step {
   position: relative;
   flex-shrink: 0;
