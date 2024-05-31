@@ -93,7 +93,11 @@ function App() {
         <Route path="/resume-help" element={<ResumeHelp />} />
         <Route path="/resume-example" element={<ResumeExample />} />
         <Route path="/salary-tools" element={<Salary />} />
-        <Route path="/find-jobs" element={<FindJobs />} />
+        
+        <Route
+          path="/find-jobs"
+          element={!isLoggedOut ? <FindJobs userData={userData} /> : <FindJobs />}
+        />
 
         <Route path="/company/dashboard" element={<CompanyDashboard userData={userData} />} />
         <Route path="/company/jobs" element={<CompanyJobs userData={userData} />} />

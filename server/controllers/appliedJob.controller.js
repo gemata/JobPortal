@@ -5,6 +5,19 @@ const AppliedJobController = {
   // Create a new AppliedJob
   async createAppliedJob(req, res) {
     try {
+      // Check if an entry with the same UserId and JobPostID already exists
+      const existingAppliedJob = await AppliedJob.findOne({
+        where: {
+          UserId: req.body.UserId,
+          JobPostID: req.body.JobPostID,
+        },
+      });
+  
+      if (existingAppliedJob) {
+        return res.status(400).json({ error: "Applicant already applied for this job post." });
+      }
+  
+      // Create new applied job entry
       const newAppliedJob = await AppliedJob.create(req.body);
       return res.status(201).json(newAppliedJob);
     } catch (error) {

@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 import grayLogo from '../../img/grayLogo.png';
 import { Link, useSearchParams } from 'react-router-dom';
 
-const FindJobs = () => {
+const FindJobs = ({ userData }) => {
   const [nationality, setNationality] = useState('');
   const [workLocation, setWorkLocation] = useState('');
   const [salaryFrom, setSalaryFrom] = useState('');
@@ -21,6 +21,7 @@ const FindJobs = () => {
   const [currentJob, setCurrentJob] = useState(null);
   const [currentCompany, setCurrentCompany] = useState(null);
   const [searchParams] = useSearchParams();
+  const [applied, setApplied] = useState(null)
   const queryValue = searchParams.get('q');
 
   useEffect(() => {
@@ -77,6 +78,65 @@ const FindJobs = () => {
     fetchJobPosts();
   };
 
+  const handleApplyClick = async () => {
+    if (!userData || !currentJob) {
+      return;
+    }
+
+    const requestBody = {
+      isSelected: null,
+      resumeAIScore: null,
+      JobPostID: currentJob.ID,
+      UserId: userData.id,
+    };
+
+    const requestBodyAppliedJob = {
+      status: 0,
+      appliedAt: new Date().toISOString(),
+      JobPostID: currentJob.ID,
+      UserId: userData.id,
+    };
+
+    try {
+      const [response1, response2] = await Promise.all([
+        fetch(`http://localhost:5000/api/applicantlists/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }),
+        fetch(`http://localhost:5000/api/appliedjobs/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBodyAppliedJob),
+        }),
+      ]);
+
+      const responseData1 = await response1.json();
+      const responseData2 = await response2.json();
+
+      if (!response1.ok) {
+        console.error("Error in applicant list:", responseData1.error);
+
+      }
+
+      if (!response2.ok) {
+        console.error("Error in applied jobs:", responseData2.error);
+
+      }
+
+      if (response1.ok && response2.ok) {
+        setApplied(true)
+      }
+    } catch (error) {
+      console.error("There was an error applying for the job!", error);
+
+    }
+  };
+
   const openJob = (job) => {
     window.scrollTo({
       top: 0,
@@ -109,7 +169,7 @@ const FindJobs = () => {
       top: 0,
       behavior: 'smooth',
     });
-
+    setApplied(false);
     setCurrentJob([]);
     setJobOpened(false);
   };
@@ -177,9 +237,8 @@ const FindJobs = () => {
                   </div>
                   <div className='flex items-center'>
                     <span
-                      className={`bg-${jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'}-100 capitalize text-${
-                        jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'
-                      }-800 text-xs select-none font-medium mr-2 px-2.5 py-0.5 rounded`}
+                      className={`bg-${jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'}-100 capitalize text-${jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'
+                        }-800 text-xs select-none font-medium mr-2 px-2.5 py-0.5 rounded`}
                     >
                       {jobPost.interviewMethod === 'online' ? (
                         <div className='flex'>
@@ -267,9 +326,8 @@ const FindJobs = () => {
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`border ${
-                      page === currentPage ? 'border-fuchsia-700 bg-jobportal-pink text-white' : 'border-gray-300 bg-gray-100'
-                    } p-3.5 rounded-lg hover:border-fuchsia-700 hover:bg-jobportal-pink hover:text-white`}
+                    className={`border ${page === currentPage ? 'border-fuchsia-700 bg-jobportal-pink text-white' : 'border-gray-300 bg-gray-100'
+                      } p-3.5 rounded-lg hover:border-fuchsia-700 hover:bg-jobportal-pink hover:text-white`}
                   >
                     {page}
                   </button>
@@ -321,7 +379,44 @@ const FindJobs = () => {
                     ${currentJob.salary_from} - ${currentJob.salary_to} per hour
                   </div>
                   <div className='flex gap-3'>
-                    <button className='bg-jobportal-pink hover:bg-fuchsia-700 text-white py-3 px-5 rounded-lg font-semibold'>Apply Now</button>
+                    {userData ? applied ?
+                      //if applied and logged in
+                      <button className='bg-green-500 hover:bg-fuchsia-700 text-white rounded-lg font-semibold flex items-center'>
+                        <div className='flex gap-2 pr-5 pl-5 pt-2 pb-2 items-center'>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                          </svg>
+                          <p className=''>Applied</p>
+                        </div>
+                      </button>
+                      :
+                      //if not applied but logged in
+                      <button onClick={handleApplyClick} className='bg-jobportal-pink hover:bg-fuchsia-700 text-white rounded-lg font-semibold flex items-center'>
+                        <div className='flex gap-2 pr-5 pl-5 pt-2 pb-2 items-center'>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-8">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                          </svg>
+                          <p className=''>Apply Now</p>
+                        </div>
+                      </button>
+                      :
+                      //if neither applied nor logged in                     
+                      <button className='bg-jobportal-pink hover:bg-fuchsia-700 text-white rounded-lg font-semibold flex items-center'>
+                        <div className='flex gap-2 pr-5 pl-5 pt-2 pb-2 items-center'>
+                          <a
+                            href='http://localhost:5000/admin/login'
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+                              <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+
+                            Sign in to Apply
+                          </a>
+                        </div>
+                      </button>
+                    }
+
+
                     <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>
                       <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='size-6'>
                         <path

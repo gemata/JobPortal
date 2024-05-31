@@ -11,11 +11,13 @@ const ApplicantList = sequelize.define(
     },
     isSelected: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      allowNull: false,
+      defaultValue: null,
+      allowNull: true,
     },
     resumeAIScore: {
       type: DataTypes.FLOAT(1, 0),
+      defaultValue:0,
+      allowNull:true,
 
     }
   },

@@ -13,7 +13,7 @@ export default function JobTableSection({ userData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Number of items per page
 
-  const [showOpenJobs, setShowOpenJobs] = useState(true);
+  const [showActiveJobs, setShowActiveJobs] = useState(true);
 
   useEffect(() => {
     const fetchJobData = async () => {
@@ -73,7 +73,7 @@ export default function JobTableSection({ userData }) {
   };
 
   // Filtered and paginated jobData
-  const filteredJobPosts = jobData.filter((job) => job.positionName.toLowerCase().includes(searchQuery.toLowerCase())).filter((job) => job.is_Active === showOpenJobs);
+  const filteredJobPosts = jobData.filter((job) => job.positionName.toLowerCase().includes(searchQuery.toLowerCase())).filter((job) => job.is_Active === showActiveJobs);
 
   const totalPages = Math.ceil(filteredJobPosts.length / itemsPerPage);
   const paginatedJobPosts = filteredJobPosts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -82,8 +82,8 @@ export default function JobTableSection({ userData }) {
     setCurrentPage(newPage);
   };
 
-  const handleToggleJobs = (isOpen) => {
-    setShowOpenJobs(isOpen);
+  const handleToggleJobs = (isActive) => {
+    setShowActiveJobs(isActive);
     setCurrentPage(1); // Reset to the first page on toggle
   };
 
@@ -112,22 +112,22 @@ export default function JobTableSection({ userData }) {
           <div className='flex gap-5 w-2/3  pl-10'>
             <div className='flex w-1/4 justify-start'>
               <button
-                id='openJobs'
+                id='activeJobs'
                 type='button'
                 className={` ${
-                  showOpenJobs
+                  showActiveJobs
                     ? ' text-white bg-jobportal-pink border border-jobportal-darkpink rounded-s-lg  text-base px-5 py-2.5'
                     : 'border border-r-0 bg-gray-200 text-gray-800 border-gray-400 rounded-s-lg text-base px-5 py-2.5'
                 } `}
                 onClick={() => handleToggleJobs(true)}
               >
-                Open
+                Active
               </button>
               <button
                 id='closedJobs'
                 type='button'
                 className={`${
-                  !showOpenJobs
+                  !showActiveJobs
                     ? 'text-white bg-jobportal-pink border border-jobportal-darkpink rounded-r-lg text-base px-5 py-2.5'
                     : 'border border-l-0 bg-gray-200 text-gray-800 border-gray-400 rounded-r-lg text-base px-5 py-2.5'
                 }`}
@@ -180,7 +180,7 @@ export default function JobTableSection({ userData }) {
       </section>
       <section>
         <div className='container mx-auto '>
-          <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
+        <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
             <div className='flex items-start gap-10 w-full pl-5 pr-5'>
               <p className='text-gray-600 font-bold w-1/24'>Nr</p>
               <p className='text-gray-600 font-bold w-3/12'> Details</p>

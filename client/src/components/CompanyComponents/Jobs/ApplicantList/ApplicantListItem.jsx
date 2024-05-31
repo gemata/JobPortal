@@ -73,19 +73,19 @@ export default function ApplicantListItem(req) {
   // Determine border color and background gradient based on applicantStatus
   const borderColor = applicantStatus === 1 ? 'border-green-500' : applicantStatus === 0 ? 'border-red-500' : '';
   const backgroundGradient = applicantStatus === 1 
-    ? 'bg-gradient-to-r from-green-50 to-white' 
+    ? 'bg-gradient-to-r from-green-50 to-white hover:to-green-50 text-green-600' 
     : applicantStatus === 0 
-    ? 'bg-gradient-to-r from-red-50 to-white' 
-    : 'bg-white';
+    ? 'bg-gradient-to-r from-red-50 to-white hover:to-red-50 text-red-600' 
+    : 'bg-white hover:bg-gray-50 hover:border-gray-600 text-gray-600';
 
   return (
     <div className={`applicantListItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border ${borderColor} ${backgroundGradient}`}>
       <div className='flex items-center gap-10 w-full '>
-        <p className='text-gray-600 font-bold w-1/24'>{applicantData.applicantNo+1}</p>
-        <p className='text-jobportal-primary font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
-        <p className='text-gray-600 w-2/12'>{applicantPersonalData.email}</p>
-        <p className='text-gray-600 w-1/12'>{applicantData.resumeAIScore + '%'}</p>
-        <p className='text-gray-600 text-sm w-3/12'>{formatDateTime(applicantData.createdAt)}</p>
+        <p className=' text-gray-600 font-bold w-1/24'>{applicantData.applicantNo+1}</p>
+        <p className=' font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
+        <p className='w-2/12'>{applicantPersonalData.email}</p>
+        <p className='w-1/12'>{applicantData.resumeAIScore + '%'}</p>
+        <p className=' text-sm w-3/12'>{formatDateTime(applicantData.createdAt)}</p>
       </div>
       <div className='Actions flex items-center gap-3 w-2/12'>
       

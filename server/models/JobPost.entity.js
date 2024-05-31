@@ -20,6 +20,7 @@ const JobPost = sequelize.define(
     // },
     is_Active: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
       allowNull: false,
     },
     startAt: {
@@ -39,7 +40,7 @@ const JobPost = sequelize.define(
       allowNull: false,
       validate: {
         min: 1,
-        max: 99999,
+        max: 999999,
       },
     },
     salary_to: {
@@ -47,7 +48,7 @@ const JobPost = sequelize.define(
       allowNull: false,
       validate: {
         min: 1,
-        max: 99999,
+        max: 999999,
       },
     },
     jobLocation: {
@@ -64,6 +65,7 @@ const JobPost = sequelize.define(
     },
     likes: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
       allowNull: true,
     },
     

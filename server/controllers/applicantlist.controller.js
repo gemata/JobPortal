@@ -7,15 +7,28 @@ const ApplicantListController = {
   // Create a new ApplicantList
   async createApplicantList(req, res) {
     try {
+      // Check if an entry with the same UserId and JobPostID already exists
+      const existingApplicantList = await ApplicantList.findOne({
+        where: {
+          UserId: req.body.UserId,
+          JobPostID: req.body.JobPostID,
+        },
+      });
+  
+      if (existingApplicantList) {
+        return res.status(400).json({ error: "Applicant already applied for this job post." });
+      }
+  
+      // Create new applicant list entry
       const newApplicantList = await ApplicantList.create(req.body);
-
+  
       // Increment nrApplicants for the related JobPost
       const jobPost = await JobPost.findByPk(req.body.JobPostID);
       if (jobPost) {
         jobPost.nrApplicants += 1;
         await jobPost.save();
       }
-
+  
       return res.status(201).json(newApplicantList);
     } catch (error) {
       return res.status(500).json({ error: error.message });
