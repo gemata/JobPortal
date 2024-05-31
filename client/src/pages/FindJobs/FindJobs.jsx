@@ -31,6 +31,8 @@ const FindJobs = () => {
   }, []);
 
   const fetchJobPosts = () => {
+    closeJob();
+
     fetch(
       `http://localhost:5000/api/jobposts?page=${currentPage}&limit=12&nat=${nationality}&q=${searchQuery}&loc=${workLocation}&sFrom=${salaryFrom}&sTo=${salaryTo}&ed=${educationLevel}&cf=${companyFilter}&jp=${jobPositionFilter}`
     )
@@ -114,23 +116,19 @@ const FindJobs = () => {
 
   return (
     <>
-      {jobOpened ? (
-        <></>
-      ) : (
-        <div className='bg-[#f1f2f4]'>
-          <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
-            <div className='flex justify-between pt-[0px] pb-[0px]'>
-              <div className='flex flex-col gap-3 w-full items-center justify-center py-10'>
-                <span className='text-black font-semibold text-2xl'>Search for a Job</span>
-                <p className='paragraph w-2/3 text-center'>
-                  Discover exciting opportunities in the tech industry. From programming and AI to design and consulting, explore openings to shape the future of innovation. Take
-                  the next step towards a rewarding career.
-                </p>
-              </div>
+      <div className='bg-gray-100'>
+        <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
+          <div className='flex justify-between pt-[0px] pb-[0px]'>
+            <div className='flex flex-col gap-3 w-full items-center justify-center py-10'>
+              <span className='text-black font-semibold text-2xl'>Search for a Job</span>
+              <p className='paragraph w-2/3 text-center'>
+                Discover exciting opportunities in the tech industry. From programming and AI to design and consulting, explore openings to shape the future of innovation. Take the
+                next step towards a rewarding career.
+              </p>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       <div className='flex max-w-[1500px] mx-auto '>
         <div className={`border transition-all ${jobOpened ? 'w-0 hidden md:block md:w-1/3 bg-gray-100' : 'w-full bg-gray-50'}`}>
@@ -159,7 +157,7 @@ const FindJobs = () => {
             className={
               jobPosts.length !== 0
                 ? jobOpened
-                  ? 'grid grid-cols-1 gap-4 px-5 mx-auto mt-5 max-h-[1000px] overflow-y-scroll'
+                  ? 'grid grid-cols-1 gap-4 px-5 mx-auto mt-5 max-h-[1200px] overflow-y-scroll'
                   : 'grid max-w-[1200px] sm:grid-cols-2 md:grid-cols-4 gap-4 px-5 mx-auto mt-10'
                 : 'flex items-center justify-center max-w-[1200px] px-5 mx-auto mt-10 min-h-[450px]'
             }
@@ -185,7 +183,7 @@ const FindJobs = () => {
                     >
                       {jobPost.interviewMethod === 'online' ? (
                         <div className='flex'>
-                          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' class='size-4'>
+                          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' className='size-4'>
                             <path d='M21.721 12.752a9.711 9.711 0 0 0-.945-5.003 12.754 12.754 0 0 1-4.339 2.708 18.991 18.991 0 0 1-.214 4.772 17.165 17.165 0 0 0 5.498-2.477ZM14.634 15.55a17.324 17.324 0 0 0 .332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 0 0 .332 4.647 17.385 17.385 0 0 0 5.268 0ZM9.772 17.119a18.963 18.963 0 0 0 4.456 0A17.182 17.182 0 0 1 12 21.724a17.18 17.18 0 0 1-2.228-4.605ZM7.777 15.23a18.87 18.87 0 0 1-.214-4.774 12.753 12.753 0 0 1-4.34-2.708 9.711 9.711 0 0 0-.944 5.004 17.165 17.165 0 0 0 5.498 2.477ZM21.356 14.752a9.765 9.765 0 0 1-7.478 6.817 18.64 18.64 0 0 0 1.988-4.718 18.627 18.627 0 0 0 5.49-2.098ZM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 0 0 1.988 4.718 9.765 9.765 0 0 1-7.478-6.816ZM13.878 2.43a9.755 9.755 0 0 1 6.116 3.986 11.267 11.267 0 0 1-3.746 2.504 18.63 18.63 0 0 0-2.37-6.49ZM12 2.276a17.152 17.152 0 0 1 2.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0 1 12 2.276ZM10.122 2.43a18.629 18.629 0 0 0-2.37 6.49 11.266 11.266 0 0 1-3.746-2.504 9.754 9.754 0 0 1 6.116-3.985Z' />
                           </svg>
 
@@ -193,11 +191,11 @@ const FindJobs = () => {
                         </div>
                       ) : jobPost.interviewMethod === 'inPerson' ? (
                         <div className='flex'>
-                          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' class='size-4'>
+                          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='size-4'>
                             <path
-                              fill-rule='evenodd'
+                              fillRule='evenodd'
                               d='M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z'
-                              clip-rule='evenodd'
+                              clipRule='evenodd'
                             />
                           </svg>
 
@@ -205,7 +203,7 @@ const FindJobs = () => {
                         </div>
                       ) : (
                         <div className='flex'>
-                          <svg fill='currentColor' class='size-4' version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 240'>
+                          <svg fill='currentColor' className='size-4' version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 240'>
                             <path
                               d='M84.635,20.256c18.383,0,33.286,14.903,33.286,33.286s-14.903,33.286-33.286,33.286S51.349,71.925,51.349,53.542
 	S66.251,20.256,84.635,20.256z M31.002,145.011c0-2.499,1.606-4.194,4.194-4.194s4.194,1.606,4.194,4.194v92.986h91.469v-92.986
@@ -376,7 +374,7 @@ const FindJobs = () => {
                 <hr />
                 <div className='px-10 py-5 flex gap-3 flex-col'>
                   <h3 className='text-xl font-semibold'>Job Summary</h3>
-                  <div className='mt-3 text-gray-600' dangerouslySetInnerHTML={{ __html: currentJob.jobSummary }}></div>
+                  <div className='mt-3 text-gray-600 jobHtmlStyling' dangerouslySetInnerHTML={{ __html: currentJob.jobSummary }}></div>
                 </div>
                 <div className='px-10'>
                   <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>Report Job</button>

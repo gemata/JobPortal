@@ -30,10 +30,23 @@ const Header = ({ userData, setUserData, isLoggedOut, setIsLoggedOut }) => {
             <Link to='/resume-help' className={getLinkClassName('/resume-help')}>
               Resume Help
             </Link>
-            <Link to='/company/dashboard' className='inline-flex hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-fuchsia-700 cursor-pointer'>
-              Employers/Post Job
-              <FaArrowRight className='mt-1.5 ml-2' />
-            </Link>{' '}
+            {userData.length != 0 && userData.role === 'Company' ? (
+              <Link to='/company/dashboard' className='inline-flex hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-fuchsia-700 cursor-pointer'>
+                Employers/Post Job
+                <FaArrowRight className='mt-1.5 ml-2' />
+              </Link>
+            ) : (
+              <></>
+            )}
+
+            {userData.length != 0 && userData.role === 'Admin' ? (
+              <a href='http://localhost:5000/admin' className='inline-flex hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-fuchsia-700 cursor-pointer'>
+                Admin Page
+                <FaArrowRight className='mt-1.5 ml-2' />
+              </a>
+            ) : (
+              <></>
+            )}
           </ul>
         </div>
       </div>

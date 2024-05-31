@@ -408,6 +408,101 @@ html {
   overflow-x: hidden;
 }
 
+.jobHtmlStyling p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.jobHtmlStyling h1 {
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.jobHtmlStyling h2 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.jobHtmlStyling h3 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.jobHtmlStyling h4 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.jobHtmlStyling h5 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.jobHtmlStyling h6 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.jobHtmlStyling a {
+  text-decoration: none;
+}
+
+.jobHtmlStyling a:hover {
+  text-decoration: underline;
+}
+
+.jobHtmlStyling .ql-size-huge {
+  font-size: 40px;
+}
+
+.jobHtmlStyling .ql-size-large {
+  font-size: 24px;
+}
+
+.jobHtmlStyling p span .ql-size-small {
+  font-size: 12px;
+}
+
+.jobHtmlStyling blockquote {
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #f9f9f9;
+  border-left: 5px solid #ccc;
+}
+
+.jobHtmlStyling ul {
+  list-style-type: disc;
+  padding-left: 40px;
+  margin: 20px 0;
+}
+
+.jobHtmlStyling ol {
+  list-style-type: decimal;
+  padding-left: 40px;
+  margin: 20px 0;
+}
+
+.jobHtmlStyling li {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.bg-ripple-gray {
+  background: repeating-linear-gradient(135deg,
+      rgb(209, 213, 219),
+      rgb(209, 213, 219) 3px,
+      rgb(189, 193, 199) 3px,
+      rgb(189, 193, 199) 6px);
+}
+
+.bg-ripple-pink {
+  background: repeating-linear-gradient(135deg,
+      #b051aa,
+      #b051aa 3px,
+      #c762bb 3px,
+      #c762bb 6px);
+}
+
 .confirmAccount__step {
   position: relative;
   flex-shrink: 0;

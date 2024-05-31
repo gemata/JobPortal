@@ -1,13 +1,26 @@
-import React from 'react'
-import NavBarContainer from '../../components/UserDashboard/NavBarContainer'
+import React from 'react';
+import NavBarContainer from '../../components/UserDashboard/NavBarContainer';
+import SignInPrompt from '../../components/SignInPrompt';
 
-const JobTracker = () => {
+const JobTracker = ({ userData }) => {
   return (
     <>
-    <NavBarContainer/>
-    <div>JobTracker</div>
+      <NavBarContainer />
+      {userData.length != 0 && userData.role !== 'Company' ? (
+        <>
+          <div className='bg-gray-100'>
+            <section className='max-w-[1200px] mx-auto py-10'>
+              <div>Job Tracker</div>
+            </section>
+          </div>
+        </>
+      ) : (
+        <div className='bg-gray-100'>
+          <SignInPrompt />
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default JobTracker
+export default JobTracker;

@@ -1,13 +1,24 @@
-import React from 'react'
-import NavBarContainer from '../../components/UserDashboard/NavBarContainer'
+import React from 'react';
+import NavBarContainer from '../../components/UserDashboard/NavBarContainer';
+import SignInPrompt from '../../components/SignInPrompt';
 
-const Settings = () => {
+const Settings = ({ userData }) => {
   return (
     <>
-    <NavBarContainer/>
-    <div>Settings</div>
+      <NavBarContainer />
+      {userData.length != 0 && userData.role !== 'Company' ? (
+        <>
+          <section className='max-w-[1200px] mx-auto py-10'>
+            <div>Settings</div>
+          </section>
+        </>
+      ) : (
+        <div className='bg-gray-100'>
+          <SignInPrompt />
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

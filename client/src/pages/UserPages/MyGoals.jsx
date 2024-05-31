@@ -1,13 +1,24 @@
-import React from 'react'
-import NavBarContainer from '../../components/UserDashboard/NavBarContainer'
+import React from 'react';
+import NavBarContainer from '../../components/UserDashboard/NavBarContainer';
+import SignInPrompt from '../../components/SignInPrompt';
 
-const MyGoals = () => {
+const MyGoals = ({ userData }) => {
   return (
     <>
-    <NavBarContainer/>
-    <div>MyGoals</div>
+      <NavBarContainer />
+      {userData.length != 0 && userData.role !== 'Company' ? (
+        <>
+          <section className='max-w-[1200px] mx-auto py-10'>
+            <div>My Goals</div>
+          </section>
+        </>
+      ) : (
+        <div className='bg-gray-100'>
+          <SignInPrompt />
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default MyGoals
+export default MyGoals;

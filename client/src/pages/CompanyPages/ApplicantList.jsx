@@ -4,8 +4,9 @@ import DashboardNavSection from '../../components/CompanyComponents/DashboardNav
 import ApplicantListHeader from '../../components/CompanyComponents/Jobs/ApplicantList/ApplicantListHeader';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import SignInPrompt from '../../components/SignInPrompt';
 
-const ApplicantList = () => {
+const ApplicantList = ({ userData }) => {
   const { id } = useParams();
   const [applicants, setApplicants] = useState([]);
 
@@ -26,12 +27,18 @@ const ApplicantList = () => {
   return (
     <>
       <div className='applicantList dashboard bg-gray-100'>
-      <DashboardNavSection />
-      <div className='flex flex-col gap-5 container mx-auto'>
-      <ApplicantListHeader applicantList={applicants}/>
-      </div>
-        <hr className='h-px my-8 bg-gray-300 border-0' />
-        <LowerJobSection />
+        <DashboardNavSection />
+        {userData.length != 0 && userData.role === 'Company' ? (
+          <>
+            <div className='flex flex-col gap-5 container mx-auto'>
+              <ApplicantListHeader applicantList={applicants} />
+            </div>
+            <hr className='h-px my-8 bg-gray-300 border-0' />
+            <LowerJobSection />
+          </>
+        ) : (
+          <SignInPrompt />
+        )}
       </div>
     </>
   );

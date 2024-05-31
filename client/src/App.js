@@ -78,11 +78,11 @@ function App() {
           element={<MyProfile userData={userData} />}
         />
         <Route path="/profile/dashboard" element={<Dashboard userData={userData} />} />
-        <Route path="/profile/job-tracker" element={<JobTracker />} />
-        <Route path="/profile/my-goals" element={<MyGoals />} />
-        <Route path="/profile/job-alerts" element={<JobAlerts />} />
-        <Route path="/profile/listed-jobs" element={<ListedJobs />} />
-        <Route path="/profile/settings" element={<Settings />} />
+        <Route path="/profile/job-tracker" element={<JobTracker userData={userData} />} />
+        <Route path="/profile/my-goals" element={<MyGoals userData={userData} />} />
+        <Route path="/profile/job-alerts" element={<JobAlerts userData={userData} />} />
+        <Route path="/profile/listed-jobs" element={<ListedJobs userData={userData} />} />
+        <Route path="/profile/settings" element={<Settings userData={userData} />} />
         <Route path="/profile/messages" element={<Messages />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
