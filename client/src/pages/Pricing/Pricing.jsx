@@ -11,39 +11,28 @@ const RightIcon = () => {
   );
 };
 
-const PRICING_DATA = [
-  {
-    id: 'price_1PIouUItGJg7D0eNCZlsBFae', // Replace with your actual price ID
-    name: 'Basic Plan',
-    price: '€100 per year',
-    iconComponent: <RightIcon />,
-    benefits: ['Essential job posting features and managing', 'Access to candidate database with delete or ignore options', 'Suitable for startups and small businesses'],
-  },
-  {
-    id: 'price_1PIotfItGJg7D0eNMSQQYeiK',
-    name: 'Standard Plan',
-    price: '€200 per year',
-    iconComponent: <RightIcon />,
-    benefits: ['Advanced job posting options', 'Enhanced visibility for listings', 'Tools to streamline your hiring process', 'Ideal for growing companies'],
-  },
-  {
-    id: 'price_1PIoqxItGJg7D0eNxwfB5Ntg',
-    name: 'Premium Plan',
-    price: '€300 per year',
-    iconComponent: <RightIcon />,
-    benefits: ['Access to all features', 'Priority job placement', 'Customized recruitment solutions', 'Tailored for enterprises and high-volume hiring'],
-  },
-];
-
 const Pricing = () => {
+  const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/subscriptionsPlan');
+        const data = await response.json();
+        setPlans(data);
+      } catch (error) {
+        console.error('Error fetching subscription plans:', error);
+      }
+    };
+
+    fetchPlans();
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   }, []);
-
-  const [loading, setLoading] = useState(false);
 
   const handleCheckout = async (planId) => {
     setLoading(true);
@@ -73,15 +62,15 @@ const Pricing = () => {
         </div>
         <div className='bg-gray-100 full-width'>
           <div className='max-w-[1200px] mx-auto flex flex-col lg:flex-row items-center gap-10 lg:items-start justify-between mt-[50px] py-8 pb-12'>
-            {PRICING_DATA.map((data, index) => (
-              <div key={index} className='relative h-full'>
+            {plans.map((plan) => (
+              <div key={plan._id} className='relative h-full flex-1'>
                 <div className='max-w-sm p-6 bg-white group h-full rounded-2xl lg:hover:-translate-y-6 ease-in duration-300 hover:bg-[#41063a] hover:text-white '>
                   <div className='flex flex-row gap-5 items-center w-full'>
-                    <div>{data.iconComponent}</div>
-                    <span className='text-3xl font-bold'>{data.name}</span>
+                    <div><RightIcon /></div>
+                    <span className='text-3xl font-bold'>{plan.planName}</span>
                   </div>
                   <span className='flex mt-4 text-[#A9A9AA] text-2xl'>What You&apos;ll Get</span>
-                  {data.benefits.map((benefit, index) => (
+                  {plan.planDescription.split(', ').map((benefit, index) => (
                     <div key={index} className='flex flex-row gap-2.5 items-start mt-6 text-left text-lg'>
                       <div className='pt-1 shrink-0'>
                         <RightIcon />
@@ -93,11 +82,11 @@ const Pricing = () => {
                   <div className='h-36'>
                     <div className='bottom-6 left-6 right-6 absolute'>
                       <div className='flex justify-start items-baseline'>
-                        <span className='text-[32px] font-bold '>{data.price}</span>
+                        <span className='text-[32px] font-bold '>{`€${plan.planPrice} per year`}</span>
                       </div>
                       <button
                         className='w-full px-4 py-3 bg-[#FFF5FA] text-[#FF1D89] group-hover:text-white group-hover:bg-[#FF1D89] rounded-xl mt-6 font-semibold text-xl'
-                        onClick={() => handleCheckout(data.id)}
+                        onClick={() => handleCheckout(plan.stripeId)}
                         disabled={loading}
                       >
                         {loading ? 'Processing...' : 'Choose'}
