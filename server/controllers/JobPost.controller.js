@@ -19,20 +19,44 @@ const JobPostController = {
   // Get all JobPosts
   async getJobPosts(req, res) {
     try {
-      const { page = 1, limit = 10, nationality, searchQuery } = req.query;
+      const { page = 1, limit = 10, nat, q, loc, sFrom, sTo, ed, cf, jp } = req.query;
       const offset = (page - 1) * limit;
 
       const filter = { is_Active: true };
-      if (nationality) {
-        filter.nationality = nationality;
+      if (nat) {
+        filter.nationality = nat;
       }
 
-      if (searchQuery) {
+      if (loc) {
+        filter.interviewMethod = loc;
+      }
+
+      if (sFrom) {
+        filter.salary_From = { [Op.gte]: sFrom };
+      }
+
+      if (sTo) {
+        filter.salary_To = { [Op.lte]: sTo };
+      }
+
+      if (ed) {
+        filter.education = ed;
+      }
+
+      if (jp) {
+        filter.JobPositionId = jp;
+      }
+
+      if (cf) {
+        filter.CompanyID = cf;
+      }
+
+      if (q) {
         filter[Op.or] = [
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('jobSummary')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('interviewMethod')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Job Position.position')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Company.CompanyName')), 'LIKE', `%${searchQuery.toLowerCase()}%`)
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('jobSummary')), 'LIKE', `%${q.toLowerCase()}%`),
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('interviewMethod')), 'LIKE', `%${q.toLowerCase()}%`),
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Job Position.position')), 'LIKE', `%${q.toLowerCase()}%`),
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Company.CompanyName')), 'LIKE', `%${q.toLowerCase()}%`)
         ];
       }
 

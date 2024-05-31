@@ -96,6 +96,7 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
       <select name='education' value={educationLevel} onChange={handleEducationLevelChange} className='w-full p-3 px-5 rounded'>
         <option value=''>Select Education Level</option>
         <option value='none'>None needed</option>
+        <option value='highschool'>High School</option>
         <option value='bachelors'>Bachelor's Degree</option>
         <option value='masters'>Master's Degree</option>
         <option value='phd'>PhD</option>

@@ -3,24 +3,40 @@ import FindJobsSearchbar from '../../components/CompanyComponents/Jobs/FindJobs/
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import DOMPurify from 'dompurify';
 import grayLogo from '../../img/grayLogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const FindJobs = () => {
   const [nationality, setNationality] = useState('');
+  const [workLocation, setWorkLocation] = useState('');
+  const [salaryFrom, setSalaryFrom] = useState('');
+  const [salaryTo, setSalaryTo] = useState('');
+  const [educationLevel, setEducationLevel] = useState('');
+  const [jobPositionFilter, setjobPositionFilter] = useState('');
+  const [companyFilter, setCompanyFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [jobPosts, setJobPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState([]);
   const [jobOpened, setJobOpened] = useState(false);
   const [currentJob, setCurrentJob] = useState(null);
+  const [currentCompany, setCurrentCompany] = useState(null);
+  const [searchParams] = useSearchParams();
+  const queryValue = searchParams.get('q');
+
+  useEffect(() => {
+    if (queryValue) {
+      setSearchQuery(queryValue);
+      fetchJobPosts();
+    }
+  }, []);
 
   const fetchJobPosts = () => {
-    fetch(`http://localhost:5000/api/jobposts?page=${currentPage}&limit=12&nationality=${nationality}&searchQuery=${searchQuery}`)
+    fetch(
+      `http://localhost:5000/api/jobposts?page=${currentPage}&limit=12&nat=${nationality}&q=${searchQuery}&loc=${workLocation}&sFrom=${salaryFrom}&sTo=${salaryTo}&ed=${educationLevel}&cf=${companyFilter}&jp=${jobPositionFilter}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data && data.jobPosts) {
-          
-          // Sanitize the job summary for each job post
           const sanitizedJobPosts = data.jobPosts.map((jobPost) => ({
             ...jobPost,
             jobSummary: DOMPurify.sanitize(jobPost.jobSummary),
@@ -35,6 +51,11 @@ const FindJobs = () => {
       })
       .catch((error) => console.error('Error fetching job posts:', error));
   };
+
+  useEffect(() => {
+    fetchJobPosts();
+  }, [currentPage, nationality, searchQuery, workLocation, salaryFrom, salaryTo, educationLevel, jobPositionFilter, companyFilter]);
+
   const handlePageChange = (page) => {
     let newPage;
 
@@ -60,14 +81,23 @@ const FindJobs = () => {
       behavior: 'smooth',
     });
 
-    console.log(job);
-
     if (currentJob) {
       if (job.ID == currentJob.ID) {
         closeJob();
         return;
       }
     }
+
+    fetch(`http://localhost:5000/api/companyprofiles/company/${job.Company.ID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setCurrentCompany(data);
+        } else {
+          console.error('No company profile found in response:', data);
+        }
+      });
+
     setCurrentJob(job);
     setJobOpened(true);
   };
@@ -82,44 +112,55 @@ const FindJobs = () => {
     setJobOpened(false);
   };
 
-  useEffect(() => {
-    fetchJobPosts();
-  }, [currentPage, nationality, searchQuery]);
-
   return (
     <>
-
-      {jobOpened ? <></> : <div className='bg-[#f1f2f4]'>
-        <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
-          <div className='flex justify-between pt-[0px] pb-[0px]'>
-            <div className='flex flex-col gap-3 w-full items-center justify-center py-10'>
-              <span className='text-black font-semibold text-2xl'>Search for a Job</span>
-              <p className='paragraph w-2/3 text-center'>
-                Discover exciting opportunities in the tech industry. From programming and AI to design and consulting, explore openings to shape the future of innovation. Take the
-                next step towards a rewarding career.
-              </p>
+      {jobOpened ? (
+        <></>
+      ) : (
+        <div className='bg-[#f1f2f4]'>
+          <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
+            <div className='flex justify-between pt-[0px] pb-[0px]'>
+              <div className='flex flex-col gap-3 w-full items-center justify-center py-10'>
+                <span className='text-black font-semibold text-2xl'>Search for a Job</span>
+                <p className='paragraph w-2/3 text-center'>
+                  Discover exciting opportunities in the tech industry. From programming and AI to design and consulting, explore openings to shape the future of innovation. Take
+                  the next step towards a rewarding career.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>}
-      
+      )}
 
-      <div className='flex max-w-[1500px] mx-auto'>
-        <div className={`border transition-all ${jobOpened ? 'w-1/2 md:w-1/3 bg-gray-100' : 'w-full bg-gray-50'}`}>
+      <div className='flex max-w-[1500px] mx-auto '>
+        <div className={`border transition-all ${jobOpened ? 'w-0 hidden md:block md:w-1/3 bg-gray-100' : 'w-full bg-gray-50'}`}>
           <FindJobsSearchbar
             nationality={nationality}
             setNationality={setNationality}
+            workLocation={workLocation}
+            setWorkLocation={setWorkLocation}
+            salaryFrom={salaryFrom}
+            setSalaryFrom={setSalaryFrom}
+            salaryTo={salaryTo}
+            setSalaryTo={setSalaryTo}
+            educationLevel={educationLevel}
+            setEducationLevel={setEducationLevel}
+            jobPositionFilter={jobPositionFilter}
+            setjobPositionFilter={setjobPositionFilter}
+            companyFilter={companyFilter}
+            setCompanyFilter={setCompanyFilter}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             handleFormSubmit={handleFormSubmit}
+            jobOpened={jobOpened}
           />
 
           <div
             className={
               jobPosts.length !== 0
                 ? jobOpened
-                  ? 'grid grid-cols-1 gap-4 px-5 mx-auto mt-5 max-h-[700px] overflow-y-scroll'
-                  : 'grid max-w-[1200px] grid-cols-4 gap-4 px-5 mx-auto mt-10'
+                  ? 'grid grid-cols-1 gap-4 px-5 mx-auto mt-5 max-h-[1000px] overflow-y-scroll'
+                  : 'grid max-w-[1200px] sm:grid-cols-2 md:grid-cols-4 gap-4 px-5 mx-auto mt-10'
                 : 'flex items-center justify-center max-w-[1200px] px-5 mx-auto mt-10 min-h-[450px]'
             }
           >
@@ -142,28 +183,31 @@ const FindJobs = () => {
                         jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'
                       }-800 text-xs select-none font-medium mr-2 px-2.5 py-0.5 rounded`}
                     >
-                      {jobPost.interviewMethod === 'online' ?  
+                      {jobPost.interviewMethod === 'online' ? (
                         <div className='flex'>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
-                            <path d="M21.721 12.752a9.711 9.711 0 0 0-.945-5.003 12.754 12.754 0 0 1-4.339 2.708 18.991 18.991 0 0 1-.214 4.772 17.165 17.165 0 0 0 5.498-2.477ZM14.634 15.55a17.324 17.324 0 0 0 .332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 0 0 .332 4.647 17.385 17.385 0 0 0 5.268 0ZM9.772 17.119a18.963 18.963 0 0 0 4.456 0A17.182 17.182 0 0 1 12 21.724a17.18 17.18 0 0 1-2.228-4.605ZM7.777 15.23a18.87 18.87 0 0 1-.214-4.774 12.753 12.753 0 0 1-4.34-2.708 9.711 9.711 0 0 0-.944 5.004 17.165 17.165 0 0 0 5.498 2.477ZM21.356 14.752a9.765 9.765 0 0 1-7.478 6.817 18.64 18.64 0 0 0 1.988-4.718 18.627 18.627 0 0 0 5.49-2.098ZM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 0 0 1.988 4.718 9.765 9.765 0 0 1-7.478-6.816ZM13.878 2.43a9.755 9.755 0 0 1 6.116 3.986 11.267 11.267 0 0 1-3.746 2.504 18.63 18.63 0 0 0-2.37-6.49ZM12 2.276a17.152 17.152 0 0 1 2.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0 1 12 2.276ZM10.122 2.43a18.629 18.629 0 0 0-2.37 6.49 11.266 11.266 0 0 1-3.746-2.504 9.754 9.754 0 0 1 6.116-3.985Z" />
+                          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' class='size-4'>
+                            <path d='M21.721 12.752a9.711 9.711 0 0 0-.945-5.003 12.754 12.754 0 0 1-4.339 2.708 18.991 18.991 0 0 1-.214 4.772 17.165 17.165 0 0 0 5.498-2.477ZM14.634 15.55a17.324 17.324 0 0 0 .332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 0 0 .332 4.647 17.385 17.385 0 0 0 5.268 0ZM9.772 17.119a18.963 18.963 0 0 0 4.456 0A17.182 17.182 0 0 1 12 21.724a17.18 17.18 0 0 1-2.228-4.605ZM7.777 15.23a18.87 18.87 0 0 1-.214-4.774 12.753 12.753 0 0 1-4.34-2.708 9.711 9.711 0 0 0-.944 5.004 17.165 17.165 0 0 0 5.498 2.477ZM21.356 14.752a9.765 9.765 0 0 1-7.478 6.817 18.64 18.64 0 0 0 1.988-4.718 18.627 18.627 0 0 0 5.49-2.098ZM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 0 0 1.988 4.718 9.765 9.765 0 0 1-7.478-6.816ZM13.878 2.43a9.755 9.755 0 0 1 6.116 3.986 11.267 11.267 0 0 1-3.746 2.504 18.63 18.63 0 0 0-2.37-6.49ZM12 2.276a17.152 17.152 0 0 1 2.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0 1 12 2.276ZM10.122 2.43a18.629 18.629 0 0 0-2.37 6.49 11.266 11.266 0 0 1-3.746-2.504 9.754 9.754 0 0 1 6.116-3.985Z' />
                           </svg>
 
                           <p className='pl-1'>Online</p>
-                      </div>
-                      : jobPost.interviewMethod === 'inPerson' ?  
-                      <div className='flex'> 
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                              <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
-                            </svg>
+                        </div>
+                      ) : jobPost.interviewMethod === 'inPerson' ? (
+                        <div className='flex'>
+                          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' class='size-4'>
+                            <path
+                              fill-rule='evenodd'
+                              d='M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z'
+                              clip-rule='evenodd'
+                            />
+                          </svg>
 
-
-                        <p className='pl-1'>In Person</p>
-                      </div> 
-                      : 
-                      <div className='flex'> 
-                      <svg fill="currentColor" class="size-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  
-	  viewBox="0 0 256 240"  >
-<path d="M84.635,20.256c18.383,0,33.286,14.903,33.286,33.286s-14.903,33.286-33.286,33.286S51.349,71.925,51.349,53.542
+                          <p className='pl-1'>In Person</p>
+                        </div>
+                      ) : (
+                        <div className='flex'>
+                          <svg fill='currentColor' class='size-4' version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 240'>
+                            <path
+                              d='M84.635,20.256c18.383,0,33.286,14.903,33.286,33.286s-14.903,33.286-33.286,33.286S51.349,71.925,51.349,53.542
 	S66.251,20.256,84.635,20.256z M31.002,145.011c0-2.499,1.606-4.194,4.194-4.194s4.194,1.606,4.194,4.194v92.986h91.469v-92.986
 	c0-2.499,1.606-4.194,4.194-4.194c2.499,0,4.194,1.606,4.194,4.194v92.986h29.092V136.623c0-22.934-18.74-41.585-41.585-41.585
 	h-8.388l-24.451,38.015l-2.945-28.467l4.016-9.638H76.96l4.016,9.638l-3.123,28.645L53.401,95.038h-9.816
@@ -179,10 +223,12 @@ const FindJobs = () => {
 	c-1.902,3.978-3.403,8.548-4.472,13.495h-12.989C174.857,23.23,182.081,16.586,190.868,12.981z M170.921,69.2h12.74
 	c1.056,4.641,2.501,8.932,4.301,12.695c0.899,1.879,1.872,3.585,2.906,5.123C182.362,83.529,175.314,77.195,170.921,69.2z
 	 M221.132,87.019c1.034-1.539,2.007-3.244,2.906-5.123c1.8-3.763,3.245-8.054,4.301-12.695h12.74
-	C236.686,77.195,229.638,83.529,221.132,87.019z"/>
-</svg>
+	C236.686,77.195,229.638,83.529,221.132,87.019z'
+                            />
+                          </svg>
                           <p className='pl-1'>Hybrid</p>
-                      </div> }
+                        </div>
+                      )}
                     </span>
 
                     <span className='select-none text-gray-500 text-sm'>
@@ -245,7 +291,7 @@ const FindJobs = () => {
             <div className='h-3'></div>
           )}
         </div>
-        <div className={`${jobOpened ? 'w-1/2 md:w-2/3' : 'w-0 hidden'} h-dvh relative border transition-all flex relative`}>
+        <div className={`${jobOpened ? 'w-full md:w-2/3 pb-3' : 'w-0 hidden'} relative border transition-all flex relative`}>
           {currentJob ? (
             <>
               <div className='flex flex-col w-full gap-3'>
@@ -278,13 +324,44 @@ const FindJobs = () => {
                   </div>
                   <div className='flex gap-3'>
                     <button className='bg-jobportal-pink hover:bg-fuchsia-700 text-white py-3 px-5 rounded-lg font-semibold'>Apply Now</button>
-                    <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>M</button>
-                    <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>🚫</button>
+                    <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='size-6'>
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          d='M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z'
+                        />
+                      </svg>
+                    </button>
+                    <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='size-6'>
+                        <path strokeLinecap='round' strokeLinejoin='round' d='M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636' />
+                      </svg>
+                    </button>
                   </div>
                 </div>
                 <div className='px-10 py-5'>
                   <h3 className='text-xl font-semibold'>Location</h3>
                   <h3 className='mt-3 ml-3 text-lg'>{currentJob.jobLocation}</h3>
+                </div>
+                <hr />
+                <div className='px-10 py-5 flex gap-3 flex-col'>
+                  <h3 className='text-xl font-semibold'>Company Info</h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Address: </span> {currentCompany?.address || 'None specified'}
+                  </h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Company Email: </span> {currentCompany?.companyEmail || 'None specified'}
+                  </h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Phone Number: </span> {currentCompany?.phoneNumber || 'None specified'}
+                  </h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Website: </span> {currentCompany?.website || 'None specified'}
+                  </h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Description: </span> {currentCompany?.description || 'None specified'}
+                  </h3>
                 </div>
                 <hr />
                 <div className='px-10 py-5 flex gap-3 flex-col'>
