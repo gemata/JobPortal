@@ -1,6 +1,8 @@
 import { Op, Sequelize } from "sequelize";
 import JobPost from '../models/JobPost.entity.js';
 import JobPosition from '../models/jobposition.entity.js';
+import Company from '../models/Company.entity.js'
+import CompanyLogo from "../models/CompanyLogo.entity.js";
 
 // Controller functions
 const JobPostController = {
@@ -20,7 +22,7 @@ const JobPostController = {
       const { page = 1, limit = 10, nationality, searchQuery } = req.query;
       const offset = (page - 1) * limit;
 
-      const filter = {};
+      const filter = { is_Active: true };
       if (nationality) {
         filter.nationality = nationality;
       }
@@ -29,7 +31,8 @@ const JobPostController = {
         filter[Op.or] = [
           Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('jobSummary')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
           Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('interviewMethod')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Job Position.position')), 'LIKE', `%${searchQuery.toLowerCase()}%`)
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Job Position.position')), 'LIKE', `%${searchQuery.toLowerCase()}%`),
+          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Company.CompanyName')), 'LIKE', `%${searchQuery.toLowerCase()}%`)
         ];
       }
 
@@ -39,10 +42,19 @@ const JobPostController = {
           {
             model: JobPosition,
             as: 'Job Position',
+          },
+          {
+            model: Company,
+            as: 'Company',
+            include: [{
+              model: CompanyLogo,
+              as: 'CompanyLogo'
+            }]
           }
         ],
         limit: parseInt(limit),
-        offset: parseInt(offset)
+        offset: parseInt(offset),
+        order: [['createdAt', 'DESC']]
       });
 
       return res.status(200).json({

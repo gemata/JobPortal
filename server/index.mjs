@@ -1079,7 +1079,7 @@ const start = async () => {
   });
 
   const SequelizeStore = connectSessionStore(SessionStore);
-  const sessionStore = new SequelizeStore({ db: sequelize, expiration: 3600 });
+  const sessionStore = new SequelizeStore({ db: sequelize, expiration: 36000 });
 
   const getSessionData = async (req, res) => {
     try {

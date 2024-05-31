@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import FindJobsSearchbar from '../../components/CompanyComponents/Jobs/FindJobs/FindJobsSearchbar';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import grayLogo from '../../img/grayLogo.png';
+import { Link } from 'react-router-dom';
 
 const FindJobs = () => {
   const [nationality, setNationality] = useState('');
@@ -8,6 +10,8 @@ const FindJobs = () => {
   const [jobPosts, setJobPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState([]);
+  const [jobOpened, setJobOpened] = useState(false);
+  const [currentJob, setCurrentJob] = useState(null);
 
   const fetchJobPosts = () => {
     fetch(`http://localhost:5000/api/jobposts?page=${currentPage}&limit=12&nationality=${nationality}&searchQuery=${searchQuery}`)
@@ -43,6 +47,35 @@ const FindJobs = () => {
     fetchJobPosts();
   };
 
+  const openJob = (job) => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
+    console.log(job);
+
+    if (currentJob) {
+      if (job.ID == currentJob.ID) {
+        closeJob();
+        return;
+      }
+    }
+
+    setCurrentJob(job);
+    setJobOpened(true);
+  };
+
+  const closeJob = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
+    setCurrentJob([]);
+    setJobOpened(false);
+  };
+
   useEffect(() => {
     fetchJobPosts();
   }, [currentPage, nationality, searchQuery]);
@@ -63,92 +96,173 @@ const FindJobs = () => {
         </div>
       </div>
 
-      <FindJobsSearchbar nationality={nationality} setNationality={setNationality} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleFormSubmit={handleFormSubmit} />
+      <div className='flex max-w-[1500px] mx-auto'>
+        <div className={`border transition-all ${jobOpened ? 'w-1/2 md:w-1/3 bg-gray-100' : 'w-full bg-gray-50'}`}>
+          <FindJobsSearchbar
+            nationality={nationality}
+            setNationality={setNationality}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleFormSubmit={handleFormSubmit}
+          />
 
-      <div
-        className={
-          jobPosts.length !== 0 ? 'grid grid-cols-4 gap-4 max-w-[1200px] px-5 mx-auto mt-10 ' : 'flex items-center justify-center max-w-[1200px] px-5 mx-auto mt-10 min-h-[450px]'
-        }
-      >
-        {jobPosts.length !== 0 ? (
-          jobPosts.map((jobPost, index) => (
-            <div key={index} className='border rounded-lg p-4 bg-white shadow-sm flex flex-col space-y-2' style={{ height: '170px' }}>
-              <div className='flex justify-between items-center'>
-                <h3 className='text-lg font-semibold'>{jobPost['Job Position']?.position} </h3>
-              </div>
-              <div className='flex items-center'>
-                <span
-                  className={`bg-${jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'}-100 capitalize text-${
-                    jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'
-                  }-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded`}
+          <div
+            className={
+              jobPosts.length !== 0
+                ? jobOpened
+                  ? 'grid grid-cols-1 gap-4 px-5 mx-auto mt-5 max-h-[700px] overflow-y-scroll'
+                  : 'grid max-w-[1200px] grid-cols-4 gap-4 px-5 mx-auto mt-10'
+                : 'flex items-center justify-center max-w-[1200px] px-5 mx-auto mt-10 min-h-[450px]'
+            }
+          >
+            {jobPosts.length !== 0 ? (
+              jobPosts.map((jobPost) => (
+                <div
+                  key={jobPost.id}
+                  onClick={() => {
+                    openJob(jobPost);
+                  }}
+                  className='cursor-pointer border rounded-lg p-4 bg-white shadow-md flex flex-col justify-between space-y-2 hover:bg-gray-50 active:bg-gray-100'
+                  style={{ height: '170px' }}
                 >
-                  {jobPost.interviewMethod}
-                </span>
+                  <div className='flex justify-between items-center'>
+                    <h3 className='select-none text-lg font-semibold'>{jobPost['Job Position']?.position} </h3>
+                  </div>
+                  <div className='flex items-center'>
+                    <span
+                      className={`bg-${jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'}-100 capitalize text-${
+                        jobPost.interviewMethod === 'online' ? 'green' : jobPost.interviewMethod === 'inPerson' ? 'blue' : 'orange'
+                      }-800 text-xs select-none font-medium mr-2 px-2.5 py-0.5 rounded`}
+                    >
+                      {jobPost.interviewMethod}
+                    </span>
 
-                <span className='text-gray-500 text-sm'>
-                  Hourly wage: ${jobPost.salary_from} - ${jobPost.salary_to}
-                </span>
-              </div>
-              <div className='flex items-center space-x-3'>
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='40px' height='40px'>
-                  <path fill='#4285F4' d='M24 9.5c1.67 0 3.24.38 4.68 1.06l6.91-6.91C31.12 1.51 27.7 0 24 0 14.53 0 6.67 5.82 3.34 14.27l7.74 6.02C12.86 13.01 18.05 9.5 24 9.5z' />
-                  <path fill='#34A853' d='M47.84 24.56c0-1.68-.15-3.27-.43-4.82H24v9.13h13.58c-.58 3.07-2.29 5.65-4.89 7.39l7.75 6C45.88 38.07 47.84 31.79 47.84 24.56z' />
-                  <path fill='#FBBC05' d='M10.07 28.67a14.45 14.45 0 0 1-.75-4.67c0-1.63.27-3.22.75-4.67l-7.74-6.02C.78 16.44 0 20.13 0 24c0 3.87.78 7.56 2.07 10.68l7.75-6.01z' />
-                  <path
-                    fill='#EA4335'
-                    d='M24 48c6.48 0 11.89-2.15 15.85-5.83l-7.75-6c-2.17 1.45-4.88 2.32-8.1 2.32-5.95 0-11.14-3.51-13.42-8.52l-7.75 6C6.67 42.18 14.53 48 24 48z'
-                  />
-                </svg>
+                    <span className='select-none text-gray-500 text-sm'>
+                      Hourly wage: ${jobPost.salary_from} - ${jobPost.salary_to}
+                    </span>
+                  </div>
+                  <div className='flex items-center space-x-3'>
+                    <img
+                      src={jobPost.Company.CompanyLogo ? `http://localhost:5000/companyLogos/${jobPost.Company.CompanyLogo.s3Key}` : grayLogo}
+                      className='w-10 h-10  select-none object-cover object-center rounded-full border border-gray-300'
+                    />
 
-                <div className='text-sm'>
-                  <div className='font-medium'>Google Inc.</div>
-                  <div className='text-gray-500'>{jobPost.jobLocation}</div>
+                    <div className='text-sm'>
+                      <div className='font-medium select-none '>{jobPost.Company.CompanyName}</div>
+                      <div className='text-gray-500 select-none '>{jobPost.jobLocation}</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <h1 className='text-center text-2xl font-semibold w-full my-10'>No jobs found!</h1>
-        )}
-      </div>
-
-      {totalPages.length !== 0 ? (
-        <div className='flex items-center justify-center gap-4 my-10'>
-          {currentPage === 1 ? (
-            <button disabled className='border border-gray-200 p-3.5 rounded-full bg-gray-100 text-gray-400'>
-              <FaArrowLeft />
-            </button>
-          ) : (
-            <button onClick={() => handlePageChange('prev')} className='border border-gray-300 p-3.5 rounded-full bg-gray-100 hover:bg-gray-300'>
-              <FaArrowLeft />
-            </button>
-          )}
-          <div id='slider' className='flex items-center gap-3'>
-            {totalPages.map((page, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(page)}
-                className={`border ${
-                  page === currentPage ? 'border-fuchsia-700 bg-jobportal-pink text-white' : 'border-gray-300 bg-gray-100'
-                } p-3.5 rounded-lg hover:border-fuchsia-700 hover:bg-jobportal-pink hover:text-white`}
-              >
-                {page}
-              </button>
-            ))}
+              ))
+            ) : (
+              <h1 className='text-center text-2xl font-semibold w-full my-10'>No jobs found!</h1>
+            )}
           </div>
-          {currentPage === totalPages.length ? (
-            <button disabled className='border border-gray-200 p-3.5 rounded-full bg-gray-100 text-gray-400'>
-              <FaArrowRight />
-            </button>
+
+          {totalPages.length !== 0 ? (
+            <div className='flex items-center justify-center gap-4 my-10'>
+              {currentPage === 1 ? (
+                <button disabled className='border border-gray-200 p-3.5 rounded-full bg-gray-100 text-gray-400'>
+                  <FaArrowLeft />
+                </button>
+              ) : (
+                <button onClick={() => handlePageChange('prev')} className='border border-gray-300 p-3.5 rounded-full bg-gray-100 hover:bg-gray-300'>
+                  <FaArrowLeft />
+                </button>
+              )}
+              <div id='slider' className='flex items-center gap-3'>
+                {totalPages.map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`border ${
+                      page === currentPage ? 'border-fuchsia-700 bg-jobportal-pink text-white' : 'border-gray-300 bg-gray-100'
+                    } p-3.5 rounded-lg hover:border-fuchsia-700 hover:bg-jobportal-pink hover:text-white`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              {currentPage === totalPages.length ? (
+                <button disabled className='border border-gray-200 p-3.5 rounded-full bg-gray-100 text-gray-400'>
+                  <FaArrowRight />
+                </button>
+              ) : (
+                <button onClick={() => handlePageChange('next')} className='border border-gray-300 p-3.5 rounded-full bg-gray-100 hover:bg-gray-300'>
+                  <FaArrowRight />
+                </button>
+              )}
+            </div>
           ) : (
-            <button onClick={() => handlePageChange('next')} className='border border-gray-300 p-3.5 rounded-full bg-gray-100 hover:bg-gray-300'>
-              <FaArrowRight />
-            </button>
+            <div className='h-3'></div>
           )}
         </div>
-      ) : (
-        <div className='h-3'></div>
-      )}
+        <div className={`${jobOpened ? 'w-1/2 md:w-2/3' : 'w-0 hidden'} h-dvh relative border transition-all flex relative`}>
+          {currentJob ? (
+            <>
+              <div className='flex flex-col w-full gap-3'>
+                <div className='sticky top-0 bg-white flex flex-col w-full gap-3 shadow-lg px-10 py-6'>
+                  <button
+                    type='button'
+                    className='flex items-center justify-center border rounded-full w-10 h-10 top-5 right-5 text-gray-500 border-gray-500 hover:bg-red-200 absolute'
+                    onClick={() => {
+                      closeJob();
+                    }}
+                  >
+                    X
+                  </button>
+                  <h1 className='text-2xl font-semibold'>{currentJob['Job Position']?.position}</h1>
+                  <hr className='w-full border border-1' />
+                  <Link to='' className='w-fit p-2'>
+                    <div className='flex items-center space-x-3'>
+                      <img
+                        src={currentJob.Company?.CompanyLogo ? `http://localhost:5000/companyLogos/${currentJob.Company?.CompanyLogo.s3Key}` : grayLogo}
+                        className='w-10 h-10  select-none object-cover object-center rounded-full border border-gray-300'
+                      />
+                      <div className='text-sm'>
+                        <div className='font-medium select-none underline'>{currentJob.Company?.CompanyName}</div>
+                      </div>
+                    </div>
+                  </Link>
+                  <div>{currentJob.jobLocation}</div>
+                  <div>
+                    ${currentJob.salary_from} - ${currentJob.salary_to} per hour
+                  </div>
+                  <div className='flex gap-3'>
+                    <button className='bg-jobportal-pink hover:bg-fuchsia-700 text-white py-3 px-5 rounded-lg font-semibold'>Apply Now</button>
+                    <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>M</button>
+                    <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>🚫</button>
+                  </div>
+                </div>
+                <div className='px-10 py-5'>
+                  <h3 className='text-xl font-semibold'>Location</h3>
+                  <h3 className='mt-3 ml-3 text-lg'>{currentJob.jobLocation}</h3>
+                </div>
+                <hr />
+                <div className='px-10 py-5 flex gap-3 flex-col'>
+                  <h3 className='text-xl font-semibold'>Job Details</h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Pay:</span> ${currentJob.salary_from} - ${currentJob.salary_to} per hour
+                  </h3>
+                  <h3 className='text-lg mt-3 ml-3'>
+                    <span className='font-semibold mr-2'>Schedule:</span> <span className='capitalize'> {currentJob.interviewMethod} </span>
+                  </h3>
+                </div>
+                <hr />
+                <div className='px-10 py-5 flex gap-3 flex-col'>
+                  <h3 className='text-xl font-semibold'>Job Summary</h3>
+                  <div className='mt-3 text-gray-600'>{currentJob.jobSummary}</div>
+                </div>
+                <div className='px-10'>
+                  <button className='bg-gray-200 hover:bg-gray-300 p-3 rounded-lg font-semibold'>Report Job</button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <h1 className='text-2xl font-semibold text-center'></h1>
+          )}
+        </div>
+      </div>
     </>
   );
 };
