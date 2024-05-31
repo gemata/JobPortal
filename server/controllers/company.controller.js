@@ -28,7 +28,7 @@ const CompanyController = {
   // Get all Companies
   async getCompanies(req, res) {
     try {
-      const Companies = await Company.findAll();
+      const Companies = await Company.findAndCountAll();
       return res.status(200).json(Companies);
     } catch (error) {
       return res.status(500).json({ error: error.message });

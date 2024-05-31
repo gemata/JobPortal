@@ -30,14 +30,14 @@ const UserController = {
   },
 
   // Get all users
-  async getUsers(req, res) {
-    try {
-      const users = await User.findAll();
-      return res.status(200).json(users);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  },
+async getUsers(req, res) {
+  try {
+    const users = await User.findAndCountAll(); // This will return { count, rows }
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+},
 
   // Get a user by ID
   async getUserById(req, res) {
