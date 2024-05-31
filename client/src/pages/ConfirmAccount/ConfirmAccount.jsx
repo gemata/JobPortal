@@ -102,9 +102,6 @@ const ConfirmAccount = () => {
       };
     }
 
-    console.log(`http://localhost:5000/api/${selectedOption === 'User' ? 'users' : 'companies'}`);
-    console.log(requestBody);
-
     const response = await fetch(`http://localhost:5000/api/${selectedOption === 'User' ? 'users' : 'companies'}`, {
       method: 'POST',
       headers: {
@@ -142,8 +139,6 @@ const ConfirmAccount = () => {
           const formData = new FormData();
           formData.append('id', selectedOption === 'User' ? account.id : account.ID);
           formData.append('file', file);
-
-          console.log(formData);
 
           const imageResponse = await fetch(`http://localhost:5000/api/${selectedOption === 'User' ? 'userimages' : 'companylogos'}`, {
             method: 'POST',

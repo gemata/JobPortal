@@ -118,10 +118,10 @@ const Home = () => {
     <>
       <div className='bg-[#f1f2f4] py-[100px]'>
         <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
-          <div className='flex justify-between items-center'>
+          <div className='flex flex-col md:flex-row justify-between items-center'>
             <div className='text-section'>
-              <h1 className='font-semibold text-[50px]'>
-                Find a job that matches <span className='block leading-[0.8] mb-7 p-0'>your interests and skills.</span>
+              <h1 className='font-semibold text-[50px] leading-[1.2]'>
+                Find a job that matches <span className='block mb-7 p-0'>your interests and skills.</span>
               </h1>
               <span className='text-base text-[#5e6670]'>
                 We aim to provide a platform where individuals can{' '}
@@ -149,7 +149,7 @@ const Home = () => {
               </div>
               <span className='text-base text-[#5e6670]'>Suggestions: Designer, Web Developer, Video Editor</span>
             </div>
-            <div className='image-section'>
+            <div className='image-section hidden md:block'>
               <img src={illustration} alt='' />
             </div>
           </div>
@@ -158,7 +158,7 @@ const Home = () => {
       <div className='mt-[100px]'>
         <div className='max-w-[1200px] mx-auto my-0 px-[15px] py-0'>
           <div className='font-medium text-[42px] mb-10'>Most Popular Vacancies</div>
-          <div className='flex justify-between'>
+          <div className='flex justify-between gap-3'>
             <div className='box-1'>
               <span>Anesthsiologists</span> <br />
               <span className='text-base text-[#949ba4]'>45,070 Open Positions</span> <br /> <br />
