@@ -37,10 +37,18 @@ const JobPost = sequelize.define(
     salary_from: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+        max: 99999,
+      },
     },
     salary_to: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+        max: 99999,
+      },
     },
     jobLocation: {
       type: DataTypes.STRING(255),

@@ -19,6 +19,7 @@ import UserProfile from "../models/userProfile.entity.js";
 import UserImage from "../models/userImage.entity.js";
 import Resume from "../models/resume.entity.js";
 import WorkExperience from "../models/workexperience.entity.js";
+import Testimonial from "../models/testimonial.entity.js";
 
 const dbContext = async () => {
   User.hasOne(Resume);
@@ -87,6 +88,9 @@ const dbContext = async () => {
 
   JobPost.belongsTo(JobPosition);
   JobPosition.hasMany(JobPost);
+  
+  User.hasMany(Testimonial);
+  Testimonial.belongsTo(User);
 
   await sequelize.sync({ alter: true });
 };

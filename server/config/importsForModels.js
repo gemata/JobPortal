@@ -23,6 +23,7 @@ import Resume from "../models/resume.entity.js";
 import WorkExperience from "../models/workexperience.entity.js";
 import ChatLog from "../models/chatLog.js";
 import PendingAccount from "../models/pendingAccount.js";
+import Testimonial from '../models/testimonial.entity.js';
 
 // Export all model files
 export {
@@ -49,5 +50,6 @@ export {
   Resume,
   WorkExperience,
   ChatLog,
-  PendingAccount
+  PendingAccount,
+  Testimonial
 };

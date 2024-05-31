@@ -1048,6 +1048,16 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
       {
+        resource: Models.Testimonial,
+        options: {
+          parent: {
+            name: "User Models",
+            icon: "None",
+          },
+        },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
         resource: Models.PendingAccount,
         options: {
           parent: {
@@ -1179,6 +1189,7 @@ const start = async () => {
   app.use("/api/userprofiles", Routes.userProfileRouter);
   app.use("/api/workexperience", Routes.WorkExperienceRouter);
   app.use("/api/pendingAccounts", Routes.PendingAccountRouter);
+  app.use("/api/testimonials", Routes.TestimonialRouter);
 
   app.use(
     "/api/stripe",
