@@ -109,8 +109,6 @@ export const Dashboard: React.FC = () => {
       .getDashboard()
       .then((response) => {
         const responseData = response.data as Data;
-        console.log(responseData);
-
         setData(responseData);
       })
       .catch((error) => {});

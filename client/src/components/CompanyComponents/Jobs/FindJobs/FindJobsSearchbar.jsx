@@ -118,7 +118,7 @@ export default function FindJobsSearchbar({
         </form>
         <div
           className={`${
-            jobOpened ? (isMenuOpen ? 'h-auto py-5 absolute bg-white border-b' : 'h-0 overflow-hidden') : 'h-auto pb-5'
+            jobOpened ? (isMenuOpen ? 'h-auto py-5 absolute bg-white border-b shadow-lg' : 'h-0 overflow-hidden') : 'h-auto pb-5'
           } flex flex-wrap gap-3 w-full max-w-[1200px] mx-auto px-5`}
         >
           <select
