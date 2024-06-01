@@ -121,103 +121,91 @@ export const Dashboard: React.FC = () => {
       {data ? (
         <Box>
           <DashboardHeader />
-          <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto', padding: '30px', gap: '30px', paddingTop: 0 }}>
-            <div style={{ display: 'flex', gap: '30px', justifyContent: 'center', flex: '1 1 0px' }}>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <div style={{ width: '66%' }}>
-                  <Text variant='title'>Account Types</Text>
-                  <Doughnut data={data?.accountTypesData} />
-                </div>
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>Job Postings and User Registation Trend</Text>
-                <Line data={data?.postingsUserData} />
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
-                <div style={{ width: '50%' }}>{/* Insert some data here */}</div>
-              </Box>
-            </div>
-            <div style={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '66.66%', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>Top Companies by Number of Job Postings</Text>
-                <Bar
-                  data={data?.topCompaniesData}
-                  options={{
-                    indexAxis: 'y',
-                    scales: {
-                      x: {
-                        beginAtZero: true,
-                      },
+          <div className='container-dashboard'>
+            <Box className='box-account-types'>
+              <div className='doughnut-graph'>
+                <Text variant='title'>Account Types</Text>
+                <Doughnut data={data?.accountTypesData} />
+              </div>
+            </Box>
+            <Box className='box-job-postings'>
+              <Text variant='title'>Job Postings and User Registration Trend</Text>
+              <Line data={data?.postingsUserData} />
+            </Box>
+            <Box className='box-top-companies'>
+              <Text variant='title'>Top Companies by Number of Job Postings</Text>
+              <Bar
+                data={data?.topCompaniesData}
+                options={{
+                  indexAxis: 'y',
+                  scales: {
+                    x: {
+                      beginAtZero: true,
                     },
-                  }}
-                />
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '50%', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>Most Popular Job Fields</Text>
-                <Bar
-                  data={data?.jobFieldsData}
-                  options={{
-                    scales: {
-                      x: {
-                        stacked: true,
-                      },
-                      y: {
-                        stacked: true,
-                      },
+                  },
+                }}
+              />
+            </Box>
+            <Box className='box-job-fields'>
+              <Text variant='title'>Most Popular Job Fields</Text>
+              <Bar
+                data={data?.jobFieldsData}
+                options={{
+                  scales: {
+                    x: {
+                      stacked: true,
                     },
-                  }}
-                />
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '33.33%', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                    y: {
+                      stacked: true,
+                    },
+                  },
+                }}
+              />
+            </Box>
+            <Box className='box-application-status'>
+              <div className='doughnut-graph'>
                 <Text variant='title'>Job Application Status</Text>
                 <Pie data={data?.jobApplicationStatusData} />
-              </Box>
-            </div>
-            <div style={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>User Engagement Metrics Over Time</Text>
-                <Line data={data?.userEngagementData} />
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '50%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
-                <div style={{ width: '50%' }}>{/* Insert some data here */}</div>
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>Subscription Revenue</Text>
-                <Bar
-                  data={data?.subscriptionRevenueData}
-                  options={{
-                    indexAxis: 'y',
-                    scales: {
-                      x: {
-                        stacked: true,
-                      },
-                      y: {
-                        stacked: true,
-                      },
+              </div>
+            </Box>
+            <Box className='box-user-engagement'>
+              <Text variant='title'>User Engagement Metrics Over Time</Text>
+              <Line data={data?.userEngagementData} />
+            </Box>
+            <Box className='box-subscription-revenue'>
+              <Text variant='title'>Subscription Revenue</Text>
+              <Bar
+                data={data?.subscriptionRevenueData}
+                options={{
+                  indexAxis: 'y',
+                  scales: {
+                    x: {
+                      stacked: true,
                     },
-                  }}
-                />
-              </Box>
-            </div>
-            <div style={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>Interviews Scheduled Over Time</Text>
-                <Line data={data?.interviewsScheduledData} />
-              </Box>
-              <Box bg='white' style={{ padding: '50px', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
-                <Text variant='title'>Job Post Engagement Metrics</Text>
-                <Line data={data?.jobPostEngagementData} />
-              </Box>
-            </div>
+                    y: {
+                      stacked: true,
+                    },
+                  },
+                }}
+              />
+            </Box>
+            <Box className='box-interviews-scheduled'>
+              <Text variant='title'>Interviews Scheduled Over Time</Text>
+              <Line data={data?.interviewsScheduledData} />
+            </Box>
+            <Box className='box-job-engagement'>
+              <Text variant='title'>Job Post Engagement Metrics</Text>
+              <Line data={data?.jobPostEngagementData} />
+            </Box>
           </div>
         </Box>
       ) : (
-        <Box data-css='default-dashboard' style={{ padding: '30px' }}>
-          <Box position='relative' overflow='hidden' bg='white' height={pageHeaderHeight} py={pageHeaderPaddingY} px={['default', 'lg', pageHeaderPaddingX]}>
-            <Box position='absolute' top={30} left={0} opacity={0.9} animate display={['none', 'none', 'none', 'block']}></Box>
-            <Text textAlign='center' color='grey100'>
+        <Box className='default-dashboard'>
+          <Box className='loading-box'>
+            <Box className='loading-box-absolute block'></Box>
+            <Text className='loading-text'>
               <H2 fontWeight='bold'>Loading...</H2>
-              <Text opacity={0.8}>Please wait while all the info loads</Text>
+              <Text className='loading-text-opacity'>Please wait while all the info loads</Text>
             </Text>
           </Box>
         </Box>

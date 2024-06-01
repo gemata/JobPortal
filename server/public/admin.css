@@ -91,6 +91,96 @@ input:focus,
   background: rgb(180, 51, 200) !important;
 }
 
+* {
+  /* outline: 1px solid lime; */
+}
+
+.container-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(375px, 1fr));
+  gap: 30px;
+  margin: auto;
+  padding: 30px;
+  padding-top: 0;
+}
+
+.box-account-types,
+.box-job-postings,
+.box-hidden,
+.box-top-companies,
+.box-job-fields,
+.box-application-status,
+.box-user-engagement,
+.box-subscription-revenue,
+.box-interviews-scheduled,
+.box-job-engagement {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.default-dashboard {
+  padding: 30px;
+}
+
+.loading-box {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  height: var(--page-header-height);
+  padding-top: var(--page-header-padding-y);
+  padding-bottom: var(--page-header-padding-y);
+  padding-left: var(--page-header-padding-x);
+  padding-right: var(--page-header-padding-x);
+}
+
+.loading-box-absolute {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  opacity: 0.9;
+  display: none;
+}
+
+.loading-box-absolute.block {
+  display: block;
+}
+
+.loading-text {
+  text-align: center;
+  color: grey100;
+}
+
+.loading-text-opacity {
+  opacity: 0.8;
+}
+
+.doughnut-graph {
+  width: 66.66%;
+}
+
+@media only screen and (max-width: 600px) {
+  .doughnut-graph {
+    width: 100%;
+  }
+}
+
 *:focus-visible {
   outline: 2px solid rgb(128, 96, 182);
   border-radius: 3px;
