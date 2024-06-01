@@ -7,7 +7,7 @@ const ResumeExample = () => {
     <>
       <div className="bg-[#f1f2f4]">
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
-          <h2 className="text-[blue] text-2xl font-semibold text-center pt-[50px] pb-[50px]">
+          <h2 className="text-jobportal-pink text-2xl font-semibold text-center pt-[50px] pb-[50px]">
             Here is our resume example
           </h2>
           <div className="flex justify-center gap-5 pb-[50px]">
