@@ -39,7 +39,6 @@ export default function ApplicantListItem(req) {
   const handleStatusChange = (event) => {
     const newStatus = event.target.value === 'true'; // Parse the value as a boolean
     
-debugger
     // Update the database
     axios.put(`http://localhost:5000/api/applicantlists/${applicantData.id}`, { isSelected: newStatus })
       .then(response => {
