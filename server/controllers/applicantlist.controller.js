@@ -1,6 +1,8 @@
 import { where } from "sequelize";
 import ApplicantList from "../models/applicantlist.entity.js";
 import JobPost from "../models/JobPost.entity.js";
+import UserProfile from "../models/userProfile.entity.js";
+import User from "../models/user.entity.js";
 
 // Controller functions
 const ApplicantListController = {
@@ -63,8 +65,22 @@ const ApplicantListController = {
    async getApplicantListByJobPostID(req, res) {
     const { JobPostID } = req.params;
     try {
-      const ApplicantListRecord = await ApplicantList.findAll({where: {JobPostID}});
-      if (!ApplicantListRecord) {
+      const ApplicantListRecord = await ApplicantList.findAll({
+        where: { JobPostID },
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [
+              {
+                model: UserProfile,
+                attributes: ['phoneNumber', 'dateOfBirth']
+              }
+            ]
+          }
+        ]
+      });
+      if (ApplicantListRecord.length === 0) {
         return res.status(404).json({ message: "Applicant List empty or not found" });
       }
       return res.status(200).json(ApplicantListRecord);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ApplicantListItem from './ApplicantListItem';
-import applicantsData from '../../../../json/applicants.json';
 import ApplicantListUserProfile from './ApplicantListUserProfile.jsx';
 
 
@@ -21,12 +20,13 @@ export default function ApplicantListHeader({applicantList}) {
     const itemsPerPage = 5; // Number of items per page
 
     useEffect(() => {
-        const updatedApplicants = applicantsData.map((applicant, index) => {
+
+        const updatedApplicants = applicantList.map((applicantList, index) => {
             return {
-                ...applicant,
+                ...applicantList,
                 applicantNo: index,
-                next: index < applicantsData.length - 1 ? applicantsData[index + 1].id : null,
-                previous: index > 0 ? applicantsData[index - 1].id : null
+                next: index < applicantList.length - 1 ? applicantList[index + 1].id : null,
+                previous: index > 0 ? applicantList[index - 1].id : null
             };
         });
         setApplicants(updatedApplicants);
@@ -116,9 +116,9 @@ export default function ApplicantListHeader({applicantList}) {
             if (criteria === 'date') {
                 comparison = Date.parse(a.createdAt) - Date.parse(b.createdAt);
             } else if (criteria === 'name') {
-                comparison = a.firstName.localeCompare(b.firstName);
+                comparison = a.User.firstName.localeCompare(b.User.firstName);
             } else if (criteria === 'email') {
-                comparison = a.email.localeCompare(b.email);
+                comparison = a.User.UserProfile.email.localeCompare(b.User.UserProfile.email);
             } else if (criteria === 'score') {
                 comparison = a.resumeAIScore - b.resumeAIScore;
             }
@@ -134,8 +134,8 @@ export default function ApplicantListHeader({applicantList}) {
 
     // Filtered and paginated applicants
     const filteredApplicants = applicants.filter(applicant =>
-        applicant.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        applicant.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+        applicant.User.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        applicant.User.lastName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredApplicants.length / itemsPerPage);
@@ -378,7 +378,7 @@ export default function ApplicantListHeader({applicantList}) {
                                 </div>
                             </button>
                             {activeProfile ? (<div className='flex justify-between  w-full'>
-                                <h5 className='text-gray-600 text-2xl '>Viewing {activeProfile.firstName + ' ' + activeProfile.lastName}'s Profile</h5>
+                                <h5 className='text-gray-600 text-2xl '>Viewing {activeProfile.User.firstName + ' ' + activeProfile.User.lastName}'s Profile</h5>
                                 <h5 className='gap-2 text-center rounded-full w-1/6 p-2 border bg-white text-gray-800 border-gray-400 '>Applicant {activeProfile.applicantNo + 1 + ' / ' + applicants.length}</h5>
                             </div>) : (
                                 <p>Loading profile...</p>

@@ -31,39 +31,21 @@ export default function ApplicantListItem(req) {
     applicantNo: req.applicantNo
   };
   const applicantPersonalData = {
-    email: req.email,
-    firstName: req.firstName,
-    lastName: req.lastName,
+    email: req.User.email,
+    firstName: req.User.firstName,
+    lastName: req.User.lastName,
   };
 
-  useEffect(() => {
-    const localData = localStorage.getItem(`applicantLists-${applicantData.id}`);
-    if (localData) {
-      setApplicantStatus(JSON.parse(localData).status);
-    } else {
-      axios.get(`/api/applicantlists/${applicantData.id}`)
-        .then(response => {
-          setApplicantStatus(response.data.status);
-          localStorage.setItem(`applicantLists-${applicantData.id}`, JSON.stringify(response.data));
-        })
-        .catch(error => {
-          console.error('Error fetching applicant data:', error);
-        });
-    }
-  }, [applicantData.id]);
-
   const handleStatusChange = (event) => {
-    const newStatus = parseInt(event.target.value);
-    setApplicantStatus(newStatus);
-
+    const newStatus = event.target.value === 'true'; // Parse the value as a boolean
+    
+debugger
     // Update the database
-    axios.put(`/api/applicantlists/${applicantData.id}`, { status: newStatus })
+    axios.put(`http://localhost:5000/api/applicantlists/${applicantData.id}`, { isSelected: newStatus })
       .then(response => {
         console.log('Status updated successfully:', response.data);
 
-        // Update local storage after a successful response
-        const updatedData = { ...applicantData, status: newStatus };
-        localStorage.setItem(`applicantLists-${applicantData.id}`, JSON.stringify(updatedData));
+        setApplicantStatus(newStatus);
       })
       .catch(error => {
         console.error('Error updating status:', error);
@@ -71,10 +53,10 @@ export default function ApplicantListItem(req) {
   };
 
   // Determine border color and background gradient based on applicantStatus
-  const borderColor = applicantStatus === 1 ? 'border-green-500' : applicantStatus === 0 ? 'border-red-500' : '';
-  const backgroundGradient = applicantStatus === 1 
+  const borderColor = applicantStatus === true ? 'border-green-500' : applicantStatus === false ? 'border-red-500' : '';
+  const backgroundGradient = applicantStatus === true 
     ? 'bg-gradient-to-r from-green-50 to-white hover:to-green-50 text-green-600' 
-    : applicantStatus === 0 
+    : applicantStatus === false 
     ? 'bg-gradient-to-r from-red-50 to-white hover:to-red-50 text-red-600' 
     : 'bg-white hover:bg-gray-50 hover:border-gray-600 text-gray-600';
 
@@ -84,7 +66,7 @@ export default function ApplicantListItem(req) {
         <p className=' text-gray-600 font-bold w-1/24'>{applicantData.applicantNo+1}</p>
         <p className=' font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
         <p className='w-2/12'>{applicantPersonalData.email}</p>
-        <p className='w-1/12'>{applicantData.resumeAIScore + '%'}</p>
+        <p className='w-1/12'>{applicantData.resumeAIScore === null ? <div>N/A</div>:<div>{applicantData.resumeAIScore} %</div> }</p>
         <p className=' text-sm w-3/12'>{formatDateTime(applicantData.createdAt)}</p>
       </div>
       <div className='Actions flex items-center gap-3 w-2/12'>
@@ -96,8 +78,8 @@ export default function ApplicantListItem(req) {
           onChange={handleStatusChange}
         >
           <option >Pending</option>
-          <option value={1}>Accepted</option>
-          <option value={0}>Declined</option>
+          <option value={true}>Accepted</option>
+          <option value={false}>Declined</option>
         </select>
         <button>
           <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
