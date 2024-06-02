@@ -65,7 +65,7 @@ const CompanyProfileController = {
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: "CompanyProfile not found" });
       }
-      return res.status(200).json(updatedCompanyProfile[0]);
+      return res.status(200).json(updatedCompanyProfile);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

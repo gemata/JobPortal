@@ -1,5 +1,7 @@
 // Import the CompanyLogo model and Sequelize
 import CompanyLogo from "../models/CompanyLogo.entity.js";
+import fs from "fs";
+import path from "path";
 
 // Controller functions
 const CompanyLogoController = {
@@ -51,15 +53,43 @@ const CompanyLogoController = {
   async updateCompanyLogo(req, res) {
     const { id } = req.params;
     const { body } = req;
+
     try {
-      const [updatedRowsCount, updatedCompanyLogo] = await CompanyLogo.update(body, {
-        where: { id },
-        returning: true, // Return the updated CompanyLogo object
+      let companyLogo = await CompanyLogo.findOne({
+        where: { CompanyID: body.id },
       });
-      if (updatedRowsCount === 0) {
-        return res.status(404).json({ message: "CompanyLogo not found" });
+
+      if (companyLogo) {
+        const filePath = `${companyLogo.bucket}/${companyLogo.s3Key}`;
+
+        try {
+          if (fs.existsSync(filePath)) {
+            await fs.promises.unlink(filePath);
+            console.log(`File unlinked: ${filePath}`);
+
+            const directoryPath = path.dirname(filePath);
+
+            const filesInDirectory = await fs.promises.readdir(directoryPath);
+            if (filesInDirectory.length === 0) {
+              await fs.promises.rmdir(directoryPath);
+              console.log(`Directory deleted: ${directoryPath}`);
+            }
+          } else {
+            console.log(`File not found: ${filePath}`);
+          }
+        } catch (error) {
+          console.error(`Error unlinking file: ${filePath}`, error);
+          throw error;
+        }
+
+        companyLogo.set({
+          s3Key: `${body.id}/${req.file.filename}`,
+          bucket: 'public/companyLogos',
+          mime: req.file.mimetype,
+          CompanyID: body.id,
+        });
+        await companyLogo.save();
       }
-      return res.status(200).json(updatedCompanyLogo[0]);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

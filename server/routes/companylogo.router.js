@@ -29,7 +29,7 @@ CompanyLogoRouter.get('/', CompanyLogoController.getCompanyLogos);
 
 CompanyLogoRouter.get('/:id', CompanyLogoController.getCompanyLogoById);
 
-CompanyLogoRouter.put('/:id', CompanyLogoController.updateCompanyLogo);
+CompanyLogoRouter.put('/:id', express.urlencoded({ extended: true }), upload.single('file'), CompanyLogoController.updateCompanyLogo);
 
 CompanyLogoRouter.delete('/:id', CompanyLogoController.deleteCompanyLogo);
 

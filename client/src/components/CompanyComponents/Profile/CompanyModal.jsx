@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CompanyModalImage from './CompanyModalImage';
 
-export default function CompanyModal({ companyData, refreshFile }) {
+export default function CompanyModal({ companyData, refreshFile, fetchData, setFetchData }) {
   const [file, setFile] = useState('');
   const [previewUrl, setPreviewUrl] = useState(null);
   const [lastModifiedDate, setLastModifiedDate] = useState(null);
@@ -14,6 +14,7 @@ export default function CompanyModal({ companyData, refreshFile }) {
   const [passwordInputType, setPasswordInputType] = useState(true);
   const [confirmPasswordInputType, setConfirmPasswordInputType] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     setFile('');
@@ -75,10 +76,10 @@ export default function CompanyModal({ companyData, refreshFile }) {
     setConfirmPasswordInputType(!confirmPasswordInputType);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    let requestBody = { ID: companyData.ID, file: file, CompanyName: newCompanyName, Email: newCompanyEmail };
+    let companyRequestBody = { ID: companyData.ID, CompanyName: newCompanyName, Email: newCompanyEmail };
 
     if (showPassword) {
       if (newPassword !== confirmPassword) {
@@ -86,15 +87,67 @@ export default function CompanyModal({ companyData, refreshFile }) {
         return;
       }
 
-      requestBody = {
-        ...requestBody,
+      companyRequestBody = {
+        ...companyRequestBody,
         password: newPassword,
       };
     }
 
-    console.log('Form submitted');
-    console.log(requestBody);
-    setErrorMessage('');
+    try {
+      const response = await fetch(`http://localhost:5000/api/companies/${companyData?.ID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(companyRequestBody),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        console.error('Error:', responseData.error);
+      } else {
+        setErrorMessage('');
+        setSuccessMessage('Company info updated successfully');
+        setFetchData(!fetchData);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('id', companyData.ID);
+      formData.append('file', file);
+
+      if (companyData.CompanyLogo) {
+        const imageResponse = await fetch(`http://localhost:5000/api/companylogos/${companyData.CompanyLogo.id}`, {
+          method: 'PUT',
+          body: formData,
+        });
+
+        if (!imageResponse.ok) {
+          console.error('Error:', imageResponse.error);
+        } else {
+          setErrorMessage('');
+          setSuccessMessage('Company info updated successfully');
+          setFetchData(!fetchData);
+        }
+      } else {
+        const imageResponse = await fetch(`http://localhost:5000/api/companylogos/`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!imageResponse.ok) {
+          console.error('Error:', imageResponse.error);
+        } else {
+          setErrorMessage('');
+          setSuccessMessage('Company info updated successfully');
+          setFetchData(!fetchData);
+        }
+      }
+    }
   };
 
   return (
@@ -197,6 +250,32 @@ export default function CompanyModal({ companyData, refreshFile }) {
                 </section>
               </div>
             </section>
+          )}
+          {successMessage ? (
+            <section className='resetPassword__form-message-container resetPassword__form-success'>
+              <div className='resetPassword__form-message'>
+                <section>
+                  <span>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='white'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    >
+                      <polyline points='20 6 9 17 4 12'></polyline>
+                    </svg>
+                  </span>
+                  <div>{successMessage}</div>
+                </section>
+              </div>
+            </section>
+          ) : (
+            <></>
           )}
           <button type='submit' className='bg-jobportal-pink text-white rounded py-2'>
             Save Changes

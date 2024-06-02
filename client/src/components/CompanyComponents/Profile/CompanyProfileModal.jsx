@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function CompanyProfileModal({ companyData }) {
+export default function CompanyProfileModal({ companyData, fetchData, setFetchData }) {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
@@ -11,7 +11,6 @@ export default function CompanyProfileModal({ companyData }) {
 
   useEffect(() => {
     if (companyData) {
-      console.log(companyData.CompanyProfile);
       setAddress(companyData.CompanyProfile?.address);
       setEmail(companyData.CompanyProfile?.companyEmail);
       setWebsite(companyData.CompanyProfile?.website);
@@ -54,7 +53,7 @@ export default function CompanyProfileModal({ companyData }) {
 
     try {
       const response = await fetch(`http://localhost:5000/api/companyProfiles/${companyData.CompanyProfile?.id}`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -67,13 +66,19 @@ export default function CompanyProfileModal({ companyData }) {
         console.error('Error:', responseData.error);
         setErrorMessage(responseData.error);
       } else {
+        setAddress('');
+        setEmail('');
+        setWebsite('');
+        setNumber('');
+        setDescription('');
+        setErrorMessage('');
+        setFetchData(!fetchData);
         setSuccessMessage('Profile info saved successfully.');
       }
     } catch (error) {
       console.error('Fetch error:', error);
       setErrorMessage('An error occurred while saving education details.');
     }
-    console.log(requestBody);
   };
 
   return (
@@ -103,6 +108,60 @@ export default function CompanyProfileModal({ companyData }) {
             <h3 className='font-semibold text-lg'>Change Description:</h3>
             <textarea className='rounded border-gray-400 pb-4 min-h-28' value={description} onChange={handleDescriptionChange}></textarea>
             <hr />
+            {errorMessage ? (
+              <section className='resetPassword__form-message-container resetPassword__form-error'>
+                <div className='resetPassword__form-message'>
+                  <section>
+                    <span>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='white'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      >
+                        <circle cx='12' cy='12' r='10'></circle>
+                        <line x1='15' y1='9' x2='9' y2='15'></line>
+                        <line x1='9' y1='9' x2='15' y2='15'></line>
+                      </svg>
+                    </span>
+                    <div>{errorMessage}</div>
+                  </section>
+                </div>
+              </section>
+            ) : (
+              <></>
+            )}
+            {successMessage ? (
+              <section className='resetPassword__form-message-container resetPassword__form-success'>
+                <div className='resetPassword__form-message'>
+                  <section>
+                    <span>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='white'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      >
+                        <polyline points='20 6 9 17 4 12'></polyline>
+                      </svg>
+                    </span>
+                    <div>{successMessage}</div>
+                  </section>
+                </div>
+              </section>
+            ) : (
+              <></>
+            )}
             <button type='submit' className='bg-jobportal-pink text-white rounded py-2'>
               Save Changes
             </button>

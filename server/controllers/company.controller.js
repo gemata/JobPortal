@@ -61,6 +61,11 @@ const CompanyController = {
     const { id } = req.params;
     const { body } = req;
     try {
+
+      if (req.body.password) {
+        req.body.password = await argon2.hash(req.body.password);
+      }
+
       const [updatedRowsCount, updatedCompany] = await Company.update(body, {
         where: { id },
         returning: true, // Return the updated Company object
@@ -68,7 +73,7 @@ const CompanyController = {
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: "Company not found" });
       }
-      return res.status(200).json(updatedCompany[0]);
+      return res.status(200).json(updatedCompany);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
