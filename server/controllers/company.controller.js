@@ -1,6 +1,8 @@
 // Import the Company model and Sequelize
 import Company from "../models/Company.entity.js";
 import PendingAccount from "../models/pendingAccount.js";
+import CompanyProfile from "../models/companyprofile.entity.js"
+import CompanyLogo from "../models/CompanyLogo.entity.js";
 import argon2 from 'argon2';
 
 // Controller functions
@@ -39,7 +41,12 @@ const CompanyController = {
   async getCompanyById(req, res) {
     const { id } = req.params;
     try {
-      const CompanyRecord = await Company.findByPk(id);
+      const CompanyRecord = await Company.findByPk(id, {
+        include: [
+          { model: CompanyProfile, as: 'CompanyProfile' },
+          { model: CompanyLogo, as: 'CompanyLogo' }
+        ]
+      });
       if (!CompanyRecord) {
         return res.status(404).json({ message: "Company not found" });
       }

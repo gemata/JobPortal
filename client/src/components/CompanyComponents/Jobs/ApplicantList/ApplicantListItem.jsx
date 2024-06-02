@@ -28,7 +28,7 @@ export default function ApplicantListItem(req) {
     updatedAt: req.updatedAt,
     JobPostID: req.JobPostID,
     UserId: req.UserId,
-    applicantNo: req.applicantNo
+    applicantNo: req.applicantNo,
   };
   const applicantPersonalData = {
     email: req.User.email,
@@ -38,45 +38,43 @@ export default function ApplicantListItem(req) {
 
   const handleStatusChange = (event) => {
     const newStatus = event.target.value === 'true'; // Parse the value as a boolean
-    
-    // Update the database
-    axios.put(`http://localhost:5000/api/applicantlists/${applicantData.id}`, { isSelected: newStatus })
-      .then(response => {
-        console.log('Status updated successfully:', response.data);
 
+    // Update the database
+    axios
+      .put(`http://localhost:5000/api/applicantlists/${applicantData.id}`, { isSelected: newStatus })
+      .then((response) => {
         setApplicantStatus(newStatus);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error updating status:', error);
       });
   };
 
   // Determine border color and background gradient based on applicantStatus
   const borderColor = applicantStatus === true ? 'border-green-500' : applicantStatus === false ? 'border-red-500' : '';
-  const backgroundGradient = applicantStatus === true 
-    ? 'bg-gradient-to-r from-green-50 to-white hover:to-green-50 text-green-600' 
-    : applicantStatus === false 
-    ? 'bg-gradient-to-r from-red-50 to-white hover:to-red-50 text-red-600' 
-    : 'bg-white hover:bg-gray-50 hover:border-gray-600 text-gray-600';
+  const backgroundGradient =
+    applicantStatus === true
+      ? 'bg-gradient-to-r from-green-50 to-white hover:to-green-50 text-green-600'
+      : applicantStatus === false
+      ? 'bg-gradient-to-r from-red-50 to-white hover:to-red-50 text-red-600'
+      : 'bg-white hover:bg-gray-50 hover:border-gray-600 text-gray-600';
 
   return (
     <div className={`applicantListItem flex items-center justify-between gap-5 rounded-lg w-full p-5 border ${borderColor} ${backgroundGradient}`}>
       <div className='flex items-center gap-10 w-full '>
-        <p className=' text-gray-600 font-bold w-1/24'>{applicantData.applicantNo+1}</p>
+        <p className=' text-gray-600 font-bold w-1/24'>{applicantData.applicantNo + 1}</p>
         <p className=' font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
         <p className='w-2/12'>{applicantPersonalData.email}</p>
-        <p className='w-1/12'>{applicantData.resumeAIScore === null ? <div>N/A</div>:<div>{applicantData.resumeAIScore} %</div> }</p>
+        <p className='w-1/12'>{applicantData.resumeAIScore === null ? <div>N/A</div> : <div>{applicantData.resumeAIScore} %</div>}</p>
         <p className=' text-sm w-3/12'>{formatDateTime(applicantData.createdAt)}</p>
       </div>
       <div className='Actions flex items-center gap-3 w-2/12'>
-      
-       
         <select
           className='focus:outline-none rounded-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5'
           value={applicantStatus}
           onChange={handleStatusChange}
         >
-          <option >Pending</option>
+          <option>Pending</option>
           <option value={true}>Accepted</option>
           <option value={false}>Declined</option>
         </select>
@@ -90,7 +88,6 @@ export default function ApplicantListItem(req) {
           </svg>
         </button>
       </div>
-      
     </div>
   );
 }

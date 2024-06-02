@@ -38,19 +38,19 @@ const CompanyProfileController = {
     }
   },
 
-    // Get a CompanyProfile by CompanyID
-    async getCompanyProfileByCompanyID(req, res) {
-      const { CompanyID } = req.params;
-      try {
-        const CompanyProfileRecord = await CompanyProfile.findOne({where: { CompanyID}});
-        if (!CompanyProfileRecord) {
-          return res.status(404).json({ message: "Company Profile not found" });
-        }
-        return res.status(200).json(CompanyProfileRecord);
-      } catch (error) {
-        return res.status(500).json({ error: error.message });
+  // Get a CompanyProfile by CompanyID
+  async getCompanyProfileByCompanyID(req, res) {
+    const { CompanyID } = req.params;
+    try {
+      const CompanyProfileRecord = await CompanyProfile.findOne({ where: { CompanyID } });
+      if (!CompanyProfileRecord) {
+        return res.status(404).json({ message: "Company Profile not found" });
       }
-    },
+      return res.status(200).json(CompanyProfileRecord);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
 
   // Update a CompanyProfile
   async updateCompanyProfile(req, res) {

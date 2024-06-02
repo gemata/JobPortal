@@ -9,6 +9,16 @@ const JobPostController = {
   // Create a new JobPost
   async createJobPost(req, res) {
     try {
+
+      const { CompanyID } = req.body;
+      const CompanyRecord = await Company.findByPk(CompanyID);
+      if (!CompanyRecord) {
+        return res.status(404).json({ message: "Company not found" });
+      }
+
+      CompanyRecord.FreeJobPosted = true;
+      await CompanyRecord.save();
+
       const newJobPost = await JobPost.create(req.body);
       return res.status(201).json(newJobPost);
     } catch (error) {
@@ -138,15 +148,31 @@ const JobPostController = {
     }
   },
 
-  // Delete an JobPost
   async deleteJobPost(req, res) {
     const { id } = req.params;
     try {
+      const jobPost = await JobPost.findByPk(id);
+      if (!jobPost) {
+        return res.status(404).json({ message: "Job Post not found" });
+      }
+
+      const CompanyID = jobPost.CompanyID;
       const deletedRowCount = await JobPost.destroy({ where: { id } });
+
       if (deletedRowCount === 0) {
         return res.status(404).json({ message: "Job Post not found" });
       }
-      return res.status(204).end(); // No content response
+
+      const count = await JobPost.count({ where: { CompanyID } });
+      if (count === 0) {
+        const CompanyRecord = await Company.findByPk(CompanyID);
+        if (CompanyRecord) {
+          CompanyRecord.FreeJobPosted = false;
+          await CompanyRecord.save();
+        }
+      }
+
+      return res.status(204).end();
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

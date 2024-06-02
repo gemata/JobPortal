@@ -59,7 +59,6 @@ export const LinkComponent: React.FC<{ record: any }> = ({ record }) => {
           }
           const data = await response.json();
           setLogo(data?.s3Key);
-          console.log(data);
         } catch (error) {
           console.error('There was a problem with the fetch operation:', error);
         }

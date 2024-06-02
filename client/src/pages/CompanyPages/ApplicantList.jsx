@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import SignInPrompt from '../../components/SignInPrompt';
 
-const ApplicantList = ({userData}) => {
+const ApplicantList = ({ userData }) => {
   const { id } = useParams();
   const [applicants, setApplicants] = useState([]);
 
@@ -20,7 +20,6 @@ const ApplicantList = ({userData}) => {
         }
         const data = await response.json();
         setApplicants(data);
-        console.log(applicants);
       } catch (error) {
         console.error('Error fetching applicants:', error);
       }
@@ -29,10 +28,10 @@ const ApplicantList = ({userData}) => {
     fetchApplicants();
   }, [id]);
 
-    // Use another useEffect to log the updated applicants state
-    useEffect(() => {
-      console.log('Updated applicants:', applicants);
-    }, [applicants]);
+  // Use another useEffect to log the updated applicants state
+  useEffect(() => {
+    console.log('Updated applicants:', applicants);
+  }, [applicants]);
 
   return (
     <>
@@ -40,17 +39,17 @@ const ApplicantList = ({userData}) => {
         <DashboardNavSection />
         {userData.length !== 0 && userData.role === 'Company' ? (
           <>
-          {applicants.length > 0 ? <div className='flex flex-col gap-5 container mx-auto'>
-              <ApplicantListHeader applicantList={applicants} />
-              <hr className='h-px my-8 bg-gray-300 border-0' />
-            </div>
-            
-            :
-            <div>
-<hr className='h-px my-8 bg-gray-300 border-0' />
-            </div>
-          }
-            
+            {applicants.length > 0 ? (
+              <div className='flex flex-col gap-5 container mx-auto'>
+                <ApplicantListHeader applicantList={applicants} />
+                <hr className='h-px my-8 bg-gray-300 border-0' />
+              </div>
+            ) : (
+              <div>
+                <hr className='h-px my-8 bg-gray-300 border-0' />
+              </div>
+            )}
+
             <LowerJobSection />
           </>
         ) : (

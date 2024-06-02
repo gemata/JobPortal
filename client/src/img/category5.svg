@@ -3,10 +3,10 @@
 <g clip-path="url(#clip0_1647_32093)">
 <path opacity="0.2" d="M40.5 43.6187C42.433 43.6187 44 42.0516 44 40.1187C44 38.1857 42.433 36.6187 40.5 36.6187C38.567 36.6187 37 38.1857 37 40.1187C37 42.0516 38.567 43.6187 40.5 43.6187Z" fill="#6A0A76"/>
 <path opacity="0.2" d="M24.5 47.6187C26.433 47.6187 28 46.0516 28 44.1187C28 42.1857 26.433 40.6187 24.5 40.6187C22.567 40.6187 21 42.1857 21 44.1187C21 46.0516 22.567 47.6187 24.5 47.6187Z" fill="#6A0A76"/>
-<path d="M40.5 43.6187C42.433 43.6187 44 42.0516 44 40.1187C44 38.1857 42.433 36.6187 40.5 36.6187C38.567 36.6187 37 38.1857 37 40.1187C37 42.0516 38.567 43.6187 40.5 43.6187Z" stroke="#6A0A76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M24.5 47.6187C26.433 47.6187 28 46.0516 28 44.1187C28 42.1857 26.433 40.6187 24.5 40.6187C22.567 40.6187 21 42.1857 21 44.1187C21 46.0516 22.567 47.6187 24.5 47.6187Z" stroke="#6A0A76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M44 28.6187L28 32.6187" stroke="#6A0A76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M28 44.1187V26.6187L44 22.6187V40.1187" stroke="#6A0A76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40.5 43.6187C42.433 43.6187 44 42.0516 44 40.1187C44 38.1857 42.433 36.6187 40.5 36.6187C38.567 36.6187 37 38.1857 37 40.1187C37 42.0516 38.567 43.6187 40.5 43.6187Z" stroke="#6A0A76" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M24.5 47.6187C26.433 47.6187 28 46.0516 28 44.1187C28 42.1857 26.433 40.6187 24.5 40.6187C22.567 40.6187 21 42.1857 21 44.1187C21 46.0516 22.567 47.6187 24.5 47.6187Z" stroke="#6A0A76" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M44 28.6187L28 32.6187" stroke="#6A0A76" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M28 44.1187V26.6187L44 22.6187V40.1187" stroke="#6A0A76" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_1647_32093">

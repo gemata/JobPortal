@@ -147,7 +147,7 @@ const FindJobs = ({ userData }) => {
       }
     }
 
-    fetch(`http://localhost:5000/api/companyprofiles/company/${job.Company.ID}`)
+    fetch(`http://localhost:5000/api/companyprofiles/company/${job.Company?.ID}`)
       .then((response) => response.json())
       .then((data) => {
         if (data) {
@@ -297,12 +297,12 @@ const FindJobs = ({ userData }) => {
                     </div>
                     <div className='flex items-center space-x-3'>
                       <img
-                        src={jobPost.Company.CompanyLogo ? `http://localhost:5000/companyLogos/${jobPost.Company.CompanyLogo.s3Key}` : grayLogo}
+                        src={jobPost.Company?.CompanyLogo ? `http://localhost:5000/companyLogos/${jobPost.Company?.CompanyLogo.s3Key}` : grayLogo}
                         className='w-10 h-10  select-none object-cover object-center rounded-full border border-gray-300'
                       />
 
                       <div className='text-sm'>
-                        <div className='font-medium select-none '>{jobPost.Company.CompanyName}</div>
+                        <div className='font-medium select-none '>{jobPost.Company?.CompanyName}</div>
                         <div className='text-gray-500 select-none '>{jobPost.jobLocation}</div>
                       </div>
                     </div>

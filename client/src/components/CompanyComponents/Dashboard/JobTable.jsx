@@ -180,7 +180,7 @@ export default function JobTableSection({ userData }) {
       </section>
       <section>
         <div className='container mx-auto '>
-        <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
+          <div className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
             <div className='flex items-start gap-10 w-full pl-5 pr-5'>
               <p className='text-gray-600 font-bold w-1/24'>Nr</p>
               <p className='text-gray-600 font-bold w-3/12'> Details</p>
@@ -209,8 +209,8 @@ export default function JobTableSection({ userData }) {
                 className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}
               >
                 {
-                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' strokeOpacity='0.2' class='size-6'>
-                    <path stroke-linecap='round' stroke-linejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' strokeOpacity='0.2' className='size-6'>
+                    <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
                   </svg>
                 }
               </button>
@@ -221,8 +221,8 @@ export default function JobTableSection({ userData }) {
                 className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}
               >
                 {
-                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
-                    <path stroke-linecap='round' stroke-linejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-6'>
+                    <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
                   </svg>
                 }
               </button>
@@ -249,8 +249,8 @@ export default function JobTableSection({ userData }) {
                 className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}
               >
                 {
-                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' strokeOpacity='0.2' class='size-6'>
-                    <path stroke-linecap='round' stroke-linejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' strokeOpacity='0.2' className='size-6'>
+                    <path strokeLinecap='round' strokeLinejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
                   </svg>
                 }
               </button>
@@ -261,8 +261,8 @@ export default function JobTableSection({ userData }) {
                 className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}
               >
                 {
-                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
-                    <path stroke-linecap='round' stroke-linejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-6'>
+                    <path strokeLinecap='round' strokeLinejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
                   </svg>
                 }
               </button>

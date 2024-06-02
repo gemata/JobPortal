@@ -18,7 +18,7 @@ const CompanyProfile = sequelize.define(
       allowNull: true,
     },
     emailNotification_ac: {
-      type: DataTypes.STRING,
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
     address: {

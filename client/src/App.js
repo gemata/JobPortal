@@ -6,7 +6,7 @@ import Header from "./components/Header/Header";
 import CompanyInterviews from "./pages/CompanyPages/Interviews";
 import CompanyJobs from "./pages/CompanyPages/Jobs";
 import CompanyDashboard from "./pages/CompanyPages/Dashboard";
-import CompanyCandidates from "./pages/CompanyPages/Candidates";
+import CompanyProfile from "./pages/CompanyPages/Profile";
 import CompanyAnalyticsOverview from "./pages/CompanyPages/Analytics/Overview";
 import CompanyJobsShow from "./pages/CompanyPages/Jobs/Show";
 import CompanyJobsCreate from "./pages/CompanyPages/Jobs/Create";
@@ -93,13 +93,14 @@ function App() {
         <Route path="/resume-help" element={<ResumeHelp />} />
         <Route path="/resume-example" element={<ResumeExample />} />
         <Route path="/salary-tools" element={<Salary />} />
-        
+
         <Route
           path="/find-jobs"
           element={!isLoggedOut ? <FindJobs userData={userData} /> : <FindJobs />}
         />
 
         <Route path="/company/dashboard" element={<CompanyDashboard userData={userData} />} />
+        <Route path="/company/profile" element={<CompanyProfile userData={userData} />} />
         <Route path="/company/jobs" element={<CompanyJobs userData={userData} />} />
         <Route path="/company/interviews" element={<CompanyInterviews userData={userData} />} />
         <Route path="/company/applicantlist/:id" element={<ApplicantList userData={userData} />} />
