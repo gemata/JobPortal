@@ -36,34 +36,35 @@ const UserProfileController = {
     }
   },
 
-    // Get a UserProfile by User ID
-    async getUserProfileByUserId(req, res) {
-      const { UserId } = req.params;
-      try {
-        const UserProfileRecord = await UserProfile.findOne({ where: { UserId } });
-  
-        if (!UserProfileRecord) {
-          return res.status(404).json({ message: "User Profile not found" });
-        }
-        return res.status(200).json(UserProfileRecord);
-      } catch (error) {
-        return res.status(500).json({ error: error.message });
+  // Get a UserProfile by User ID
+  async getUserProfileByUserId(req, res) {
+    const { UserId } = req.params;
+    try {
+      const UserProfileRecord = await UserProfile.findOne({ where: { UserId } });
+
+      if (!UserProfileRecord) {
+        return res.status(404).json({ message: "User Profile not found" });
       }
-    },
+      return res.status(200).json(UserProfileRecord);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
 
   // Update a UserProfile
   async updateUserProfile(req, res) {
     const { id } = req.params;
     const { body } = req;
     try {
-      const [updatedRowsCount, updatedUserProfile] = await UserProfile.update(body, {
-        where: { id },
-        returning: true, // Return the updated UserProfile object
-      });
+      const [updatedRowsCount, updatedUserProfile] =
+        await UserProfile.update(body, {
+          where: { id },
+          returning: true, // Return the updated UserProfile object
+        });
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: "UserProfile not found" });
       }
-      return res.status(200).json(updatedUserProfile[0]);
+      return res.status(200).json(updatedUserProfile);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
