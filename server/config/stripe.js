@@ -41,12 +41,12 @@ router.post("/webhook", async (req, res) => {
 
     const subscriptionPlan = invoice.lines.data[0].price.product;
     const amountPaid = invoice.amount_paid / 100;
-
-    console.log(subscriptionPlan);
+    const email = req.body.data.object.customer_email;
 
     try {
       await InvoiceM.create({
         subscriptionPlan: subscriptionPlan,
+        email:email,
         amountPaid: amountPaid,
         isActive: true,
         paymentDate: new Date(invoice.created * 1000),
