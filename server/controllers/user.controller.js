@@ -1,6 +1,9 @@
 // Import the User model and Sequelize
 import User from '../models/user.entity.js';
 import PendingAccount from '../models/pendingAccount.js';
+import UserProfile from '../models/userProfile.entity.js';
+import UserImage from '../models/userImage.entity.js';
+import Resume from '../models/resume.entity.js';
 import { Op } from 'sequelize';
 import argon2 from 'argon2';
 
@@ -30,20 +33,26 @@ const UserController = {
   },
 
   // Get all users
-async getUsers(req, res) {
-  try {
-    const users = await User.findAndCountAll(); // This will return { count, rows }
-    return res.status(200).json(users);
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-},
+  async getUsers(req, res) {
+    try {
+      const users = await User.findAndCountAll(); // This will return { count, rows }
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
 
   // Get a user by ID
   async getUserById(req, res) {
     const { id } = req.params;
     try {
-      const UserRecord = await User.findByPk(id);
+      const UserRecord = await User.findByPk(id, {
+        include: [
+          { model: UserProfile, as: 'UserProfile' },
+          { model: UserImage, as: 'UserImage' },
+          { model: Resume, as: 'Resume' }
+        ]
+      });
       if (!UserRecord) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -59,7 +68,9 @@ async getUsers(req, res) {
     const { body } = req;
     try {
 
-      body.password = await argon2.hash(body.password);
+      if (body.password) {
+        body.password = await argon2.hash(body.password);
+      }
 
       const [updatedRowsCount, updatedUser] = await User.update(body, {
         where: { id },
@@ -68,7 +79,7 @@ async getUsers(req, res) {
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: 'User not found' });
       }
-      return res.status(200).json(updatedUser[0]);
+      return res.status(200).json(updatedUser);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

@@ -63,6 +63,7 @@ export default function CompanyProfile({ userData }) {
 
     setTimeout(() => {
       setToggleDeleteButton((prevState) => !prevState);
+      setDeleteWarningMessage('Are you sure you want to delete your profile info?');
     }, 3000);
   };
 
@@ -120,9 +121,6 @@ export default function CompanyProfile({ userData }) {
 
         if (!response.ok) {
           console.error('Error:', responseData.error);
-        } else {
-          setDeleteWarningMessage('Profile data deleted.');
-          setFetchData(!fetchData);
         }
       } catch (error) {
         console.error('Fetch error:', error);

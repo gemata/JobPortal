@@ -1,4 +1,6 @@
 import UserImage from "../models/userImage.entity.js";
+import fs from "fs";
+import path from "path";
 
 // Controller functions
 const UserImageController = {
@@ -51,15 +53,39 @@ const UserImageController = {
   async updateUserImage(req, res) {
     const { id } = req.params;
     const { body } = req;
+
     try {
-      const [updatedRowsCount, updatedUserImage] = await UserImage.update(body, {
-        where: { id },
-        returning: true, // Return the updated UserImage object
+
+      console.log(body);
+
+      let userImage = await UserImage.findOne({
+        where: { UserId: body.id },
       });
-      if (updatedRowsCount === 0) {
-        return res.status(404).json({ message: "UserImage not found" });
+
+      if (userImage) {
+        const filePath = `${userImage.bucket}/${userImage.s3Key}`;
+
+        try {
+          if (fs.existsSync(filePath)) {
+            await fs.promises.unlink(filePath);
+            console.log(`File unlinked: ${filePath}`);
+          } else {
+            console.log(`File not found: ${filePath}`);
+          }
+        } catch (error) {
+          console.error(`Error unlinking file: ${filePath}`, error);
+          throw error;
+        }
+
+        userImage.set({
+          s3Key: `${body.id}/${req.file.filename}`,
+          bucket: 'public/profilePics',
+          mime: req.file.mimetype,
+          UserId: body.id,
+        });
+        await userImage.save();
       }
-      return res.status(200).json(updatedUserImage[0]);
+      return res.status(200).json({ message: 'User Image updated successfully', userImage });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

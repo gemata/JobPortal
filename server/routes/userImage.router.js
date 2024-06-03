@@ -29,7 +29,7 @@ UserImageRouter.get('/', UserImageController.getUserImages);
 
 UserImageRouter.get('/:id', UserImageController.getUserImageById);
 
-UserImageRouter.put('/:id', UserImageController.updateUserImage);
+UserImageRouter.put('/:id', express.urlencoded({ extended: true }), upload.single('file'), UserImageController.updateUserImage);
 
 UserImageRouter.delete('/:id', UserImageController.deleteUserImage);
 
