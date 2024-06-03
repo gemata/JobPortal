@@ -13,14 +13,7 @@ const JobPositionController = {
 
   async getJobPositions(req, res) {
     try {
-      const JobPositions = await JobPosition.findAndCountAll({
-        include: [
-          {
-            model: JobPost,
-            as: "JobPosts",
-          },
-        ],
-      });
+      const JobPositions = await JobPosition.findAndCountAll();
       return res.status(201).json(JobPositions);
     } catch (error) {
       return res.status(500).json({ error: error.message });

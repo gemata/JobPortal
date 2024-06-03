@@ -31,6 +31,7 @@ const categoryData = [
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [companies, setCompanies] = useState([]);
+  const [mostLikedJobs, setMostLikedJobs] = useState([]);
   const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState([]);
 
@@ -80,8 +81,19 @@ const Home = () => {
       }
     };
 
+    const fetchJobPositions = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/jobposts/popular");
+        const data = await response.json();
+        setMostLikedJobs(data);
+      } catch (error) {
+        console.error("Error fetching job positions:", error);
+      }
+    };
+
     fetchCompanies();
     fetchTestimonials();
+    fetchJobPositions();
   }, []);
 
   return (
@@ -138,80 +150,21 @@ const Home = () => {
       </div>
       <div className="mt-[100px]">
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
-          <div className="font-medium text-[42px] mb-10">
+        <div className="font-medium text-[42px] mb-10">
             Most Popular Vacancies
           </div>
-          <div className="flex justify-between gap-3">
-            <div className="box-1">
-              <span>Anesthsiologists</span> <br />
-              <span className="text-base text-[#949ba4]">
-                45,070 Open Positions
-              </span>{" "}
-              <br /> <br />
-              <span>Maxillofacial Surgeons</span>
-              <br />
-              <span className="text-base text-[#949ba4]">
-                74,875 Open Positions
-              </span>{" "}
-              <br /> <br />
-              <span>Financial Manager</span>
-              <br />
-              <span className="text-base text-[#949ba4]">
-                61,391 Open Positions
-              </span>
-              <br /> <br />
-            </div>
-            <div className="box-2">
-              <span>Surgeons</span> <br />
-              <span className="text-base text-[#949ba4]">
-                50,364 Open Positions
-              </span>{" "}
-              <br /> <br />
-              <span>Software Developer</span> <br />
-              <span className="text-base text-[#949ba4]">
-                43,359 Open Positions
-              </span>
-              <br />
-              <br />
-              <span>Management Analysis</span> <br />
-              <span className="text-base text-[#949ba4]">
-                93,046 Open Positions
-              </span>
-            </div>
-            <div className="box-3">
-              <span>Dentist</span> <br />
-              <span className="text-base text-[#949ba4]">
-                12,365 Open Positions
-              </span>
-              <br />
-              <br />
-              <span>IT Manager</span> <br />
-              <span className="text-base text-[#949ba4]">
-                22,180 Open Positions
-              </span>
-              <br /> <br />
-              <span>Data Scientist</span>
-              <br />
-              <span className="text-base text-[#949ba4]">
-                35,670 Open Positions
-              </span>
-            </div>
-            <div className="box-4">
-              <span>Video Editor</span> <br />
-              <span className="text-base text-[#949ba4]">
-                61,310 Open Positions
-              </span>
-              <br /> <br />
-              <span>Operations Research Analysis</span> <br />
-              <span className="text-base text-[#949ba4]">
-                8,288 Open Positions
-              </span>
-              <br /> <br />
-              <span>DevOps Engineer</span> <br />
-              <span className="text-base text-[#949ba4]">
-                52,422 Open Positions
-              </span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {mostLikedJobs.map((job) => (
+              <div
+                key={job.id}
+                className="p-4 bg-white rounded-md shadow-sm hover:shadow-lg cursor-pointer transition-shadow duration-300"
+              >
+                <div className="font-semibold text-lg">
+                  {job.position}
+                </div>
+                <div className="text-sm text-gray-500">{job.totalLikes} Users Liked The Jobs In This Position</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

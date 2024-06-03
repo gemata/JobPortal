@@ -1,7 +1,7 @@
 import { Op, Sequelize } from "sequelize";
-import JobPost from '../models/JobPost.entity.js';
-import JobPosition from '../models/jobposition.entity.js';
-import Company from '../models/Company.entity.js'
+import JobPost from "../models/JobPost.entity.js";
+import JobPosition from "../models/jobposition.entity.js";
+import Company from "../models/Company.entity.js";
 import CompanyLogo from "../models/CompanyLogo.entity.js";
 
 // Controller functions
@@ -9,7 +9,6 @@ const JobPostController = {
   // Create a new JobPost
   async createJobPost(req, res) {
     try {
-
       const { CompanyID } = req.body;
       const CompanyRecord = await Company.findByPk(CompanyID);
       if (!CompanyRecord) {
@@ -29,7 +28,18 @@ const JobPostController = {
   // Get all JobPosts
   async getJobPosts(req, res) {
     try {
-      const { page = 1, limit = 10, nat, q, loc, sFrom, sTo, ed, cf, jp } = req.query;
+      const {
+        page = 1,
+        limit = 10,
+        nat,
+        q,
+        loc,
+        sFrom,
+        sTo,
+        ed,
+        cf,
+        jp,
+      } = req.query;
       const offset = (page - 1) * limit;
 
       const filter = { is_Active: true };
@@ -63,10 +73,26 @@ const JobPostController = {
 
       if (q) {
         filter[Op.or] = [
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('jobSummary')), 'LIKE', `%${q.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('interviewMethod')), 'LIKE', `%${q.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Job Position.position')), 'LIKE', `%${q.toLowerCase()}%`),
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Company.CompanyName')), 'LIKE', `%${q.toLowerCase()}%`)
+          Sequelize.where(
+            Sequelize.fn("LOWER", Sequelize.col("jobSummary")),
+            "LIKE",
+            `%${q.toLowerCase()}%`
+          ),
+          Sequelize.where(
+            Sequelize.fn("LOWER", Sequelize.col("interviewMethod")),
+            "LIKE",
+            `%${q.toLowerCase()}%`
+          ),
+          Sequelize.where(
+            Sequelize.fn("LOWER", Sequelize.col("Job Position.position")),
+            "LIKE",
+            `%${q.toLowerCase()}%`
+          ),
+          Sequelize.where(
+            Sequelize.fn("LOWER", Sequelize.col("Company.CompanyName")),
+            "LIKE",
+            `%${q.toLowerCase()}%`
+          ),
         ];
       }
 
@@ -75,32 +101,66 @@ const JobPostController = {
         include: [
           {
             model: JobPosition,
-            as: 'Job Position',
+            as: "Job Position",
           },
           {
             model: Company,
-            as: 'Company',
-            include: [{
-              model: CompanyLogo,
-              as: 'CompanyLogo'
-            }]
-          }
+            as: "Company",
+            include: [
+              {
+                model: CompanyLogo,
+                as: "CompanyLogo",
+              },
+            ],
+          },
         ],
         limit: parseInt(limit),
         offset: parseInt(offset),
-        order: [['createdAt', 'DESC']]
+        order: [["createdAt", "DESC"]],
       });
 
       return res.status(200).json({
         totalItems: count,
         totalPages: Math.ceil(count / limit),
         currentPage: parseInt(page),
-        jobPosts
+        jobPosts,
       });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
+
+  async getPopularJobs(req, res) {
+    try {
+      const jobPosts = await JobPost.findAll({
+        include: [
+          {
+            model: JobPosition,
+            as: "Job Position",
+          },
+        ],
+      });
+  
+      const jobLikes = jobPosts.reduce((acc, jobPost) => {
+        const position = jobPost["Job Position"].position;
+        if (!acc[position]) {
+          acc[position] = {
+            ...jobPost["Job Position"].toJSON(),
+            totalLikes: 0,
+          };
+        }
+        acc[position].totalLikes += jobPost.likes;
+        return acc;
+      }, {});
+  
+      const jobLikesArray = Object.values(jobLikes).sort((a, b) => b.totalLikes - a.totalLikes);
+  
+      return res.status(200).json(jobLikesArray);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+  
 
   // Get a JobPost by ID
   async getJobPostById(req, res) {
@@ -209,7 +269,6 @@ const JobPostController = {
       return res.status(500).json({ error: error.message });
     }
   },
-
 };
 
 export default JobPostController;
