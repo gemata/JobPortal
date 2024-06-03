@@ -48,6 +48,7 @@ const dbContext = async () => {
   User.hasMany(InterviewList);
   InterviewList.belongsTo(User);
 
+  Company.hasMany(JobPost);
   JobPost.belongsTo(Company);
 
   JobPost.hasMany(ApplicantList);
@@ -88,7 +89,7 @@ const dbContext = async () => {
 
   JobPost.belongsTo(JobPosition);
   JobPosition.hasMany(JobPost);
-  
+
   User.hasMany(Testimonial);
   Testimonial.belongsTo(User);
 

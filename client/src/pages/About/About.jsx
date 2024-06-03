@@ -38,7 +38,8 @@ const About = () => {
         // Extract the company logos
         const logos = data.rows
           .filter((company) => company.CompanyLogo) // Ensure the company has a logo
-          .slice(0, 6) // Get the top 6 companies
+          .sort((a, b) => (b.jobPostCount || 0) - (a.jobPostCount || 0)) // Assuming `jobPostCount` is the number of jobs posted
+          .slice(0, 6) // Get top 6 companies
           .map(
             (company) =>
               `http://localhost:5000/companyLogos/${company.CompanyLogo.s3Key}`
