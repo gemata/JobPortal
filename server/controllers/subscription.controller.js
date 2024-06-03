@@ -6,7 +6,7 @@ const SubscriptionController = {
       const newSubscription = await Subscription.create(req.body);
       return res.status(201).json(newSubscription);
     } catch (error) {
-      return res.staus(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   },
 

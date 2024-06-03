@@ -25,7 +25,7 @@ import fs from "fs";
 import { Icon } from "@adminjs/design-system";
 import dashboardHandler from "./config/dashboardHandler.js";
 import stripeRoutes from "./config/stripe.js";
-import './schedulers/jobScheduler.js'
+import "./schedulers/jobScheduler.js";
 
 // Import models and routes from config files in one line each
 import * as Models from "./config/importsForModels.js";
@@ -1058,6 +1058,16 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
       {
+        resource: Models.ChatSupport,
+        options: {
+          parent: {
+            name: "User Models",
+            icon: "None",
+          },
+        },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
         resource: Models.PendingAccount,
         options: {
           parent: {
@@ -1190,6 +1200,7 @@ const start = async () => {
   app.use("/api/workexperience", Routes.WorkExperienceRouter);
   app.use("/api/pendingAccounts", Routes.PendingAccountRouter);
   app.use("/api/testimonials", Routes.TestimonialRouter);
+  app.use("/api/chatsupports", Routes.ChatSupportRouter);
 
   app.use(
     "/api/stripe",

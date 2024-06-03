@@ -6,7 +6,7 @@ const ProductController = {
       const newProduct = await Product.create(req.body);
       return res.status(201).json(newProduct);
     } catch (error) {
-      return res.staus(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   },
 

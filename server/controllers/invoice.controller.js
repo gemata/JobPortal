@@ -6,7 +6,7 @@ const InvoiceController = {
       const newInvoice = await Invoice.create(req.body);
       return res.status(201).json(newInvoice);
     } catch (error) {
-      return res.staus(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   },
 
