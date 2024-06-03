@@ -30,12 +30,20 @@ const CompanyController = {
   // Get all Companies
   async getCompanies(req, res) {
     try {
-      const Companies = await Company.findAndCountAll();
+      const Companies = await Company.findAndCountAll({
+        include: [
+          {
+            model: CompanyLogo,
+            as: 'CompanyLogo' // Make sure this matches the alias used in your association definition
+          }
+        ]
+      });
       return res.status(200).json(Companies);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
+  
 
   // Get a Company by ID
   async getCompanyById(req, res) {
