@@ -79,73 +79,76 @@ export default function CompanyModal({ companyData, refreshFile, fetchData, setF
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    let companyRequestBody = { ID: companyData.ID, CompanyName: newCompanyName, Email: newCompanyEmail };
+    const companyRequestBody = {
+      ID: companyData.ID,
+      CompanyName: newCompanyName,
+      Email: newCompanyEmail,
+      ...(showPassword && newPassword === confirmPassword && { password: newPassword }),
+    };
 
-    if (showPassword) {
-      if (newPassword !== confirmPassword) {
-        setErrorMessage('Password and Confirm Password do not match!');
-        return;
-      }
+    if (!newCompanyName || !newCompanyEmail) {
+      setErrorMessage('Please fill out all fields.');
+      setSuccessMessage('');
+      return;
+    }
 
-      companyRequestBody = {
-        ...companyRequestBody,
-        password: newPassword,
-      };
+    if (showPassword && newPassword !== confirmPassword) {
+      setErrorMessage('Password and Confirm Password do not match!');
+      setSuccessMessage('');
+      return;
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/companies/${companyData?.ID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(companyRequestBody),
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        console.error('Error:', responseData.error);
-      } else {
-        setErrorMessage('');
-        setSuccessMessage('Company info updated successfully');
-        setFetchData(!fetchData);
-      }
+      await updateCompanyDetails(companyRequestBody);
+      await updateCompanyLogo();
+      setErrorMessage('');
+      setSuccessMessage('Company info updated successfully');
+      setFile('');
+      setPreviewUrl('');
+      setLastModifiedDate('');
+      setNewCompanyName('');
+      setNewCompanyEmail('');
+      setNewPassword('');
+      setConfirmPassword('');
+      setFetchData(!fetchData);
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Error:', error);
     }
+  };
 
+  const updateCompanyDetails = async (body) => {
+    const response = await fetch(`http://localhost:5000/api/companies/${companyData?.ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.error);
+    }
+  };
+
+  const updateCompanyLogo = async () => {
     if (file) {
       const formData = new FormData();
       formData.append('id', companyData.ID);
       formData.append('file', file);
 
-      if (companyData.CompanyLogo) {
-        const imageResponse = await fetch(`http://localhost:5000/api/companylogos/${companyData.CompanyLogo.id}`, {
-          method: 'PUT',
-          body: formData,
-        });
+      const method = companyData.CompanyLogo ? 'PUT' : 'POST';
+      const endpoint = companyData.CompanyLogo ? `http://localhost:5000/api/companylogos/${companyData.CompanyLogo.id}` : 'http://localhost:5000/api/companylogos/';
 
-        if (!imageResponse.ok) {
-          console.error('Error:', imageResponse.error);
-        } else {
-          setErrorMessage('');
-          setSuccessMessage('Company info updated successfully');
-          setFetchData(!fetchData);
-        }
-      } else {
-        const imageResponse = await fetch(`http://localhost:5000/api/companylogos/`, {
-          method: 'POST',
-          body: formData,
-        });
+      const imageResponse = await fetch(endpoint, {
+        method: method,
+        body: formData,
+      });
 
-        if (!imageResponse.ok) {
-          console.error('Error:', imageResponse.error);
-        } else {
-          setErrorMessage('');
-          setSuccessMessage('Company info updated successfully');
-          setFetchData(!fetchData);
-        }
+      if (!imageResponse.ok) {
+        const errorData = await imageResponse.json();
+        throw new Error(errorData.error);
       }
     }
   };

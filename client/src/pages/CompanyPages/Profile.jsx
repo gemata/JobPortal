@@ -10,12 +10,12 @@ import CompanyProfileModal from '../../components/CompanyComponents/Profile/Comp
 export default function CompanyProfile({ userData }) {
   const [companyData, setCompanyData] = useState([]);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isProfileDeleteModalOpen, setIsProfileDeleteModalOpen] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [refreshFile, setRefreshFile] = useState(false);
   const [fetchData, setFetchData] = useState(false);
   const [toggleDeleteButton, setToggleDeleteButton] = useState(false);
   const [deleteWarningMessage, setDeleteWarningMessage] = useState('Are you sure you want to delete your profile info?');
+
   useEffect(() => {
     fetch(`http://localhost:5000/api/companies/${userData.ID}`)
       .then((response) => response.json())
@@ -24,6 +24,15 @@ export default function CompanyProfile({ userData }) {
       })
       .catch((error) => console.error('Error fetching company data:', error));
   }, [userData, fetchData]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleCloseCompanyModal();
+      handleCloseProfileModal();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [fetchData]);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -259,22 +268,22 @@ export default function CompanyProfile({ userData }) {
                     <hr />
 
                     <p>
-                      Company Address: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.address}</span>
+                      Company Address: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.address || 'None specified'}</span>
                     </p>
                     <hr />
 
                     <p>
-                      Company Email: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.companyEmail}</span>
+                      Company Email: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.companyEmail || 'None specified'}</span>
                     </p>
                     <hr />
 
                     <p>
-                      Company Website: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.website}</span>
+                      Company Website: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.website || 'None specified'}</span>
                     </p>
                     <hr />
 
                     <p>
-                      Company Number: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.phoneNumber}</span>
+                      Company Number: <span className='float-right break-all text-gray-600'>{companyData.CompanyProfile?.phoneNumber || 'None specified'}</span>
                     </p>
                     <hr />
 

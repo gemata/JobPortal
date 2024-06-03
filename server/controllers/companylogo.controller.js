@@ -66,14 +66,6 @@ const CompanyLogoController = {
           if (fs.existsSync(filePath)) {
             await fs.promises.unlink(filePath);
             console.log(`File unlinked: ${filePath}`);
-
-            const directoryPath = path.dirname(filePath);
-
-            const filesInDirectory = await fs.promises.readdir(directoryPath);
-            if (filesInDirectory.length === 0) {
-              await fs.promises.rmdir(directoryPath);
-              console.log(`Directory deleted: ${directoryPath}`);
-            }
           } else {
             console.log(`File not found: ${filePath}`);
           }
@@ -90,6 +82,7 @@ const CompanyLogoController = {
         });
         await companyLogo.save();
       }
+      return res.status(200).json({ message: 'Company logo updated successfully', companyLogo });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
