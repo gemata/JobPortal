@@ -1,4 +1,5 @@
 import JobPosition from "../models/jobposition.entity.js";
+import JobPost from "../models/JobPost.entity.js";
 
 const JobPositionController = {
   async createJobPosition(req, res) {
@@ -12,7 +13,14 @@ const JobPositionController = {
 
   async getJobPositions(req, res) {
     try {
-      const JobPositions = await JobPosition.findAll();
+      const JobPositions = await JobPosition.findAndCountAll({
+        include: [
+          {
+            model: JobPost,
+            as: "JobPosts",
+          },
+        ],
+      });
       return res.status(201).json(JobPositions);
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -22,7 +30,9 @@ const JobPositionController = {
   async getJobPositionsByJobField(req, res) {
     const { id } = req.params;
     try {
-      const JobPositions = await JobPosition.findAll({ where: { JobFieldId: id } });
+      const JobPositions = await JobPosition.findAll({
+        where: { JobFieldId: id },
+      });
       return res.status(201).json(JobPositions);
     } catch (error) {
       return res.status(500).json({ error: error.message });
