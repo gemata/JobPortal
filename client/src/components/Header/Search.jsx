@@ -12,6 +12,7 @@ export default function Search({ userData, setUserData, isLoggedOut, setIsLogged
     setUserData([]);
     setIsLoggedOut(true);
     Cookies.remove('userSessionToken');
+    navigate(`/`);
   };
 
   const handleFormSubmit = (e) => {

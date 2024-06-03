@@ -10,6 +10,7 @@ const ApplicantListUserProfile = ({ id }) => {
   const [userImage, setUserImage] = useState(null);
   const [userEducation, setUserEducation] = useState([]);
   const [userWork, setUserWork] = useState([]);
+  const [resume, setResume] = useState([]);
 
   useEffect(() => {
     // Fetch user data
@@ -41,22 +42,46 @@ const ApplicantListUserProfile = ({ id }) => {
       .get(`http://localhost:5000/api/workexperiences/user/${id}`)
       .then((response) => setUserWork(response.data))
       .catch((error) => console.error('Error fetching user work experience:', error));
+    // Fetch user work experience
+    axios
+      .get(`http://localhost:5000/api/resumes/${id}`)
+      .then((response) => setResume(response.data))
+      .catch((error) => console.error('Error fetching user work experience:', error));
+
+
   }, [id]);
 
+  // Utility function to format the date and time
+function formatDateTime(dateTime) {
+  const date = new Date(dateTime);
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour12: true,
+  };
+
+  return date.toLocaleString('en-US', options);
+}
+
   return (
+    
     <div className='container w-full'>
-      <div className='profilebasics flex flex-row rounded-lg bg-white border border-grey-400 justify-between gap-5 pt-1'>
-        <div className='profileBasics flex flex-row justify-between gap-5 p-5'>
-          <div className='w-56 h-56 bg-white rounded-lg border-gray-300 border shadow-lg '>
-            <img src='' alt='User Image' />
-          </div>
-          <div className='pr-5'>
-            <p className='font-bold text-base text-xl text-gray-600'>First Name + Last Name</p>
-            <p>Email</p>
-            <p>Phone Number</p>
-            <p>Birthday</p>
-          </div>
-        </div>
+      {userImage && userEducation && userProfile && userData && userWork ? 
+        <div>
+          <div className='profilebasics flex flex-row rounded-lg bg-white border border-grey-400 justify-between gap-5 pt-1 pl-5'>
+            <div className='profileBasics flex flex-row justify-between gap-5 p-5'>
+              <div className='w-56 h-56 bg-white rounded-lg border-gray-300 border shadow-lg overflow-hidden '>
+                <img src={`http://localhost:5000/profilePics/${userImage.s3Key}`} alt='User Image' className='w-full h-fullobject-contain object-center' />
+              </div>
+              <div className='pr-5'>
+                <p className='font-bold text-base text-xl text-gray-600'>{userData.firstName + ' ' + userData.lastName}</p>
+                <p className='text-base text-l text-gray-600'>{userData.email}</p>
+                <p className='text-base text-l text-gray-600'>{userProfile.phoneNumber}</p>
+                <p className='text-base text-l text-gray-600'>{formatDateTime(userProfile.dateOfBirth)}</p>
+              </div>
+            </div>
         <div className='actionbuttons flex items-start gap-5 p-5'>
           {/* Replace with reume link of the user */}
           <Link to=''>
@@ -71,8 +96,9 @@ const ApplicantListUserProfile = ({ id }) => {
                   d='M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z'
                 />
               </svg>
-
-              <p className='ml-1'>View Resume</p>
+              <a className='ml-1' href={`http://localhost:5000/resumes/${resume.s3Key}`}>
+              View Resume
+              </a>
             </button>
           </Link>
           <button type='button' className=''>
@@ -86,7 +112,6 @@ const ApplicantListUserProfile = ({ id }) => {
           </button>
         </div>
       </div>
-
       <div className='education pt-2'>
         <div className='text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border bg-white text-gray-600 border-gray-300'>
           <p className='pl-2 pb-1 text-lg'>Education </p>
@@ -98,7 +123,6 @@ const ApplicantListUserProfile = ({ id }) => {
           </div>
         ))}
       </div>
-
       <div className='workexperience pt-2'>
         <div className='text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border bg-white text-gray-600 border-gray-300'>
           <p className='pl-2 pb-1 text-lg'>Work Experience </p>
@@ -110,6 +134,13 @@ const ApplicantListUserProfile = ({ id }) => {
           </div>
         ))}
       </div>
+      </div>
+      :
+      <div>
+        <p>Loading Profile</p>
+      </div>
+      }
+      
     </div>
   );
 };
