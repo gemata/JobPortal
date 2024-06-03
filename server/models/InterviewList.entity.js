@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
 
+
 const InterviewList = sequelize.define(
   "InterviewList",
   {
@@ -8,6 +9,10 @@ const InterviewList = sequelize.define(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+    },
+    interviewMethod: {
+      type: DataTypes.STRING,
+      allowNull: true, // Adjust as necessary
     },
     address: {
       type: DataTypes.STRING(255),
@@ -23,10 +28,12 @@ const InterviewList = sequelize.define(
     },
     stage: {
       type: DataTypes.INTEGER,
+      defaultValue:1,
       allowNull: false,
     },
     is_Selected: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
+      defaultValue: 0,
       allowNull: false,
     },
   },

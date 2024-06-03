@@ -1,5 +1,6 @@
 // Import the InterviewList model and Sequelize
 import InterviewList from "../models/InterviewList.entity.js";
+import ApplicantList from "../models/applicantlist.entity.js";
 
 // Controller functions
 const InterviewListController = {
@@ -8,6 +9,41 @@ const InterviewListController = {
     try {
       const newInterviewList = await InterviewList.create(req.body);
       return res.status(201).json(newInterviewList);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Create interviews from selected applicants
+  async createInterviewsFromSelectedApplicants(req, res) {
+    const { JobPostID } = req.params;
+    const { interviewMethod, address, onlineLink } = req.body;
+    try {
+      // Get selected applicants for the job post
+      const selectedApplicants = await ApplicantList.findAll({
+        where: { JobPostID, isSelected: 1 },
+      });
+  
+      if (!selectedApplicants.length) {
+        return res.status(404).json({ message: "No selected applicants found for this job post" });
+      }
+  
+      // Create interview records for each selected applicant
+      const interviewPromises = selectedApplicants.map((applicant) =>
+        InterviewList.create({
+          JobPostID: applicant.JobPostID,
+          UserId: applicant.UserId,
+          stage: 1,
+          is_Selected: 0,
+          interviewMethod,  // Save the interview method
+          address: interviewMethod === 'In Person' ? address : null,  // Save address if interview method is In Person
+          onlineLink: interviewMethod === 'Online' ? onlineLink : null,  // Save online link if interview method is Online
+        })
+      );
+  
+      const newInterviews = await Promise.all(interviewPromises);
+  
+      return res.status(201).json(newInterviews);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

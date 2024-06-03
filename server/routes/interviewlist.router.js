@@ -5,6 +5,8 @@ const InterviewListRouter = express.Router();
 
 InterviewListRouter.post('/', InterviewListController.createInterviewList);
 
+InterviewListRouter.post('/interviews/from-selected-applicants/:JobPostID', InterviewListController.createInterviewsFromSelectedApplicants);
+
 InterviewListRouter.get('/', InterviewListController.getInterviewLists);
 
 InterviewListRouter.get('/:id', InterviewListController.getInterviewListById);

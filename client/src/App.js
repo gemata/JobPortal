@@ -31,6 +31,7 @@ import ResumeHelp from "./pages/ResumeHelp/ResumeHelp";
 import ResumeExample from "./pages/ResumeHelp/ResumeExample";
 import Salary from "./pages/Salary/Salary";
 import FindJobs from "./pages/FindJobs/FindJobs";
+import CreateInterview from "./components/CompanyComponents/Jobs/InterviewList/CreateInterview";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -103,6 +104,8 @@ function App() {
         <Route path="/company/profile" element={<CompanyProfile userData={userData} />} />
         <Route path="/company/jobs" element={<CompanyJobs userData={userData} />} />
         <Route path="/company/interviews" element={<CompanyInterviews userData={userData} />} />
+        <Route path="/company/createinterview/:id" element={<CreateInterview userData={userData} />} />
+
         <Route path="/company/applicantlist/:id" element={<ApplicantList userData={userData} />} />
 
         <Route
