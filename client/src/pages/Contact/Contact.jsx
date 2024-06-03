@@ -42,6 +42,7 @@ const ContactUs = () => {
           subject: "",
           message: "",
         });
+        window.location.reload();
       } else {
         // Handle server errors
         console.error("Failed to send message");
@@ -103,10 +104,10 @@ const ContactUs = () => {
                 <div>
                   <input
                     type="text"
-                    name="subjects"
-                    placeholder="Subjects"
+                    name="subject"
+                    placeholder="Subject"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md"
-                    value={formData.subjects}
+                    value={formData.subject}
                     onChange={handleChange}
                   />
                 </div>
