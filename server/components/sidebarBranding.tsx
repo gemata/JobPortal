@@ -10,7 +10,7 @@ const SidebarBranding: React.FC<{}> = () => {
     align-items: center;
     flex-shrink: 0;
     text-decoration: none;
-    padding: 48px 32px;
+    padding: 48px 32px 12px 32px;
 
     &:hover h1 {
       color: #3040d6;
@@ -30,6 +30,11 @@ const SidebarBranding: React.FC<{}> = () => {
         <img width='50px' style={{ borderRadius: '50%' }} src={'http://localhost:5000/mainLogo.png'} alt='Logo' />
         <StyledH1>{'Job Horizon'}</StyledH1>
       </StyledLink>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0px 44px 48px 44px' }}>
+        <a style={{ color: 'purple', float: 'right', fontSize: '16px' }} href='http://localhost:3000/'>
+          Go to main page
+        </a>
+      </div>
     </>
   );
 };
