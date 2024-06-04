@@ -6,27 +6,9 @@ import userSVG from "../../img/user.svg";
 import cloudSVG from "../../img/uploadCloud.svg";
 import searchSVG from "../../img/search.svg";
 import checkBadgeSVG from "../../img/checkBadge.svg";
-import categoryImage1 from "../../img/category1.svg";
-import categoryImage2 from "../../img/category2.svg";
-import categoryImage3 from "../../img/category3.svg";
-import categoryImage4 from "../../img/category4.svg";
-import categoryImage5 from "../../img/category5.svg";
-import categoryImage6 from "../../img/category6.svg";
-import categoryImage7 from "../../img/category7.svg";
-import categoryImage8 from "../../img/category8.svg";
+import grayLogo from "../../img/grayLogo.png";
 import TestimonialCard from "../../components/HomePageComponents/TestimonialCard";
 import EmpCard from "../../components/HomePageComponents/EmpCard";
-
-const categoryData = [
-  { name: "Graphics & Design", positions: 357, image: categoryImage1 },
-  { name: "Code & Programing", positions: 312, image: categoryImage2 },
-  { name: "Digital Marketing", positions: 297, image: categoryImage3 },
-  { name: "Video & Animation", positions: 247, image: categoryImage4 },
-  { name: "Music & Audio", positions: 204, image: categoryImage5 },
-  { name: "Account & Finance", positions: 167, image: categoryImage6 },
-  { name: "Health & Care", positions: 125, image: categoryImage7 },
-  { name: "Data & Science", positions: 57, image: categoryImage8 },
-];
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -34,6 +16,7 @@ const Home = () => {
   const [mostLikedJobs, setMostLikedJobs] = useState([]);
   const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState([]);
+  const [jobFields, setJobFields] = useState([]);
 
   useEffect(() => {
     window.scrollTo({
@@ -52,48 +35,40 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/companies");
-        const data = await response.json();
-        // Assuming `data` contains a `rows` array with company objects
-        const sortedCompanies = data.rows
-          .sort((a, b) => (b.jobPostCount || 0) - (a.jobPostCount || 0)) // Assuming `jobPostCount` is the number of jobs posted
-          .slice(0, 8); // Get top 8 companies
+        const responses = await Promise.all([
+          fetch("http://localhost:5000/api/companies"),
+          fetch("http://localhost:5000/api/testimonials"),
+          fetch("http://localhost:5000/api/jobposts/popular"),
+          fetch("http://localhost:5000/api/jobfields"),
+        ]);
 
-        setCompanies(sortedCompanies);
+        const companiesData = await responses[0].json();
+        setCompanies(
+          companiesData.rows
+            .sort((a, b) => b.jobPostCount - a.jobPostCount)
+            .slice(0, 8)
+        );
+
+        const testimonialsData = await responses[1].json();
+        setTestimonials(
+          testimonialsData.sort((a, b) => b.rating - a.rating).slice(0, 3)
+        );
+
+        const jobPositionsData = await responses[2].json();
+        setMostLikedJobs(jobPositionsData);
+
+        const jobFieldsData = await responses[3].json();
+        setJobFields(
+          jobFieldsData.rows.sort((a, b) => b.count - a.count).slice(0, 8)
+        ); // Assuming API returns count of open positions
       } catch (error) {
-        console.error("Error fetching companies:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    const fetchTestimonials = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/testimonials");
-        const data = await response.json();
-        // Sort testimonials by rating in descending order and take the top 3
-        const topTestimonials = data
-          .sort((a, b) => b.rating - a.rating)
-          .slice(0, 3);
-        setTestimonials(topTestimonials);
-      } catch (error) {
-        console.error("Error fetching testimonials:", error);
-      }
-    };
-
-    const fetchJobPositions = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/jobposts/popular");
-        const data = await response.json();
-        setMostLikedJobs(data);
-      } catch (error) {
-        console.error("Error fetching job positions:", error);
-      }
-    };
-
-    fetchCompanies();
-    fetchTestimonials();
-    fetchJobPositions();
+    fetchData();
   }, []);
 
   return (
@@ -150,7 +125,7 @@ const Home = () => {
       </div>
       <div className="mt-[100px]">
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
-        <div className="font-medium text-[42px] mb-10">
+          <div className="font-medium text-[42px] mb-10">
             Most Popular Vacancies
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -159,10 +134,10 @@ const Home = () => {
                 key={job.id}
                 className="p-4 bg-white rounded-md shadow-sm hover:shadow-lg cursor-pointer transition-shadow duration-300"
               >
-                <div className="font-semibold text-lg">
-                  {job.position}
+                <div className="font-semibold text-lg">{job.position}</div>
+                <div className="text-sm text-gray-500">
+                  {job.totalLikes} Users Liked The Jobs In This Position
                 </div>
-                <div className="text-sm text-gray-500">{job.totalLikes} Users Liked The Jobs In This Position</div>
               </div>
             ))}
           </div>
@@ -170,7 +145,7 @@ const Home = () => {
       </div>
       <div className="bg-[#f1f2f4] mt-[100px]">
         <div className="font-medium text-[42px] text-center mb-[100px] pt-[100px]">
-          How does job-pilot work ?
+          How does job-horizon work ?
         </div>
         <div className="px-6 md:px-0 pb-[100px] flex flex-col md:flex-row justify-center gap-5">
           <div className="rounded-xl up-arrow flex flex-col items-center py-6">
@@ -227,26 +202,26 @@ const Home = () => {
       <div>
         <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
           <div className="font-medium text-[42px] mb-[100px] pt-[100px]">
-            <h2>Popular Categories</h2>
+            Popular Job Fields
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {categoryData.map((category) => (
+            {jobFields.map((field) => (
               <div
-                key={category.name}
+                key={field.id}
                 className="flex items-center p-4 bg-purple-50 rounded-md shadow-sm hover:shadow-lg cursor-pointer transition-shadow duration-300"
               >
-                <div className="flex-shrink-0 w-16 h-16">
+                <div className="flex-shrink-0 w-16 h-16 border-fuchsia-700 border rounded-full">
                   <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover rounded-md"
+                    src={`http://localhost:5000/jobFields/${field.s3Key}`} // Ensure your server serves images from the correct directory
+                    alt={field.field}
+                    className="w-full h-full object-contain object-center p-4"
                   />
                 </div>
                 <div className="ml-4">
-                  <div className="text-lg font-semibold">{category.name}</div>
+                  <div className="text-lg font-semibold">{field.field}</div>
                   <div className="text-sm text-gray-600">
-                    {category.positions} Open position
-                    {category.positions > 1 ? "s" : ""}
+                    {field.jobPositionCount} Open position
+                    {field.jobPositionCount > 1 ? "s" : ""}
                   </div>
                 </div>
               </div>
@@ -267,9 +242,13 @@ const Home = () => {
             >
               <div className="flex items-center mb-4">
                 <img
-                  src={`http://localhost:5000/companyLogos/${company.CompanyLogo?.s3Key}`}
+                  src={
+                    company.CompanyLogo
+                      ? `http://localhost:5000/companyLogos/${company.CompanyLogo?.s3Key}`
+                      : grayLogo
+                  }
                   alt={company.CompanyName}
-                  className="w-10 h-10 object-contain object-center rounded-full mr-4"
+                  className="w-10 h-10 border object-contain object-center rounded-full mr-4"
                 />
                 <div>
                   <div className="text-lg font-semibold">

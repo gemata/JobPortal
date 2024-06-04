@@ -1,5 +1,7 @@
 // Import the JobField model and Sequelize
 import JobField from "../models/jobfield.entity.js";
+import JobPosition from "../models/jobposition.entity.js";
+import { Sequelize } from "sequelize";
 
 // Controller functions
 const JobFieldController = {
@@ -16,7 +18,20 @@ const JobFieldController = {
   // Get all JobFields
   async getJobFields(req, res) {
     try {
-      const JobFields = await JobField.findAll();
+      const JobFields = await JobField.findAndCountAll({
+        attributes: {
+          include: [
+            [
+              Sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM \`Job Positions\` AS jobPositions
+                WHERE jobPositions.\`jobFieldId\` = \`JobField\`.\`id\`
+              )`),
+              "jobPositionCount",
+            ],
+          ],
+        },
+      });
       return res.status(200).json(JobFields);
     } catch (error) {
       return res.status(500).json({ error: error.message });
