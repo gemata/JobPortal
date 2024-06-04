@@ -6,6 +6,7 @@ import ResumeCard from '../../components/UserDashboard/ResumeCard';
 import ProfileDetail from '../../components/UserDashboard/ProfileDetail';
 import SignInPrompt from '../../components/SignInPrompt';
 import ProfileDates from '../../components/UserDashboard/ProfileDates';
+import PreviewResume from '../../components/UserDashboard/PreviewResume';
 
 const MyProfile = ({ userData }) => {
   const [profileData, setProfileData] = useState('');
@@ -32,10 +33,10 @@ const MyProfile = ({ userData }) => {
               <div className='flex flex-col gap-5 w-1/3'>
                 <ProfileHeader profileData={profileData} fetchData={fetchData} setFetchData={setFetchData} />
                 <ProfileDates profileData={profileData} />
-                <ResumeCard profileData={profileData} />
+                {profileData.Resume ? <PreviewResume resume={profileData.Resume} /> : <ResumeCard />}
               </div>
               <div className='flex flex-col gap-5 w-2/3'>
-                <ResumeUpload profileData={profileData} className='h-32' />
+                <ResumeUpload profileData={profileData} fetchData={fetchData} setFetchData={setFetchData} className='h-32' />
                 <ProfileDetail userData={userData} profileData={profileData} fetchData={fetchData} setFetchData={setFetchData} className='flex-1' />
               </div>
             </div>
