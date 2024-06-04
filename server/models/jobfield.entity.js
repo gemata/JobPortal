@@ -14,6 +14,11 @@ const JobField = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+
+    s3Key: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
     sequelize, // We need to pass the connection instance
