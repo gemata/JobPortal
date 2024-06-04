@@ -8,6 +8,10 @@ export default function UserProfileModal({ profileData, fetchData, setFetchData 
   const [dateOfBirth, setDateOfBirth] = useState('');
 
   const formatDateForInput = (dateString) => {
+    if (!dateString) {
+      return null;
+    }
+
     const date = new Date(dateString);
     const year = date.getFullYear();
     let month = date.getMonth() + 1;

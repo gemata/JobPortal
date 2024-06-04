@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-const AddEducation = ({ userData }) => {
+const AddEducation = ({ userData, fetchData, setFetchData }) => {
   const [education, setEducation] = useState({
-    schoolName: "",
-    degreeType: "",
-    degreeName: "",
-    country: "",
-    city: "",
+    schoolName: '',
+    degreeType: '',
+    degreeName: '',
+    country: '',
+    city: '',
     currentlyStudyingHere: false,
-    startDate: "",
-    endDate: "",
-    description: "",
+    startDate: '',
+    endDate: '',
+    description: '',
   });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setEducation({
       ...education,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
+    setErrorMessage('');
+    setSuccessMessage('');
 
     const requestBody = {
       ...education,
@@ -35,9 +35,9 @@ const AddEducation = ({ userData }) => {
 
     try {
       const response = await fetch(`http://localhost:5000/api/educations/`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody),
       });
@@ -45,150 +45,79 @@ const AddEducation = ({ userData }) => {
       const responseData = await response.json();
 
       if (!response.ok) {
-        console.error("Error:", responseData.error);
+        console.error('Error:', responseData.error);
         setErrorMessage(responseData.error);
       } else {
-        setSuccessMessage("Education details saved successfully.");
+        setSuccessMessage('Education details saved successfully.');
         setEducation({
-          schoolName: "",
-          degreeType: "",
-          degreeName: "",
-          country: "",
-          city: "",
+          schoolName: '',
+          degreeType: '',
+          degreeName: '',
+          country: '',
+          city: '',
           currentlyStudyingHere: false,
-          startDate: "",
-          endDate: "",
-          description: "",
+          startDate: '',
+          endDate: '',
+          description: '',
         });
-
-        window.location.reload();
+        setFetchData(!fetchData);
       }
     } catch (error) {
-      console.error("Fetch error:", error);
-      setErrorMessage("An error occurred while saving education details.");
+      console.error('Fetch error:', error);
+      setErrorMessage('An error occurred while saving education details.');
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-lg mx-auto p-4 bg-white rounded shadow-lg"
-    >
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          School Name
-        </label>
-        <input
-          type="text"
-          name="schoolName"
-          value={education.schoolName}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          required
-        />
+    <form onSubmit={handleSubmit} className='w-full max-w-lg mx-auto p-4 bg-white rounded shadow-lg'>
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>School Name</label>
+        <input type='text' name='schoolName' value={education.schoolName} onChange={handleChange} className='w-full px-3 py-2 border rounded' required />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Degree Type
-        </label>
-        <input
-          type="text"
-          name="degreeType"
-          value={education.degreeType}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          required
-        />
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>Degree Type</label>
+        <input type='text' name='degreeType' value={education.degreeType} onChange={handleChange} className='w-full px-3 py-2 border rounded' required />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Degree Name
-        </label>
-        <input
-          type="text"
-          name="degreeName"
-          value={education.degreeName}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          required
-        />
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>Degree Name</label>
+        <input type='text' name='degreeName' value={education.degreeName} onChange={handleChange} className='w-full px-3 py-2 border rounded' required />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Country</label>
-        <input
-          type="text"
-          name="country"
-          value={education.country}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          required
-        />
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>Country</label>
+        <input type='text' name='country' value={education.country} onChange={handleChange} className='w-full px-3 py-2 border rounded' required />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">City</label>
-        <input
-          type="text"
-          name="city"
-          value={education.city}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          required
-        />
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>City</label>
+        <input type='text' name='city' value={education.city} onChange={handleChange} className='w-full px-3 py-2 border rounded' required />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Currently Studying Here
-        </label>
-        <input
-          type="checkbox"
-          name="currentlyStudyingHere"
-          checked={education.currentlyStudyingHere}
-          onChange={handleChange}
-          className="mr-2 leading-tight"
-        />
-        <span className="text-gray-700">Yes</span>
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>Currently Studying Here</label>
+        <input type='checkbox' name='currentlyStudyingHere' checked={education.currentlyStudyingHere} onChange={handleChange} className='mr-2 leading-tight' />
+        <span className='text-gray-700'>Yes</span>
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Start Date</label>
-        <input
-          type="date"
-          name="startDate"
-          value={education.startDate}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          required
-        />
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>Start Date</label>
+        <input type='date' name='startDate' value={education.startDate} onChange={handleChange} className='w-full px-3 py-2 border rounded' required />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">End Date</label>
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>End Date</label>
         <input
-          type="date"
-          name="endDate"
+          type='date'
+          name='endDate'
           value={education.endDate}
           onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
+          className='w-full px-3 py-2 border rounded'
           required={!education.currentlyStudyingHere}
           disabled={education.currentlyStudyingHere}
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Description
-        </label>
-        <textarea
-          name="description"
-          value={education.description}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
-          rows="4"
-        />
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>Description</label>
+        <textarea name='description' value={education.description} onChange={handleChange} className='w-full px-3 py-2 border rounded' rows='4' />
       </div>
-      {errorMessage && <div className="text-red-600">{errorMessage}</div>}
-      {successMessage && <div className="text-green-600">{successMessage}</div>}
-      <button
-        type="submit"
-        className="w-full px-4 py-2 bg-purple-500 text-white font-bold rounded"
-      >
+      {errorMessage && <div className='text-red-600'>{errorMessage}</div>}
+      {successMessage && <div className='text-green-600'>{successMessage}</div>}
+      <button type='submit' className='w-full px-4 py-2 bg-purple-500 text-white font-bold rounded'>
         Save Changes
       </button>
     </form>

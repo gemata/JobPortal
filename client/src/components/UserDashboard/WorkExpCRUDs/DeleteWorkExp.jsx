@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const DeleteWorkExperience = ({ onClose, workExperienceDetail }) => {
+const DeleteWorkExperience = ({ onClose, workExperienceDetail, fetchData, setFetchData }) => {
   const deleteWorkExperience = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/workexperience/${workExperienceDetail.id}`, {
@@ -9,7 +9,7 @@ const DeleteWorkExperience = ({ onClose, workExperienceDetail }) => {
 
       if (response.ok) {
         onClose();
-        window.location.reload();
+        setFetchData(!fetchData);
       } else {
         console.error('Failed to delete work experience detail');
       }

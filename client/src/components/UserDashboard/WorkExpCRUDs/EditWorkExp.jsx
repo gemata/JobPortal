@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const EditWorkExperience = ({ userData, workExperienceDetail }) => {
+const EditWorkExperience = ({ userData, workExperienceDetail, fetchData, setFetchData }) => {
   const [workExperience, setWorkExperience] = useState({
     companyName: '',
     jobTitle: '',
@@ -80,7 +80,7 @@ const EditWorkExperience = ({ userData, workExperienceDetail }) => {
           endDate: '',
           description: '',
         });
-        window.location.reload();
+        setFetchData(!fetchData);
       }
     } catch (error) {
       console.error('Fetch error:', error);

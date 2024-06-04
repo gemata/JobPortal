@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const DeleteEducation = ({ onClose, educationDetail }) => {
+const DeleteEducation = ({ onClose, educationDetail, fetchData, setFetchData }) => {
   const deleteEducation = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/educations/${educationDetail.id}`, {
@@ -9,7 +9,7 @@ const DeleteEducation = ({ onClose, educationDetail }) => {
 
       if (response.ok) {
         onClose();
-        window.location.reload();
+        setFetchData(!fetchData);
       } else {
         console.error('Failed to delete education detail');
       }

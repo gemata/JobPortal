@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const EditEducation = ({ userData, educationDetail }) => {
+const EditEducation = ({ userData, educationDetail, fetchData, setFetchData }) => {
   const [education, setEducation] = useState({
     schoolName: '',
     degreeType: '',
@@ -80,7 +80,7 @@ const EditEducation = ({ userData, educationDetail }) => {
           endDate: '',
           description: '',
         });
-        window.location.reload();
+        setFetchData(!fetchData);
       }
     } catch (error) {
       console.error('Fetch error:', error);

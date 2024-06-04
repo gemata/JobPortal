@@ -40,7 +40,7 @@ const ProfileDetail = ({ userData, profileData, fetchData, setFetchData }) => {
         })
         .catch((error) => console.error('Error fetching work experience list:', error));
     }
-  }, [userData]);
+  }, [userData, fetchData]);
 
   const openConfirm = () => {
     setToggleDeleteButton((prevState) => !prevState);
@@ -323,23 +323,20 @@ const ProfileDetail = ({ userData, profileData, fetchData, setFetchData }) => {
           ))}
         </div>
       )}
-      <Modal isOpen={isEducationModalOpen} onClose={handleCloseEducationModal}>
-        <AddEducation userData={userData} addEducationDetail={addEducationDetail} />
-      </Modal>
-      <Modal isOpen={isEditEducationModalOpen} onClose={handleCloseEditEducationModal}>
-        <EditEducation userData={userData} educationDetail={currentEducation} updateEducationDetail={updateEducationDetail} />
-      </Modal>
-      <Modal isOpen={isDeleteEducationModalOpen} onClose={handleCloseDeleteEducationModal}>
-        <DeleteEducation educationDetail={currentEducation} onClose={handleCloseDeleteEducationModal} />
-      </Modal>
       <Modal isOpen={isWorkModalOpen} onClose={handleCloseWorkModal}>
-        <AddWorkExperience userData={userData} addWorkExperienceDetail={addWorkExperienceDetail} />
+        <AddWorkExperience userData={userData} addWorkExperienceDetail={addWorkExperienceDetail} fetchData={fetchData} setFetchData={setFetchData} />
       </Modal>
       <Modal isOpen={isEditWorkModalOpen} onClose={handleCloseEditWorkModal}>
-        <EditWorkExperience userData={userData} workExperienceDetail={currentWorkExperience} updateWorkExperienceDetail={updateWorkExperienceDetail} />
+        <EditWorkExperience
+          userData={userData}
+          workExperienceDetail={currentWorkExperience}
+          updateWorkExperienceDetail={updateWorkExperienceDetail}
+          fetchData={fetchData}
+          setFetchData={setFetchData}
+        />
       </Modal>
       <Modal isOpen={isDeleteWorkModalOpen} onClose={handleCloseDeleteWorkModal}>
-        <DeleteWorkExperience workExperienceDetail={currentWorkExperience} onClose={handleCloseDeleteWorkModal} />
+        <DeleteWorkExperience workExperienceDetail={currentWorkExperience} onClose={handleCloseDeleteWorkModal} fetchData={fetchData} setFetchData={setFetchData} />
       </Modal>
 
       <div className='flex justify-between items-center'>
@@ -388,13 +385,13 @@ const ProfileDetail = ({ userData, profileData, fetchData, setFetchData }) => {
         </div>
       )}
       <Modal isOpen={isEducationModalOpen} onClose={handleCloseEducationModal}>
-        <AddEducation userData={userData} addEducationDetail={addEducationDetail} />
+        <AddEducation userData={userData} addEducationDetail={addEducationDetail} fetchData={fetchData} setFetchData={setFetchData} />
       </Modal>
       <Modal isOpen={isEditEducationModalOpen} onClose={handleCloseEditEducationModal}>
-        <EditEducation userData={userData} educationDetail={currentEducation} updateEducationDetail={updateEducationDetail} />
+        <EditEducation userData={userData} educationDetail={currentEducation} updateEducationDetail={updateEducationDetail} fetchData={fetchData} setFetchData={setFetchData} />
       </Modal>
       <Modal isOpen={isDeleteEducationModalOpen} onClose={handleCloseDeleteEducationModal}>
-        <DeleteEducation educationDetail={currentEducation} onClose={handleCloseDeleteEducationModal} />
+        <DeleteEducation educationDetail={currentEducation} onClose={handleCloseDeleteEducationModal} fetchData={fetchData} setFetchData={setFetchData} />
       </Modal>
       <Modal isOpen={isProfileModalOpen} onClose={handleCloseProfileModal}>
         <UserProfileModal profileData={profileData} fetchData={fetchData} setFetchData={setFetchData} />
