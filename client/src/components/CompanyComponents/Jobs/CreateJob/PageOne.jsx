@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
-
 export default function PageOne({ jobField, setJobField, jobPosition, setJobPosition, educationLevel, setEducationLevel, jobSummary, setJobSummary }) {
   const [jobFields, setJobFields] = useState([]);
   const [jobPositions, setJobPositions] = useState([]);
@@ -13,7 +12,12 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
     fetch('http://localhost:5000/api/jobfields/')
       .then((response) => response.json())
       .then((data) => {
-        setJobFields(data);
+        console.log('Job fields data:', data); // Log the entire response
+        if (data && Array.isArray(data.rows)) {
+          setJobFields(data.rows);
+        } else {
+          console.error('API response is not in expected format:', data);
+        }
       })
       .catch((error) => console.error('Error fetching job fields:', error));
   }, []);
