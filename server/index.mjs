@@ -84,7 +84,7 @@ const authenticate = async ({ email, password }, ctx) => {
     }
 
     if (user.role === "User") {
-      ctx.res.redirect("http://localhost:3000/profile/dashboard");
+      ctx.res.redirect("http://localhost:3000/profile/detail");
     }
 
     return user;

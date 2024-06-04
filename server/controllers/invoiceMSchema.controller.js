@@ -32,6 +32,19 @@ const InvoiceMController = {
     }
   },
 
+  async getInvoiceMByEmail(req, res) {
+    const { email } = req.params;
+    try {
+      const invoiceMRecord = await InvoiceM.findOne({ email: email });
+      if (!invoiceMRecord) {
+        return res.status(404).json({ message: "InvoiceM not found" });
+      }
+      return res.status(200).json(invoiceMRecord);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
   async updateInvoiceM(req, res) {
     const { id } = req.params;
     const { body } = req;

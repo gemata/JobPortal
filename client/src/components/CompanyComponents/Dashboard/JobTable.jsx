@@ -8,6 +8,7 @@ export default function JobTableSection({ userData }) {
   const [sortCriteria, setSortCriteria] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isPremium, setIsPremium] = useState(false);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +38,22 @@ export default function JobTableSection({ userData }) {
 
     fetchJobData();
   }, [userData.ID]);
+
+  useEffect(() => {
+    if (userData.Email) {
+      fetch(`http://localhost:5000/api/invoicesM/email/${userData.Email}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            if (data.isActive) {
+              setIsPremium(true);
+            }
+          } else {
+            console.error('API response is not in expected format:', data);
+          }
+        });
+    }
+  }, [userData]);
 
   const handleSortCriteriaChange = (event) => {
     setSortCriteria(event.target.value);
@@ -162,7 +179,7 @@ export default function JobTableSection({ userData }) {
               </select>
             </div>
             <div className='flex w-1/4 '>
-              <Link to='/company/jobs/create'>
+              <Link to={isPremium || jobData.length == 0 ? '/company/jobs/create' : '/pricing'}>
                 <button
                   type='button'
                   className='inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border border-jobportal-darkpink text-base px-5 py-2.5 '

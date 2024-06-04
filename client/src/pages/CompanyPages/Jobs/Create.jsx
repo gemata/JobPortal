@@ -25,6 +25,27 @@ const CompanyJobsCreate = ({ userData }) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (userData) {
+      // Perform both fetch operations concurrently
+      Promise.all([
+        fetch(`http://localhost:5000/api/jobposts/company/${userData.ID}`).then((res) => res.json()),
+        fetch(`http://localhost:5000/api/invoicesM/email/${userData.Email}`).then((res) => res.json()),
+      ])
+        .then(([jobPostsData, invoiceData]) => {
+          const hasJobPosts = jobPostsData && jobPostsData.length !== 0;
+          const isInvoiceInactive = invoiceData && !invoiceData.isActive;
+
+          if (hasJobPosts && isInvoiceInactive) {
+            navigate('/pricing');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, [userData, navigate]);
+
   const nextPage = () => {
     if (currentPage < 3) {
       setCurrentPage(currentPage + 1);

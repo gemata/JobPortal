@@ -9,6 +9,8 @@ InvoiceMRouter.get("/", InvoiceMController.getInvoiceMs);
 
 InvoiceMRouter.get("/:id", InvoiceMController.getInvoiceMById);
 
+InvoiceMRouter.get("/email/:email", InvoiceMController.getInvoiceMByEmail);
+
 InvoiceMRouter.put("/:id", InvoiceMController.updateInvoiceM);
 
 InvoiceMRouter.delete("/:id", InvoiceMController.deleteInvoiceM);
