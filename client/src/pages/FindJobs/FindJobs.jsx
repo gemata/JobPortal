@@ -23,6 +23,7 @@ const FindJobs = ({ userData }) => {
   const [searchParams] = useSearchParams();
   const [applied, setApplied] = useState(null);
   const queryValue = searchParams.get('q');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (queryValue) {
@@ -120,14 +121,17 @@ const FindJobs = ({ userData }) => {
 
       if (!response1.ok) {
         console.error('Error in applicant list:', responseData1.error);
+        setErrorMessage(responseData1.error);
       }
 
       if (!response2.ok) {
         console.error('Error in applied jobs:', responseData2.error);
+        setErrorMessage(responseData2.error);
       }
 
       if (response1.ok && response2.ok) {
         setApplied(true);
+        setErrorMessage('');
       }
     } catch (error) {
       console.error('There was an error applying for the job!', error);
@@ -382,6 +386,34 @@ const FindJobs = ({ userData }) => {
                     <div>
                       ${currentJob.salary_from} - ${currentJob.salary_to} per hour
                     </div>
+                    {errorMessage ? (
+                      <section className='resetPassword__form-message-container resetPassword__form-error'>
+                        <div className='resetPassword__form-message'>
+                          <section>
+                            <span>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='16'
+                                height='16'
+                                viewBox='0 0 24 24'
+                                fill='none'
+                                stroke='white'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                              >
+                                <circle cx='12' cy='12' r='10'></circle>
+                                <line x1='15' y1='9' x2='9' y2='15'></line>
+                                <line x1='9' y1='9' x2='15' y2='15'></line>
+                              </svg>
+                            </span>
+                            <div>{errorMessage}</div>
+                          </section>
+                        </div>
+                      </section>
+                    ) : (
+                      <></>
+                    )}
                     <div className='flex gap-3'>
                       {userData ? (
                         applied ? (
