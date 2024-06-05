@@ -1,14 +1,12 @@
 import sequelize from "./sequelize.mjs";
 import mongooseConnection from "./mongoose.js";
-import User from '../models/user.entity.js';
-import Company from '../models/Company.entity.js';
-import PendingAccount from "../models/pendingAccount.js";
+import GraphData from "../models/graphData.entity.js";
 
 const dashboardHandler = async () => {
 
-  const usersCount = await User.count();
-  const companiesCount = await Company.count();
-  const pendingAccountsCount = await PendingAccount.countDocuments();
+  const latestRecord = await GraphData.findOne({
+    order: [['createdAt', 'DESC']],
+  });
 
   return {
     message: "Data from handler",
@@ -17,7 +15,7 @@ const dashboardHandler = async () => {
       datasets: [
         {
           label: 'Account Types',
-          data: [usersCount, companiesCount, pendingAccountsCount],
+          data: [latestRecord.userCount, latestRecord.companyCount, latestRecord.pendingAccountCount],
           backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 205, 86, 0.5)'],
           borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
           hoverOffset: 3,
@@ -29,7 +27,7 @@ const dashboardHandler = async () => {
       datasets: [
         {
           label: 'Job Postings',
-          data: [12, 19, 3, 5, 2, 3],
+          data: [latestRecord.jobPostingsJan, latestRecord.jobPostingsFeb, latestRecord.jobPostingsMar, latestRecord.jobPostingsApr, latestRecord.jobPostingsMay, latestRecord.jobPostingsJun],
           fill: 'start',
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgb(75, 192, 192)',
@@ -37,7 +35,7 @@ const dashboardHandler = async () => {
         },
         {
           label: 'User Registrations',
-          data: [50, 30, 70, 40, 60, 80],
+          data: [latestRecord.userRegistrationsJan, latestRecord.userRegistrationsFeb, latestRecord.userRegistrationsMar, latestRecord.userRegistrationsApr, latestRecord.userRegistrationsMay, latestRecord.userRegistrationsJun],
           fill: 'start',
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           borderColor: 'rgb(255, 99, 132)',
@@ -46,11 +44,11 @@ const dashboardHandler = async () => {
       ],
     },
     jobApplicationStatusData: {
-      labels: ['Applied', 'Shortlisted', 'Rejected'],
+      labels: ['Applied', 'Rejected'],
       datasets: [
         {
           label: 'Job Application Status',
-          data: [60, 25, 15],
+          data: [latestRecord.jobApplicationStatusApplied, latestRecord.jobApplicationStatusRejected],
           borderColor: ['rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(255, 99, 132)'],
           backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(255, 99, 132, 0.5)'],
         },
@@ -61,7 +59,7 @@ const dashboardHandler = async () => {
       datasets: [
         {
           label: 'User Logins',
-          data: [100, 120, 150, 130, 140, 160],
+          data: [latestRecord.userEngagementLoginJan, latestRecord.userEngagementLoginFeb, latestRecord.userEngagementLoginMar, latestRecord.userEngagementLoginApr, latestRecord.userEngagementLoginMay, latestRecord.userEngagementLoginJun],
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           borderColor: 'rgb(255, 99, 132)',
           fill: false,
@@ -69,7 +67,7 @@ const dashboardHandler = async () => {
         },
         {
           label: 'Profile Completions',
-          data: [50, 60, 70, 80, 90, 100],
+          data: [latestRecord.userEngagementProfileJan, latestRecord.userEngagementProfileFeb, latestRecord.userEngagementProfileMar, latestRecord.userEngagementProfileApr, latestRecord.userEngagementProfileMay, latestRecord.userEngagementProfileJun],
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgb(54, 162, 235)',
           fill: false,
@@ -77,7 +75,7 @@ const dashboardHandler = async () => {
         },
         {
           label: 'Resume Uploads',
-          data: [20, 25, 30, 35, 40, 45],
+          data: [latestRecord.userEngagementResumeJan, latestRecord.userEngagementResumeFeb, latestRecord.userEngagementResumeMar, latestRecord.userEngagementResumeApr, latestRecord.userEngagementResumeMay, latestRecord.userEngagementResumeJun],
           backgroundColor: 'rgba(255, 206, 86, 0.2)',
           borderColor: 'rgb(255, 206, 86)',
           fill: false,
@@ -90,7 +88,7 @@ const dashboardHandler = async () => {
       datasets: [
         {
           label: 'Subscription Revenue',
-          data: [[2000], [3500], [5000]],
+          data: [[latestRecord.subscriptionRevenueBasic], [latestRecord.subscriptionRevenueStandard], [latestRecord.subscriptionRevenuePremium]],
           backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
           borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)'],
           borderWidth: 1,
@@ -102,7 +100,7 @@ const dashboardHandler = async () => {
       datasets: [
         {
           label: 'Interviews Scheduled',
-          data: [10, 15, 20, 18, 22, 25],
+          data: [latestRecord.interviewsScheduledJan, latestRecord.interviewsScheduledFeb, latestRecord.interviewsScheduledMar, latestRecord.interviewsScheduledApr, latestRecord.interviewsScheduledMay, latestRecord.interviewsScheduledJun],
           backgroundColor: 'rgba(76, 175, 80, 0.2)',
           borderColor: 'rgb(76, 175, 80)',
           fill: 'start',
@@ -110,40 +108,22 @@ const dashboardHandler = async () => {
       ],
     },
     jobPostEngagementData: {
-      labels: ['Job 1', 'Job 2', 'Job 3', 'Job 4'],
+      labels: ['Likes', 'Shares', 'Views'],
       datasets: [
         {
-          label: 'Likes',
-          data: [20, 15, 10, 25],
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          fill: 'start',
-          tension: 0.3,
-        },
-        {
-          label: 'Shares',
-          data: [10, 12, 8, 15],
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          fill: 'start',
-          tension: 0.3,
-        },
-        {
-          label: 'Views',
-          data: [30, 25, 20, 35],
-          backgroundColor: 'rgba(255, 206, 86, 0.2)',
-          borderColor: 'rgb(255, 206, 86)',
-          fill: 'start',
-          tension: 0.3,
+          label: 'Job Application Status',
+          data: [latestRecord.jobPostEngagementLikes, latestRecord.jobPostEngagementShares, latestRecord.jobPostEngagementViews],
+          borderColor: ['rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(255, 99, 132)'],
+          backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(255, 99, 132, 0.5)'],
         },
       ],
     },
     jobFieldsData: {
-      labels: ['IT', 'Finance', 'Marketing', 'Engineering'],
+      labels: [latestRecord.jobFieldsPopular1, latestRecord.jobFieldsPopular2, latestRecord.jobFieldsPopular3, latestRecord.jobFieldsPopular4],
       datasets: [
         {
           label: 'Job Fields',
-          data: [30, 25, 20, 25],
+          data: [latestRecord.jobFieldsPopular1Count, latestRecord.jobFieldsPopular2Count, latestRecord.jobFieldsPopular3Count, latestRecord.jobFieldsPopular4Count],
           backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(76, 175, 80, 0.2)'],
           borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(76, 175, 80)'],
           borderWidth: 1,
@@ -151,11 +131,11 @@ const dashboardHandler = async () => {
       ],
     },
     topCompaniesData: {
-      labels: ['Company A', 'Company B', 'Company C', 'Company D'],
+      labels: [latestRecord.topCompany1, latestRecord.topCompany2, latestRecord.topCompany3, latestRecord.topCompany4],
       datasets: [
         {
           label: 'Number of Job Postings',
-          data: [25, 20, 18, 15],
+          data: [latestRecord.topCompany1Count, latestRecord.topCompany2Count, latestRecord.topCompany3Count, latestRecord.topCompany4Count],
           backgroundColor: 'rgba(76,175,80, 0.2)',
           borderColor: 'rgb(76,175,80)',
           borderWidth: 1,

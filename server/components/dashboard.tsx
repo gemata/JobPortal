@@ -192,8 +192,10 @@ export const Dashboard: React.FC = () => {
               <Line data={data?.interviewsScheduledData} />
             </Box>
             <Box className='box-job-engagement'>
-              <Text variant='title'>Job Post Engagement Metrics</Text>
-              <Line data={data?.jobPostEngagementData} />
+              <div className='doughnut-graph'>
+                <Text variant='title'>Job Post Engagement Metrics</Text>
+                <Pie data={data?.jobPostEngagementData} />
+              </div>
             </Box>
           </div>
         </Box>
