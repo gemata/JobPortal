@@ -1,8 +1,8 @@
-import cron from 'node-cron';
+import cron from "node-cron";
 
-import { Op } from 'sequelize';
-import JobPost from '../models/JobPost.entity.js';
-import GraphData from '../models/graphData.entity.js';
+import { Op } from "sequelize";
+import JobPost from "../models/JobPost.entity.js";
+import GraphData from "../models/graphData.entity.js";
 
 // Function to update JobPost status
 const updateJobPostStatus = async () => {
@@ -13,8 +13,8 @@ const updateJobPostStatus = async () => {
     const jobPosts = await JobPost.findAll({
       where: {
         endAt: { [Op.lt]: currentDate },
-        is_Active: true
-      }
+        is_Active: true,
+      },
     });
 
     // Update the is_Active status of the found JobPosts
@@ -25,14 +25,16 @@ const updateJobPostStatus = async () => {
       }
       console.log(`Updated ${jobPosts.length} job posts to inactive status.`);
     } else {
-      console.log('No job posts to update.');
+      console.log("No job posts to update.");
     }
 
     const latestRecord = await GraphData.findOne({
-      order: [['createdAt', 'ASC']],
+      order: [["createdAt", "ASC"]],
     });
 
-    await latestRecord.destroy();
+    if (latestRecord) {
+      await latestRecord.destroy();
+    }
 
     const newGraphData = await GraphData.create({
       userCount: 100,
@@ -82,31 +84,30 @@ const updateJobPostStatus = async () => {
       jobPostEngagementLikes: 300,
       jobPostEngagementShares: 200,
       jobPostEngagementViews: 400,
-      jobFieldsPopular1: 'Engineering',
+      jobFieldsPopular1: "Engineering",
       jobFieldsPopular1Count: 80,
-      jobFieldsPopular2: 'Marketing',
+      jobFieldsPopular2: "Marketing",
       jobFieldsPopular2Count: 60,
-      jobFieldsPopular3: 'Design',
+      jobFieldsPopular3: "Design",
       jobFieldsPopular3Count: 40,
-      jobFieldsPopular4: 'Sales',
+      jobFieldsPopular4: "Sales",
       jobFieldsPopular4Count: 50,
-      topCompany1: 'Tech Corp',
+      topCompany1: "Tech Corp",
       topCompany1Count: 100,
-      topCompany2: 'Innovate LLC',
+      topCompany2: "Innovate LLC",
       topCompany2Count: 75,
-      topCompany3: 'BuildIt Inc.',
+      topCompany3: "BuildIt Inc.",
       topCompany3Count: 65,
-      topCompany4: 'Create Solutions',
-      topCompany4Count: 55
+      topCompany4: "Create Solutions",
+      topCompany4Count: 55,
     });
-    console.log('New GraphData entry created:', newGraphData.id);
-
+    console.log("New GraphData entry created:", newGraphData.id);
   } catch (error) {
-    console.error('Error updating job post status:', error);
+    console.error("Error updating job post status:", error);
   }
 };
 
 // Schedule the job to run every 10 minutes
-cron.schedule('*/10 * * * *', updateJobPostStatus, {
-  timezone: 'Etc/GMT-2' // UTC+2 timezone
+cron.schedule("*/10 * * * *", updateJobPostStatus, {
+  timezone: "Etc/GMT-2", // UTC+2 timezone
 });

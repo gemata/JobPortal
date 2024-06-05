@@ -20,6 +20,7 @@ import UserImage from "../models/userImage.entity.js";
 import Resume from "../models/resume.entity.js";
 import WorkExperience from "../models/workexperience.entity.js";
 import Testimonial from "../models/testimonial.entity.js";
+import SavedJob from "../models/savedJob.entity.js";
 
 const dbContext = async () => {
   User.hasOne(Resume);
@@ -59,6 +60,9 @@ const dbContext = async () => {
 
   User.hasMany(LikedJob);
   LikedJob.belongsTo(User);
+
+  User.hasMany(SavedJob);
+  SavedJob.belongsTo(User);
 
   JobPost.hasMany(LikedJob);
   LikedJob.belongsTo(JobPost);

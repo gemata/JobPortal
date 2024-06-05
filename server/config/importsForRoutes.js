@@ -12,6 +12,7 @@ import JobFieldRouter from "../routes/jobfield.router.js";
 import JobPositionRouter from "../routes/jobposition.router.js";
 import JobPostRouter from "../routes/jobpost.router.js";
 import LikedJobRouter from "../routes/likedJob.router.js";
+import SavedJobRouter from "../routes/savedJob.router.js";
 import PriceRouter from "../routes/price.router.js";
 import ProductRouter from "../routes/product.router.js";
 import ResumeRouter from "../routes/resume.router.js";
@@ -40,6 +41,7 @@ export {
   JobPositionRouter,
   JobPostRouter,
   LikedJobRouter,
+  SavedJobRouter,
   PriceRouter,
   ProductRouter,
   ResumeRouter,

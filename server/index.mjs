@@ -1068,6 +1068,16 @@ const start = async () => {
         features: [importExportFeature({ componentLoader })],
       },
       {
+        resource: Models.SavedJob,
+        options: {
+          parent: {
+            name: "User Models",
+            icon: "None",
+          },
+        },
+        features: [importExportFeature({ componentLoader })],
+      },
+      {
         resource: Models.PendingAccount,
         options: {
           parent: {
@@ -1189,6 +1199,7 @@ const start = async () => {
   app.use("/api/jobpositions", Routes.JobPositionRouter);
   app.use("/api/jobposts", Routes.JobPostRouter);
   app.use("/api/likedjobs", Routes.LikedJobRouter);
+  app.use("/api/savedjobs", Routes.SavedJobRouter);
   app.use("/api/prices", Routes.PriceRouter);
   app.use("/api/products", Routes.ProductRouter);
   app.use("/api/resumes", Routes.ResumeRouter);

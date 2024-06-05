@@ -11,6 +11,7 @@ import JobField from "../models/jobfield.entity.js";
 import JobPosition from "../models/jobposition.entity.js";
 import JobPost from "../models/JobPost.entity.js";
 import LikedJob from "../models/likedJob.entity.js";
+import SavedJob from "../models/savedJob.entity.js";
 import Price from "../models/price.entity.js";
 import Product from "../models/product.entity.js";
 import Subscription from "../models/subscription.entity.js";
@@ -40,6 +41,7 @@ export {
   JobPosition,
   JobPost,
   LikedJob,
+  SavedJob,
   Price,
   Product,
   Subscription,
