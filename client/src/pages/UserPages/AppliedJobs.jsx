@@ -5,6 +5,7 @@ import SignInPrompt from '../../components/SignInPrompt';
 
 const AppliedJobs = ({ userData }) => {
   const [appliedJobs, setAppliedJobs] = useState('');
+  const [fetchData, setFetchData] = useState(false);
 
   useEffect(() => {
     if (userData) {
@@ -14,7 +15,7 @@ const AppliedJobs = ({ userData }) => {
           setAppliedJobs(data);
         });
     }
-  }, [userData]);
+  }, [userData, fetchData]);
 
   const removeAppliedJob = (id) => {
     fetch(`http://localhost:5000/api/appliedjobs/${id}`, {
@@ -24,10 +25,10 @@ const AppliedJobs = ({ userData }) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
+        setFetchData(!fetchData);
       })
       .then((data) => {
-        console.log('Successfully deleted:', data);
+        console.log('Successfully deleted.');
       });
   };
 
