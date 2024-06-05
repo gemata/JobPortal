@@ -16,12 +16,14 @@ const InterviewListController = {
 
   // Create interviews from selected applicants
   async createInterviewsFromSelectedApplicants(req, res) {
-    const { JobPostID } = req.params;
-    const { interviewMethod, address, onlineLink } = req.body;
+    const { id } = req.params;
+    const { interviewMethod, address, onlineLink, time, interviewDetails } = req.body;
+
+
     try {
       // Get selected applicants for the job post
       const selectedApplicants = await ApplicantList.findAll({
-        where: { JobPostID, isSelected: 1 },
+        where: { JobPostID: id, isSelected: 1},
       });
   
       if (!selectedApplicants.length) {
@@ -35,6 +37,8 @@ const InterviewListController = {
           UserId: applicant.UserId,
           stage: 1,
           is_Selected: 0,
+          interviewDetails,
+          time,
           interviewMethod,  // Save the interview method
           address: interviewMethod === 'In Person' ? address : null,  // Save address if interview method is In Person
           onlineLink: interviewMethod === 'Online' ? onlineLink : null,  // Save online link if interview method is Online

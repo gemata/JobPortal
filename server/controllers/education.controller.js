@@ -76,7 +76,8 @@ const EducationController = {
   async getEducationsByUserId(req, res) {
     const { id } = req.params;
     try {
-      const Educations = await Education.findAll({ where: { UserId: id } });
+      const Educations = await Education.findAll({ 
+        where: { UserId: id } });
       if (!Educations.length) {
         return res
           .status(404)

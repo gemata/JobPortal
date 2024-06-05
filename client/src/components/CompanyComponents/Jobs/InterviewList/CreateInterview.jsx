@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import illustration from '../../../../img/Illustration.svg';
-import DOMPurify from 'dompurify';
-import SignInPrompt from '../../../SignInPrompt';
-import DashboardNavSection from '../../DashboardNavSection';
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import illustration from "../../../../img/Illustration.svg";
+import DOMPurify from "dompurify";
+import SignInPrompt from "../../../SignInPrompt";
+import DashboardNavSection from "../../DashboardNavSection";
 
 
 const CreateInterview = ({ userData }) => {
@@ -14,23 +14,147 @@ const CreateInterview = ({ userData }) => {
   const [interviewDetails, setInterviewDetails] = useState("");
   const [locationOrLink, setLocationOrLink] = useState("");
   const [interviewDateTime, setInterviewDateTime] = useState("");
+
+  const [interviewDate, setInterviewDate] = useState('');
+  const [interviewTime, setInterviewTime] = useState('');
+  const [address, setAddress] = useState('');
+  const [onlineLink, setOnlineLink] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleInterviewMethodChange = (e) => {
     setInterviewMethod(e.target.value);
   };
 
-  const handleLocationOrLinkChange = (e) => {
-    setLocationOrLink(e.target.value);
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+
   };
 
-  const handleInterviewDateTimeChange = (e) => {
-    setInterviewDateTime(e.target.value);
+  const handleOnlineLinkChange = (e) => {
+    setOnlineLink(e.target.value);
+
   };
+
+
+  const handleLocationOrLinkChange = (e) => {
+    setLocationOrLink(e.target.value);
+    switch (e.target.value) {
+      case 'Online':
+        setAddress(null);
+        setOnlineLink(e.target.value);
+        break;
+
+        case 'In Person':
+          setOnlineLink(null);
+          setAddress(e.target.value);
+        break;
+    
+      default:
+        break;
+    }
+  };
+
+
 
   const handleInterviewDetailsChange = (value) => {
     setInterviewDetails(value);
   };
+
+  const handleDateChange = (event) => {
+    setInterviewDate(event.target.value);
+    handleInterviewDateTimeMerge();
+  };
+  
+  const handleTimeChange = (event) => {
+    setInterviewTime(event.target.value);
+    handleInterviewDateTimeMerge();
+  };
+
+  const handleInterviewDateTimeMerge = () => {
+    // Check if both date and time are available
+    if (interviewDate && interviewTime) {
+      // Combine date and time using Moment.js (recommended)
+       const combinedDateTime = `${interviewDate}T${interviewTime}`;
+       setInterviewDateTime(combinedDateTime);
+       return combinedDateTime;
+    } else {
+      
+      console.warn('Both date and time are required to create a datetime value.');
+      return;
+    }
+  };
+  
+
+  const handleFormSubmit = async () => {
+    const sanitizedJobDetails = DOMPurify.sanitize(interviewDetails);
+    if (interviewDate === '' || interviewDate === null || interviewTime === '' || interviewTime == null) {
+      setErrorMessage('Date or Time Missing.');
+      return
+    }
+
+    const combinedDateTime = `${interviewDate}T${interviewTime}:00`;
+
+    const requestBody = {
+        interviewMethod: interviewMethod,
+        address: address,
+        onlineLink: onlineLink,
+        time: combinedDateTime,
+        interviewDetails: sanitizedJobDetails,
+    };
+
+    for (const [key, value] of Object.entries(requestBody)) {
+        // Skip address and onlineLink for separate validation
+        if (key === 'address' || key === 'onlineLink') {
+            continue;
+        }
+
+        // Check for null or empty values in other fields
+        if (value === null || value === "") {
+            setErrorMessage(`Field is missing: ${key}`);
+            return;
+        }
+    }
+
+    setInterviewMethod("");
+    setInterviewDetails("");
+    setLocationOrLink("");
+    setInterviewDateTime("");
+
+    try {
+        const response = await fetch(
+            `http://localhost:5000/api/interviewlists/fromselectedapplicants/${id}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            }
+        );
+
+        const responseData = await response.text(); // Read raw text
+        console.log('Raw response data:', responseData);
+
+        if (!response.ok) {
+            console.error("Error:", responseData);
+            setSuccessMessage("");
+            setErrorMessage("Error: " + responseData);
+        } else {
+            const jsonResponse = JSON.parse(responseData); // Parse JSON only if response is okay
+            setErrorMessage("");
+            setSuccessMessage("Interview created successfully.");
+            setTimeout(() => {
+                navigate("/company/dashboard");
+            }, 1000);
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        setErrorMessage("Fetch error: " + error.message);
+    }
+};
 
   return (
     <>
@@ -43,8 +167,13 @@ const CreateInterview = ({ userData }) => {
                 <div className="flex flex-col gap-5">
                   <div className="bg-white w-full rounded-xl flex justify-between p-8 items-center h-48 overflow-hidden">
                     <h1 className="text-3xl font-semibold">Create Interview</h1>
-                    <img className="h-[300px]" src={illustration} alt="missing banner" />
+                    <img
+                      className="h-[300px]"
+                      src={illustration}
+                      alt="missing banner"
+                    />
                   </div>
+
                   <form className="space-y-4 p-8 rounded-xl bg-white">
                     <label className="float-left" htmlFor="interviewMethod">
                       Interview Method
@@ -67,8 +196,8 @@ const CreateInterview = ({ userData }) => {
                         <input
                           type="text"
                           name="onlineLink"
-                          value={locationOrLink}
-                          onChange={handleLocationOrLinkChange}
+                          value={onlineLink}
+                          onChange={handleOnlineLinkChange}
                           className="w-full p-3 px-5 rounded"
                           placeholder="Enter the link to the online interview (e.g., Google Meet)"
                         />
@@ -81,8 +210,8 @@ const CreateInterview = ({ userData }) => {
                         <input
                           type="text"
                           name="address"
-                          value={locationOrLink}
-                          onChange={handleLocationOrLinkChange}
+                          value={address}
+                          onChange={handleAddressChange}
                           className="w-full p-3 px-5 rounded"
                           placeholder="Enter the address for the interview"
                         />
@@ -90,13 +219,24 @@ const CreateInterview = ({ userData }) => {
                     ) : null}
 
                     <label className="float-left" htmlFor="interviewDateTime">
-                      Schedule Interview
+                      Set Scheduled Date
                     </label>
                     <input
-                      type="datetime-local"
-                      name="interviewDateTime"
-                      value={interviewDateTime}
-                      onChange={handleInterviewDateTimeChange}
+                      type='date'
+                      name="interviewDate"
+                      value={interviewDate}
+                      onChange={handleDateChange}
+                      className="w-full p-3 px-5 rounded"
+                    />
+
+                    <label className="float-left" htmlFor="interviewDateTime">
+                      Set Scheduled Time
+                    </label>
+                    <input
+                      type='time'
+                      name="interviewTime"
+                      value={interviewTime}
+                      onChange={handleTimeChange}
                       className="w-full p-3 px-5 rounded"
                     />
 
@@ -124,7 +264,60 @@ const CreateInterview = ({ userData }) => {
                         ],
                       }}
                     />
+                    {successMessage ? (
+                      <section className="resetPassword__form-message-container resetPassword__form-success rounded-lg">
+                        <div className="resetPassword__form-message">
+                          <section>
+                            <span>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                              </svg>
+                            </span>
+                            <div>{successMessage}</div>
+                          </section>
+                        </div>
+                      </section>
+                    ) : (
+                      <></>
+                    )}
+                    {errorMessage ? (
+                      <section className="resetPassword__form-message-container resetPassword__form-error rounded-lg">
+                        <div className="resetPassword__form-message">
+                          <section>
+                            <span>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                              </svg>
+                            </span>
+                            <div>{errorMessage}</div>
+                          </section>
+                        </div>
+                      </section>
+                    ) : (
+                      <></>
+                    )}
                   </form>
+
                   <div className="flex justify-between pb-5">
                     <Link
                       to={`/company/applicantlist/${id}`}
@@ -146,6 +339,7 @@ const CreateInterview = ({ userData }) => {
                       Cancel
                     </Link>
                     <button
+                      onClick={handleFormSubmit}
                       type="button"
                       className="flex items-center gap-3 rounded-md bg-jobportal-pink px-5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-fuchsia-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">
                       Create Interview

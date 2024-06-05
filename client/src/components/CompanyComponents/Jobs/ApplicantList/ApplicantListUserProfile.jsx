@@ -39,7 +39,7 @@ const ApplicantListUserProfile = ({ id }) => {
 
     // Fetch user work experience
     axios
-      .get(`http://localhost:5000/api/workexperiences/user/${id}`)
+      .get(`http://localhost:5000/api/workexperience/user/${id}`)
       .then((response) => setUserWork(response.data))
       .catch((error) =>
         console.error("Error fetching user work experience:", error)
@@ -106,11 +106,12 @@ const ApplicantListUserProfile = ({ id }) => {
                       d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
                     />
                   </svg>
-                  <a
+                  {resume.s3Key?<a
                     className="ml-1"
                     href={`http://localhost:5000/resumes/${resume.s3Key}`}>
-                    View Resume
-                  </a>
+                    Download Full Resume
+                  </a>:<div>Resume Unavailable</div>}
+                  
                 </button>
               </Link>
               <button type="button" className="">
@@ -130,19 +131,15 @@ const ApplicantListUserProfile = ({ id }) => {
               </button>
             </div>
           </div>
-          <div className="education pt-2">
+          <div className="education pt-5 pb-5">
             <div className="text-left text-l font-bold rounded-tl-lg rounded-tr-lg  w-1/6 pt-2 pr-2 pl-2 border bg-white text-gray-600 border-gray-300">
               <p className="pl-2 pb-1 text-lg">Education </p>
             </div>
             <hr className="h-px bg-gray-300 border-0" />
             {userEducation.map((education) => (
-              <div className="flex flex-row gap-4 pt-1 w-full">
-                <EducationListItem
-                  className="w-full"
-                  key={education.id}
-                  {...education}
-                />
-              </div>
+                <div className="flex flex-row gap-4 pt-5 w-full" key={education.id}>
+                    <EducationListItem education={education} />
+                </div>
             ))}
           </div>
           <div className="workexperience pt-2">
@@ -151,13 +148,9 @@ const ApplicantListUserProfile = ({ id }) => {
             </div>
             <hr className="h-px my-0 bg-gray-300 border-0" />
             {userWork.map((work) => (
-              <div className="flex flex-row gap-4 pt-1 w-full">
-                <WorkExperienceListItem
-                  className="w-full"
-                  key={work.id}
-                  {...work}
-                />
-              </div>
+                <div className="flex flex-row gap-4 pt-5 w-full" key={work.id}>
+                    <WorkExperienceListItem work={work} />
+                </div>
             ))}
           </div>
         </div>

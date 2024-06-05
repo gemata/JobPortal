@@ -26,6 +26,14 @@ const InterviewList = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    interviewDetails: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    userNotes: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     stage: {
       type: DataTypes.INTEGER,
       defaultValue:1,

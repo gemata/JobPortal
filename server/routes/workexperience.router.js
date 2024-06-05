@@ -9,7 +9,7 @@ WorkExperienceRouter.get('/', WorkExperienceController.getWorkExperiences);
 
 WorkExperienceRouter.get('/:id', WorkExperienceController.getWorkExperienceById);
 
-WorkExperienceRouter.get('/user/:UserId', WorkExperienceController.getWorkExperiencesByUserId);
+WorkExperienceRouter.get('/user/:id', WorkExperienceController.getWorkExperiencesByUserId);
 
 WorkExperienceRouter.put('/:id', WorkExperienceController.updateWorkExperience);
 

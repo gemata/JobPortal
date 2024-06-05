@@ -506,14 +506,14 @@ export default function ApplicantListHeader({ applicantList, jobPostId, isActive
           <div className="flex flex-start">
             <ApplicantListUserProfile id={activeProfileId} />
           </div>
-          <hr className="h-px my-2 bg-gray-300 border-0" />
+          <hr className="h-px my-2 bg-gray-300 border-0 mt-5" />
 
           <div className="applicantButtons flex justify-items-end">
             <div className="prevApplicant">
               {activeProfile.previous == null ? (
                 <button
                   style={{ height: "2.5rem" }}
-                  disabled={true}
+                disabled={true}
                   className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}>
                   {
                     <div className="text flex flex-row items-center justify-between">

@@ -74,6 +74,11 @@ const JobPost = sequelize.define(
       defaultValue: 0,
       allowNull: true,
     },
+    interviewActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
   },
   {
     sequelize

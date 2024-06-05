@@ -39,10 +39,10 @@ const WorkExperienceController = {
 
   // Get all WorkExperiences by user ID
   async getWorkExperiencesByUserId(req, res) {
-    const { UserId } = req.params;
+    const { id } = req.params;
     try {
       const WorkExperiences = await WorkExperience.findAll({
-        where: { UserId },
+        where: { UserId: id },
       });
       if (!WorkExperiences.length) {
         return res
