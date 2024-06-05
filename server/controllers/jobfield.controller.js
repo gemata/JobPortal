@@ -31,6 +31,12 @@ const JobFieldController = {
             ],
           ],
         },
+        include: [
+          {
+            model: JobPosition,
+            as: "Job Positions",
+          },
+        ],
       });
       return res.status(200).json(JobFields);
     } catch (error) {
