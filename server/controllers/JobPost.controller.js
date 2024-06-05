@@ -202,19 +202,19 @@ const JobPostController = {
       return res.status(500).json({ error: error.message });
     }
   },
-    // Get a JobPost by CompanyID
-    async getJobPoststWithInterviews(req, res) {
-      const { CompanyID } = req.params;
-      try {
-        const JobPostRecords = await JobPost.findAll({ where: { CompanyID, is_Active: 0 } });
-        if (!JobPostRecords) {
-          return res.status(404).json({ message: "Job Post not found" });
-        }
-        return res.status(200).json(JobPostRecords);
-      } catch (error) {
-        return res.status(500).json({ error: error.message });
+  // Get a JobPost by CompanyID
+  async getJobPoststWithInterviews(req, res) {
+    const { CompanyID } = req.params;
+    try {
+      const JobPostRecords = await JobPost.findAll({ where: { CompanyID, is_Active: 0 } });
+      if (!JobPostRecords) {
+        return res.status(404).json({ message: "Job Post not found" });
       }
-    },
+      return res.status(200).json(JobPostRecords);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
 
   // Update a JobPost
   async updateJobPost(req, res) {
@@ -228,7 +228,7 @@ const JobPostController = {
       if (updatedRowsCount === 0) {
         return res.status(404).json({ message: "Job Post not found" });
       }
-      return res.status(200).json(updatedJobPost[0]);
+      return res.status(200).json(updatedJobPost);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
