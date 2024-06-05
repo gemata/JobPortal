@@ -5,7 +5,7 @@ import GraphData from "../models/graphData.entity.js";
 const dashboardHandler = async () => {
 
   const latestRecord = await GraphData.findOne({
-    order: [['createdAt', 'DESC']],
+    order: [['createdAt', 'ASC']],
   });
 
   return {
