@@ -11,7 +11,7 @@ const NavBarContainer = () => {
               to="/profile/dashboard"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >
@@ -32,7 +32,7 @@ const NavBarContainer = () => {
               to="/profile/detail"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >
@@ -57,7 +57,7 @@ const NavBarContainer = () => {
               to="/profile/job-tracker"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >
@@ -83,7 +83,7 @@ const NavBarContainer = () => {
               to="/profile/my-goals"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >
@@ -108,7 +108,7 @@ const NavBarContainer = () => {
               to="/profile/applied-jobs"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >
@@ -130,7 +130,7 @@ const NavBarContainer = () => {
               to="/profile/saved-jobs"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >
@@ -154,7 +154,7 @@ const NavBarContainer = () => {
               to="/profile/liked-jobs"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center border-b-4 border-purple-500"
+                  ? "flex items-center border-b-4 border-fuchsia-700"
                   : "flex items-center"
               }
             >

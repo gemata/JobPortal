@@ -50,7 +50,7 @@ const SavedJobController = {
     try {
       const SavedJobs = await SavedJob.findAll({ where: { UserId } });
       if (!SavedJobs.length) {
-        return res.status(404).json({ message: "No liked jobs found for this user" });
+        return res.status(404).json({ message: "No saved jobs found for this user" });
       }
       return res.status(200).json(SavedJobs);
     } catch (error) {
