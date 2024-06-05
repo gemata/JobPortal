@@ -167,6 +167,24 @@ const InterviewListController = {
     }
   },
 
+    // Update a InterviewList
+    async updateInterviewListUserNotes(req, res) {
+      const { id } = req.params;
+      const { body } = req;
+      try {
+        const [updatedRowsCount, updatedInterviewList] = await InterviewList.update(body, {
+          where: { UserId: id },
+          returning: true, // Return the updated InterviewList object
+        });
+        if (updatedRowsCount === 0) {
+          return res.status(404).json({ message: "Interview list not found" });
+        }
+        return res.status(200).json(updatedInterviewList[0]);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    },
+
   // Delete an InterviewList
   async deleteInterviewList(req, res) {
     const { id } = req.params;

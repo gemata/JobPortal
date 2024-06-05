@@ -17,6 +17,8 @@ InterviewListRouter.get('/jobs/:JobPostID', InterviewListController.getInterview
 
 InterviewListRouter.put('/:id', InterviewListController.updateInterviewList);
 
+InterviewListRouter.put('/user-notes/:id', InterviewListController.updateInterviewListUserNotes);
+
 InterviewListRouter.delete('/:id', InterviewListController.deleteInterviewList);
 
 export default InterviewListRouter;

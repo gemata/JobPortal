@@ -5,6 +5,7 @@ import DashboardNavSection from '../../components/CompanyComponents/DashboardNav
 import ApplicantListHeader from '../../components/CompanyComponents/Jobs/ApplicantList/ApplicantListHeader';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import DOMPurify from 'dompurify';
 import SignInPrompt from '../../components/SignInPrompt';
 import InterviewListHeader from '../../components/CompanyComponents/Jobs/InterviewList/InterviewListHeader';
 
@@ -23,6 +24,15 @@ const InterviewList = ({ userData }) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+
+        // Sanitize userNotes using DOMPurify
+        const sanitizedData = data.map(applicant => ({
+          ...applicant,
+          userNotes: DOMPurify.sanitize(applicant.userNotes)
+      }));
+
+      // Set the sanitized data in the state
+      setApplicants(sanitizedData);
         setApplicants(data);
       } catch (error) {
         console.error('Error fetching applicants:', error);

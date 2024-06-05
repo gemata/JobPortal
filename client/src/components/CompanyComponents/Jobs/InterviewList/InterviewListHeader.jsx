@@ -4,6 +4,8 @@ import axios from "axios";
 import ApplicantListUserProfile from "../ApplicantList/ApplicantListUserProfile.jsx";
 import ApplicantListItem from "../ApplicantList/ApplicantListItem.jsx";
 import InterviewListItem from "./InterviewListItem.jsx";
+import ReactQuill from 'react-quill';
+import DOMPurify from 'dompurify';
 
 export default function InterviewListHeader({
   applicantList,
@@ -21,6 +23,11 @@ export default function InterviewListHeader({
   const [jobPost, setJobPost] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [jobIsActive, setJobIsActive] = useState(isActive);
+  const [noteShow, setNoteShow] = useState(false);
+  const [noteUserId, setNoteUserId] = useState(false);
+  const [noteData, setNoteData] = useState(null);
+  const [noteUserName, setNoteUserName] = useState(null);
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Number of items per page
@@ -30,7 +37,9 @@ export default function InterviewListHeader({
   useEffect(() => {
     const fetchJobPost = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/jobposts/${jobPostId}`);
+        const response = await fetch(
+          `http://localhost:5000/api/jobposts/${jobPostId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch job post data");
         }
@@ -178,6 +187,68 @@ export default function InterviewListHeader({
     setCurrentPage(newPage);
   };
 
+  const handleNoteShowed = (noteUserId) => {
+
+    const foundApplicant = applicants.find(applicant => applicant.UserId === noteUserId);
+    if (foundApplicant) {
+        const userNote = foundApplicant.userNotes;
+        setNoteUserName(foundApplicant.User.firstName + ' ' + foundApplicant.User.lastName)
+        setNoteData(userNote);
+    } else {
+        // Handle case when applicant with the given noteUserId is not found
+       
+    }
+
+    
+    setNoteUserId(noteUserId);
+    setNoteShow(true);
+  };
+
+  const handleNoteClosed = () => {
+    setNoteUserId(null);
+    setNoteShow(false);
+  };
+
+  const handleNoteChange = (value) => {
+    setNoteData(value);
+  };
+
+  const handleNoteSave = () => {
+    if (noteUserId != null) {
+        const sanitizedNotes = DOMPurify.sanitize(noteData);
+        // Update the status field in the database
+        axios
+            .put(`http://localhost:5000/api/interviewlists/user-notes/${noteUserId}`, {
+                userNotes: sanitizedNotes,
+            })
+            .then((response) => {
+                console.log("status updated successfully:", response.data);
+
+                // Update userNotes locally in applicants array
+                const updatedApplicants = applicants.map(applicant => {
+                    if (applicant.UserId === noteUserId) {
+                        return {
+                            ...applicant,
+                            userNotes: sanitizedNotes
+                        };
+                    } else {
+                        return applicant;
+                    }
+                });
+                setApplicants(updatedApplicants);
+            })
+            .catch((error) => {
+                console.error("Error updating status:", error);
+            });
+
+        // Reset state variables
+        setNoteUserId(null);
+        setNoteData(null);
+        setNoteShow(false);
+    } else {
+        return;
+    }
+};
   return (
     <div>
       {showModal && (
@@ -256,243 +327,323 @@ export default function InterviewListHeader({
       )}
       {showProfile == false ? (
         <div>
-          <section className="">
-            <div className="flex container mx-auto pt-10  justify-between">
-              <div className="flex w-1/3">
-                <input
-                  type="text"
-                  className="focus:outline-none rounded-none rounded-l-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 border-r-0"
-                  placeholder="Search User"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-                <button
-                  type="button"
-                  className="inline-flex rounded-e-lg text-gray-900 items-center px-3 text-sm text-gray-900 bg-gray-200 border border-rounded border-gray-400 border-l hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex gap-5 w-1/2">
-                <div className="flex w-1/3">
-                  <span className="inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-400 border-e-0 rounded-s-md">
-                    Sort by:
-                  </span>
-                  <select
-                    className="focus:outline-none rounded-e-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 "
-                    onChange={handleSortCriteriaChange}>
-                    <option value="date">Date Applied</option>
-                    <option value="name">Name</option>
-                    <option value="email">Email</option>
-                    <option value="score">Resume Score</option>
-                  </select>
-                </div>
-                <div className="flex w-1/3">
-                  <span className="inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-400 border-e-0 rounded-s-md">
-                    Order by:
-                  </span>
-                  <select
-                    className="focus:outline-none rounded-e-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 "
-                    onChange={handleSortOrderChange}>
-                    <option value="desc">Descending</option>
-                    <option value="asc">Ascending</option>
-                  </select>
-                </div>
-                {!jobIsActive ? (
-                  <div className="flex w-1/3  justify-end">
-                    <button
-                      type="button"
-                      disabled={true}
-                      className="inline-flex focus:outline-none rounded-lg bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 px-5 py-2.5 ">
-                      <p className="text-gray-300 ">Interview Has Concluded</p>
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex w-1/3  justify-end">
-                    <button
-                      onClick={handleConcludeInterviewClick}
-                      type="button"
-                      className="inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border border-jobportal-darkpink text-base px-5 py-2.5 ">
-                      <p className="pl-2">Conclude Interview</p>
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </section>
-          <section className="Section">
-            <div className="container mx-auto ">
+          {noteShow && (
+           
               <div
-                className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
-                <div className="flex items-start gap-10 w-11/12 pl-5 pr-5">
-                  <p className="text-gray-600 font-bold w-1/24">Nr</p>
-                  <p className="text-gray-600 font-bold w-3/12"> Full Name</p>
-                  <p className="text-gray-600 w-2/12 font-bold">Email</p>
+                style={{ zIndex: 330 }}
 
-                  <p className="text-gray-600 w-3/12 font-bold">Applied At</p>
-                  <p className="text-gray-600 w-3/12 font-bold text-end">
-                    Actions
-                  </p>
-                </div>
-                <div className="emptyspace w-1/12">
-                  <p> </p>
+                className="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                <div className="bg-white rounded-lg shadow-lg w-auto">
+                  <div className="flex flex-row items-center text-lg  p-6 rounded-tl-lg text-white text-xl rounded-tr-lg border-l border-r border-t border-jobportal-darkpink bg-jobportal-pink font-bold ">
+                    {/* Warning SVG */}
+                    
+                    <p className="pl-2">Notes - {noteUserName}</p>
+                  </div>
+                  <ReactQuill
+                    value={noteData}
+                    onChange={handleNoteChange}
+                    className="w-full  rounded focus:outline-none pt-10 focus:ring-2 focus:ring-jobportal-pink"
+                    placeholder="Job Summary"
+                    modules={{
+                      toolbar: [
+                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ size: [] }],
+                        ["bold", "italic", "underline", "strike", "blockquote"],
+                        [{ list: "ordered" }, { list: "bullet" }],
+                        ["clean"],
+                      ],
+                    }}
+                  />
+                  <div className="flex justify-end p-4 rounded-bl-lg rounded-br-lg border-l border-r  border-b border-gray-400 bg-gray-200">
+                    <button
+                      onClick={handleNoteClosed}
+                      className={`gap-5 rounded-lg py-2 m-2 px-4 border bg-white text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}>
+                      <div className="text flex flex-row items-center justify-between">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6 pr-1">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18 18 6M6 6l12 12"
+                          />
+                        </svg>
+
+                        <p>Cancel</p>
+                      </div>
+                    </button>
+                    <button
+                      onClick={handleNoteSave}
+                      className={`gap-5 rounded-lg py-2 px-4 m-2 text-white border border-jobportal-darkpink bg-jobportal-pink hover:opacity-90 font-bold text-base`}>
+                      <div className="text flex flex-row items-center justify-between">
+                        <p>Save</p>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6 pl-1 ">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
-              
-        <div className="flex flex-col gap-4 pt-1">
-          {jobPost && paginatedApplicants.map((applicant) => (
-            <div className="flex flex-row gap-4 pt-1 w-full" key={applicant.id}>
-              <InterviewListItem
-               key={applicant.id}
-               applicant={applicant} 
-               jobPost={jobPost}
-               handleConcludeInterviewClick={handleConcludeInterviewClick}
-              />
-              <button
-                onClick={() => handleShowProfile(applicant.UserId)}
-                className={`gap-5 rounded-lg w-1/12 p-5 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
-              >
-                <div className="text flex flex-row items-center justify-between">
-                  <p>View Profile</p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-9 hover:rotate-45"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                    />
-                  </svg>
+  
+          )}
+          <div>
+            <section className="">
+              <div className="flex container mx-auto pt-10  justify-between">
+                <div className="flex w-1/3">
+                  <input
+                    type="text"
+                    className="focus:outline-none rounded-none rounded-l-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 border-r-0"
+                    placeholder="Search User"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                  <button
+                    type="button"
+                    className="inline-flex rounded-e-lg text-gray-900 items-center px-3 text-sm text-gray-900 bg-gray-200 border border-rounded border-gray-400 border-l hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                      />
+                    </svg>
+                  </button>
                 </div>
-              </button>
-            </div>
-          ))}
-        </div>
-
-             
-
-              <div className="flex justify-center mt-4">
-                {currentPage == 1 ? (
-                  <button
-                    style={{ width: "2.5rem", height: "2.5rem" }}
-                    disabled={true}
-                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}>
-                    {
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        strokeOpacity="0.2"
-                        className="size-6">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15.75 19.5 8.25 12l7.5-7.5"
-                        />
-                      </svg>
-                    }
-                  </button>
-                ) : (
-                  <button
-                    style={{ width: "2.5rem", height: "2.5rem" }}
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}>
-                    {
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="size-6">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15.75 19.5 8.25 12l7.5-7.5"
-                        />
-                      </svg>
-                    }
-                  </button>
-                )}
-
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={`px-3 py-1 mx-1 ${
-                      currentPage === index + 1
-                        ? "focus:outline-none rounded-md bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink"
-                        : "focus:outline-none rounded-md bg-gray-50 border text-gray-900 text-sm border-gray-400"
-                    }`}>
-                    {index + 1}
-                  </button>
-                ))}
-
-                {currentPage == totalPages ? (
-                  <button
-                    style={{ width: "2.5rem", height: "2.5rem" }}
-                    disabled={true}
-                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}>
-                    {
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        strokeOpacity="0.2"
-                        className="size-6">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                        />
-                      </svg>
-                    }
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    style={{ width: "2.5rem", height: "2.5rem" }}
-                    className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}>
-                    {
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="size-6">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                        />
-                      </svg>
-                    }
-                  </button>
-                )}
+                <div className="flex gap-5 w-1/2">
+                  <div className="flex w-1/3">
+                    <span className="inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-400 border-e-0 rounded-s-md">
+                      Sort by:
+                    </span>
+                    <select
+                      className="focus:outline-none rounded-e-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 "
+                      onChange={handleSortCriteriaChange}>
+                      <option value="date">Date Applied</option>
+                      <option value="name">Name</option>
+                      <option value="email">Email</option>
+                      <option value="score">Resume Score</option>
+                    </select>
+                  </div>
+                  <div className="flex w-1/3">
+                    <span className="inline-flex font-bold items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-400 border-e-0 rounded-s-md">
+                      Order by:
+                    </span>
+                    <select
+                      className="focus:outline-none rounded-e-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5 "
+                      onChange={handleSortOrderChange}>
+                      <option value="desc">Descending</option>
+                      <option value="asc">Ascending</option>
+                    </select>
+                  </div>
+                  {!jobIsActive ? (
+                    <div className="flex w-1/3  justify-end">
+                      <button
+                        type="button"
+                        disabled={true}
+                        className="inline-flex focus:outline-none rounded-lg bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 px-5 py-2.5 ">
+                        <p className="text-gray-300 ">
+                          Interview Has Concluded
+                        </p>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex w-1/3  justify-end">
+                      <button
+                        onClick={handleConcludeInterviewClick}
+                        type="button"
+                        className="inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border border-jobportal-darkpink text-base px-5 py-2.5 ">
+                        <p className="pl-2">Conclude Interview</p>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+            <section className="Section">
+              <div className="container mx-auto ">
+                <div
+                  className={`applicantListItem flex items-center justify-between gap-5 w-full p-0 mt-10`}>
+                  <div className="flex items-start gap-10 w-11/12 pl-5 pr-5">
+                    <p className="text-gray-600 font-bold w-1/24">Nr</p>
+                    <p className="text-gray-600 font-bold w-3/12"> Full Name</p>
+                    <p className="text-gray-600 w-2/12 font-bold">Email</p>
+
+                    <p className="text-gray-600 w-3/12 font-bold">Applied At</p>
+                    <p className="text-gray-600 w-4/12 font-bold text-end">
+                      Actions
+                    </p>
+                  </div>
+                  <div className="emptyspace w-1/12">
+                    <p> </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4 pt-1">
+                  {jobPost &&
+                    paginatedApplicants.map((applicant) => (
+                      <div
+                        className="flex flex-row gap-4 pt-1 w-full"
+                        key={applicant.id}>
+                        <InterviewListItem
+                          key={applicant.id}
+                          applicant={applicant}
+                          jobPost={jobPost}
+                          handleNoteShowed={handleNoteShowed}
+                          handleConcludeInterviewClick={
+                            handleConcludeInterviewClick
+                          }
+                        />
+                        <button
+                          onClick={() => handleShowProfile(applicant.UserId)}
+                          className={`gap-5 rounded-lg w-1/12 p-5 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}>
+                          <div className="text flex flex-row items-center justify-between">
+                            <p>View Profile</p>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              className="size-9 hover:rotate-45">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                              />
+                            </svg>
+                          </div>
+                        </button>
+                      </div>
+                    ))}
+                </div>
+
+                <div className="flex justify-center mt-4">
+                  {currentPage == 1 ? (
+                    <button
+                      style={{ width: "2.5rem", height: "2.5rem" }}
+                      disabled={true}
+                      className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}>
+                      {
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          strokeOpacity="0.2"
+                          className="size-6">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 19.5 8.25 12l7.5-7.5"
+                          />
+                        </svg>
+                      }
+                    </button>
+                  ) : (
+                    <button
+                      style={{ width: "2.5rem", height: "2.5rem" }}
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}>
+                      {
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 19.5 8.25 12l7.5-7.5"
+                          />
+                        </svg>
+                      }
+                    </button>
+                  )}
+
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`px-3 py-1 mx-1 ${
+                        currentPage === index + 1
+                          ? "focus:outline-none rounded-md bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink"
+                          : "focus:outline-none rounded-md bg-gray-50 border text-gray-900 text-sm border-gray-400"
+                      }`}>
+                      {index + 1}
+                    </button>
+                  ))}
+
+                  {currentPage == totalPages ? (
+                    <button
+                      style={{ width: "2.5rem", height: "2.5rem" }}
+                      disabled={true}
+                      className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}>
+                      {
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          strokeOpacity="0.2"
+                          className="size-6">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      }
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      style={{ width: "2.5rem", height: "2.5rem" }}
+                      className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-jobportal-pink hover:opacity-90 border text-white font-bold text-sm border-jobportal-pink `}>
+                      {
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      }
+                    </button>
+                  )}
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       ) : (
         <div>
