@@ -61,7 +61,9 @@ const Home = () => {
 
         const jobFieldsData = await responses[3].json();
         setJobFields(
-          jobFieldsData.rows.sort((a, b) => b.count - a.count).slice(0, 8)
+          jobFieldsData.rows
+            .sort((a, b) => b.jobPositionCount - a.jobPositionCount)
+            .slice(0, 8)
         ); // Assuming API returns count of open positions
       } catch (error) {
         console.error("Error fetching data:", error);
