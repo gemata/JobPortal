@@ -10,7 +10,7 @@ const AppliedJob = sequelize.define(
       primaryKey: true,
     },
     status: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     appliedAt: {

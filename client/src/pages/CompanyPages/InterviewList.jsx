@@ -47,11 +47,11 @@ const InterviewList = ({ userData }) => {
   }, [id]);
 
   useEffect(() => {
-    console.log('Updated applicants:', applicants);
+    //console.log('Updated applicants:', applicants);
   }, [applicants]);
 
   useEffect(() => {
-    console.log('Updated status:', isInterviewActive);
+    //console.log('Updated status:', isInterviewActive);
   }, [isInterviewActive]);
 
 

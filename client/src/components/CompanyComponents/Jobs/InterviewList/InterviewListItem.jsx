@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 // Utility function to format the date and time
 function formatDateTime(dateTime) {
@@ -18,36 +19,58 @@ function formatDateTime(dateTime) {
   return date.toLocaleString('en-US', options);
 }
 
-export default function InterviewListItem(req) {
-  const [applicantStatus, setApplicantStatus] = useState(req.is_Selected);
+export default function InterviewListItem({ applicant, jobPost }) {
+  const [applicantStatus, setApplicantStatus] = useState(applicant.is_Selected);
   const applicantData = {
-    id: req.id,
-    is_Selected: req.is_Selected,
-    resumeAIScore: req.resumeAIScore,
-    createdAt: req.createdAt,
-    updatedAt: req.updatedAt,
-    JobPostID: req.JobPostID,
-    UserId: req.UserId,
-    applicantNo: req.applicantNo,
+    id: applicant.id,
+    is_Selected: applicant.is_Selected,
+    createdAt: applicant.createdAt,
+    updatedAt: applicant.updatedAt,
+    JobPostID: applicant.JobPostID,
+    UserId: applicant.UserId,
+    applicantNo: applicant.applicantNo,
   };
   const applicantPersonalData = {
-    email: req.User.email,
-    firstName: req.User.firstName,
-    lastName: req.User.lastName,
+    email: applicant.User.email,
+    firstName: applicant.User.firstName,
+    lastName: applicant.User.lastName,
   };
 
+useEffect(() => {
+    setApplicantStatus(applicant.is_Selected);
+  }, [applicant]);
   const handleStatusChange = (event) => {
-    const newStatus = event.target.value === 'true'; // Parse the value as a boolean
+    const newStatus = parseInt(event.target.value);
+    let statusString;
 
+    // Set status based on newStatus
+    if (newStatus === 1) {
+        statusString = "Accepted";
+    } else if (newStatus === 0) {
+        statusString = "Rejected";
+    }
     // Update the database
     axios
       .put(`http://localhost:5000/api/interviewlists/${applicantData.id}`, { is_Selected: newStatus })
       .then((response) => {
+        console.log('Status updated successfully:', response.data);
         setApplicantStatus(newStatus);
       })
       .catch((error) => {
         console.error('Error updating status:', error);
       });
+
+       // Update the status field in the database
+    axios
+    .put(`http://localhost:5000/api/appliedjobs/user/${applicant.UserId}`, { status: statusString })
+    .then((response) => {
+      console.log('status updated successfully:', response.data);
+    })
+    .catch((error) => {
+      console.error('Error updating status:', error);
+    });
+
+
   };
 
   // Determine border color and background gradient based on applicantStatus
@@ -65,18 +88,17 @@ export default function InterviewListItem(req) {
         <p className=' text-gray-600 font-bold w-1/24'>{applicantData.applicantNo + 1}</p>
         <p className=' font-bold w-3/12'>{applicantPersonalData.firstName + ' ' + applicantPersonalData.lastName}</p>
         <p className='w-2/12'>{applicantPersonalData.email}</p>
-        <p className='w-1/12'>{applicantData.resumeAIScore === null ? <div>N/A</div> : <div>{applicantData.resumeAIScore} %</div>}</p>
+
         <p className=' text-sm w-3/12'>{formatDateTime(applicantData.createdAt)}</p>
       </div>
-      <div className='Actions flex items-center gap-3 w-2/12'>
+      {applicant? <div className='Actions flex items-center gap-3 w-3/12'>
         <select
           className='focus:outline-none rounded-md bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-400 p-2.5'
-          value={applicantData.is_Selected}
+          value={applicantStatus}
           onChange={handleStatusChange}
         >
-          <option>Pending</option>
-          <option value={true}>Accepted</option>
-          <option value={false}>Declined</option>
+           <option value={1}>Accepted</option>
+          <option value={0}>Rejected</option>
         </select>
         <button>
           <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
@@ -88,6 +110,10 @@ export default function InterviewListItem(req) {
           </svg>
         </button>
       </div>
+      :
+      <div>Loading</div>
+      }
+      
     </div>
   );
 }

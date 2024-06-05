@@ -82,6 +82,32 @@ const AppliedJobController = {
     }
   },
 
+// Update a AppliedJob
+async updateAppliedJobbyUserId(req, res) {
+  const { id } = req.params;
+  const { status } = req.body; // Extract the specific field you want to update
+
+  try {
+    // Update the AppliedJob where UserId matches the provided id
+    const [updatedRowsCount, updatedAppliedJobs] = await AppliedJob.update(
+      { status }, // Update only the status field
+      {
+        where: { UserId: id },
+        returning: true, // Return the updated AppliedJob objects
+      }
+    );
+
+    if (updatedRowsCount === 0) {
+      return res.status(404).json({ message: "AppliedJob not found" });
+    }
+
+    // Send back the first updated record
+    return res.status(200).json(updatedAppliedJobs[0]);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+},
+
   // Delete an AppliedJob
   async deleteAppliedJob(req, res) {
     const { id } = req.params;

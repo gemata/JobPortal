@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import ApplicantListUserProfile from "../ApplicantList/ApplicantListUserProfile.jsx";
+import ApplicantListItem from "../ApplicantList/ApplicantListItem.jsx";
+import InterviewListItem from "./InterviewListItem.jsx";
 
-import ApplicantListUserProfile from '../ApplicantList/ApplicantListUserProfile.jsx';
-import ApplicantListItem from '../ApplicantList/ApplicantListItem.jsx';
-import InterviewListItem from './InterviewListItem.jsx';
-
-export default function InterviewListHeader({ applicantList, jobPostId, isActive}) {
+export default function InterviewListHeader({
+  applicantList,
+  jobPostId,
+  isActive,
+}) {
   const [applicants, setApplicants] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState('date');
-  const [sortOrder, setSortOrder] = useState('desc');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [sortCriteria, setSortCriteria] = useState("date");
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeProfileId, setActiveProfileId] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [activeProfile, setActiveProfile] = useState(null);
   // Modal state
+  const [jobPost, setJobPost] = useState(null);
   const [showModal, setShowModal] = useState(false);
- const [jobIsActive, setJobIsActive] = useState(isActive)
+  const [jobIsActive, setJobIsActive] = useState(isActive);
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Number of items per page
@@ -23,17 +28,33 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
   const navigate = useNavigate();
 
   useEffect(() => {
-    const updatedApplicants = applicantList.map((applicantList, index) => {
-      return {
-        ...applicantList,
-        applicantNo: index,
-        next: index < applicantList.length - 1 ? applicantList[index + 1].id : null,
-        previous: index > 0 ? applicantList[index - 1].id : null,
-      };
-    });
-    
+    const fetchJobPost = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/jobposts/${jobPostId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch job post data");
+        }
+        const data = await response.json();
+        setJobPost(data);
+        setJobIsActive(data.interviewActive); // Update jobIsActive based on fetched data
+      } catch (error) {
+        console.error("Error fetching job post data:", error);
+      }
+    };
+
+    fetchJobPost();
+  }, [jobPostId]);
+
+  useEffect(() => {
+    const updatedApplicants = applicantList.map((applicant, index) => ({
+      ...applicant,
+      applicantNo: index,
+      next:
+        index < applicantList.length - 1 ? applicantList[index + 1].id : null,
+      previous: index > 0 ? applicantList[index - 1].id : null,
+    }));
     setApplicants(updatedApplicants);
-  }, []);
+  }, [applicantList]);
 
   const handleSortCriteriaChange = (event) => {
     setSortCriteria(event.target.value);
@@ -41,16 +62,24 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
   };
 
   const handleConcludeInterviewClick = async () => {
-        const hasUnreviewedApplicants = applicants.some((applicant) => applicant.isSelected === null);
-        if (hasUnreviewedApplicants && jobIsActive === true) {
-          setShowModal(true);
-        } else {
-          navigate(`/company/createinterview/${jobPostId}`);
-        }
+    const hasUnreviewedApplicants = applicants.some(
+      (applicant) => applicant.is_Selected === null
+    );
+    if (hasUnreviewedApplicants && jobIsActive === true) {
+      setShowModal(true);
+    } else {
+      navigate(`/company/createinterview/${jobPostId}`);
+    }
   };
 
   const handleModalProceed = () => {
-    setApplicants(applicants.map((applicant) => (applicant.isSelected === null ? { ...applicant, isSelected: 0 } : applicant)));
+    setApplicants(
+      applicants.map((applicant) =>
+        applicant.is_Selected === null
+          ? { ...applicant, isSelected: 0 }
+          : applicant
+      )
+    );
     setShowModal(false);
     // Proceed with the interview creation process
   };
@@ -61,7 +90,9 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
 
   const handleShowProfile = (UserId) => {
     // !!! REPLACE WITH AN API REQUEST !!!
-    const selectedApplicant = applicants.find((applicant) => applicant.UserId === UserId);
+    const selectedApplicant = applicants.find(
+      (applicant) => applicant.UserId === UserId
+    );
     if (selectedApplicant) {
       setActiveProfileId(UserId);
       setActiveProfile(selectedApplicant);
@@ -71,7 +102,9 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
 
   const handleNextApplicant = (nextApplicantId) => {
     // !!! REPLACE WITH AN API REQUEST !!!
-    const selectedApplicant = applicants.find((applicant) => applicant.id === nextApplicantId);
+    const selectedApplicant = applicants.find(
+      (applicant) => applicant.id === nextApplicantId
+    );
     if (selectedApplicant) {
       setActiveProfileId(nextApplicantId);
       setActiveProfile(selectedApplicant);
@@ -81,7 +114,9 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
 
   const handlePreviousApplicant = (prevApplicantId) => {
     // !!! REPLACE WITH AN API REQUEST !!!
-    const selectedApplicant = applicants.find((applicant) => applicant.id === prevApplicantId);
+    const selectedApplicant = applicants.find(
+      (applicant) => applicant.id === prevApplicantId
+    );
     if (selectedApplicant) {
       setActiveProfileId(prevApplicantId);
       setActiveProfile(selectedApplicant);
@@ -103,16 +138,18 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
   const sortApplicants = (criteria, order) => {
     const sortedApplicants = [...applicants].sort((a, b) => {
       let comparison = 0;
-      if (criteria === 'date') {
+      if (criteria === "date") {
         comparison = Date.parse(a.createdAt) - Date.parse(b.createdAt);
-      } else if (criteria === 'name') {
+      } else if (criteria === "name") {
         comparison = a.User.firstName.localeCompare(b.User.firstName);
-      } else if (criteria === 'email') {
-        comparison = a.User.UserProfile.email.localeCompare(b.User.UserProfile.email);
-      } else if (criteria === 'score') {
+      } else if (criteria === "email") {
+        comparison = a.User.UserProfile.email.localeCompare(
+          b.User.UserProfile.email
+        );
+      } else if (criteria === "score") {
         comparison = a.resumeAIScore - b.resumeAIScore;
       }
-      return order === 'asc' ? comparison : -comparison;
+      return order === "asc" ? comparison : -comparison;
     });
     setApplicants(sortedApplicants);
   };
@@ -124,11 +161,18 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
 
   // Filtered and paginated applicants
   const filteredApplicants = applicants.filter(
-    (applicant) => applicant.User.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || applicant.User.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+    (applicant) =>
+      applicant.User.firstName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      applicant.User.lastName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredApplicants.length / itemsPerPage);
-  const paginatedApplicants = filteredApplicants.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedApplicants = filteredApplicants.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -159,7 +203,7 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
               <p className="pl-2">Warning</p>
             </div>
             <p className="p-6 border-l border-r border-gray-400">
-              There are applicants with a pending status.
+              There are candidates with a pending status.
               <br /> Proceeding will mark them as not selected. <br />
               <br />
               Do you want to continue?
@@ -265,14 +309,13 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
                     <option value="asc">Ascending</option>
                   </select>
                 </div>
-                {jobIsActive ? (
+                {!jobIsActive ? (
                   <div className="flex w-1/3  justify-end">
                     <button
                       type="button"
                       disabled={true}
                       className="inline-flex focus:outline-none rounded-lg bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 px-5 py-2.5 ">
-                      
-                      <p className='text-gray-300 '>Interview Ongoing...</p>
+                      <p className="text-gray-300 ">Interview Has Concluded</p>
                     </button>
                   </div>
                 ) : (
@@ -281,8 +324,7 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
                       onClick={handleConcludeInterviewClick}
                       type="button"
                       className="inline-flex text-white bg-jobportal-pink hover:opacity-90 font-bold rounded-lg border border-jobportal-darkpink text-base px-5 py-2.5 ">
-                     
-                      <p className='pl-2'>Conclude Interview</p>
+                      <p className="pl-2">Conclude Interview</p>
                     </button>
                   </div>
                 )}
@@ -297,7 +339,7 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
                   <p className="text-gray-600 font-bold w-1/24">Nr</p>
                   <p className="text-gray-600 font-bold w-3/12"> Full Name</p>
                   <p className="text-gray-600 w-2/12 font-bold">Email</p>
-                  <p className="text-gray-600 w-1/12 font-bold">AI Score</p>
+
                   <p className="text-gray-600 w-3/12 font-bold">Applied At</p>
                   <p className="text-gray-600 w-3/12 font-bold text-end">
                     Actions
@@ -307,38 +349,43 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
                   <p> </p>
                 </div>
               </div>
-
-              <div className="flex flex-col gap-4 pt-1">
-                {paginatedApplicants.map((applicant) => (
-                  <div className="flex flex-row gap-4 pt-1 w-full">
-                    <InterviewListItem
-                      className="w-11/12"
-                      key={applicant.id}
-                      {...applicant}
+              
+        <div className="flex flex-col gap-4 pt-1">
+          {jobPost && paginatedApplicants.map((applicant) => (
+            <div className="flex flex-row gap-4 pt-1 w-full" key={applicant.id}>
+              <InterviewListItem
+               key={applicant.id}
+               applicant={applicant} 
+               jobPost={jobPost}
+               handleConcludeInterviewClick={handleConcludeInterviewClick}
+              />
+              <button
+                onClick={() => handleShowProfile(applicant.UserId)}
+                className={`gap-5 rounded-lg w-1/12 p-5 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}
+              >
+                <div className="text flex flex-row items-center justify-between">
+                  <p>View Profile</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-9 hover:rotate-45"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
                     />
-                    <button
-                      onClick={() => handleShowProfile(applicant.UserId)}
-                      className={`gap-5 rounded-lg w-1/12 p-5 border bg-gray-200 text-gray-800 border-gray-400 hover:bg-jobportal-pink hover:border-jobportal-darkpink hover:text-white`}>
-                      <div className="text flex flex-row items-center justify-between">
-                        <p>View Profile</p>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-9 hover:rotate-45">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
-                ))}
-              </div>
+                  </svg>
+                </div>
+              </button>
+            </div>
+          ))}
+        </div>
+
+             
 
               <div className="flex justify-center mt-4">
                 {currentPage == 1 ? (
@@ -503,7 +550,7 @@ export default function InterviewListHeader({ applicantList, jobPostId, isActive
               {activeProfile.previous == null ? (
                 <button
                   style={{ height: "2.5rem" }}
-                disabled={true}
+                  disabled={true}
                   className={`px-1.5 py-1 mx-1 focus:outline-none rounded-full bg-grey-100 border text-grey-200 font-bold text-sm border-grey-200 `}>
                   {
                     <div className="text flex flex-row items-center justify-between">
