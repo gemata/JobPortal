@@ -19,17 +19,16 @@ const InterviewListController = {
     const { id } = req.params;
     const { interviewMethod, address, onlineLink, time, interviewDetails } = req.body;
 
-
     try {
       // Get selected applicants for the job post
       const selectedApplicants = await ApplicantList.findAll({
-        where: { JobPostID: id, isSelected: 1},
+        where: { JobPostID: id, isSelected: 1 },
       });
-  
+
       if (!selectedApplicants.length) {
         return res.status(404).json({ message: "No selected applicants found for this job post" });
       }
-  
+
       // Create interview records for each selected applicant
       const interviewPromises = selectedApplicants.map((applicant) =>
         InterviewList.create({
@@ -44,9 +43,9 @@ const InterviewListController = {
           onlineLink: interviewMethod === 'Online' ? onlineLink : null,  // Save online link if interview method is Online
         })
       );
-  
+
       const newInterviews = await Promise.all(interviewPromises);
-  
+
       return res.status(201).json(newInterviews);
     } catch (error) {
       return res.status(500).json({ error: error.message });

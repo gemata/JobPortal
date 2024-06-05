@@ -5,7 +5,7 @@ import CompanyRouter from "../routes/company.router.js";
 import CompanyLogoRouter from "../routes/companylogo.router.js";
 import CompanyProfileRouter from "../routes/companyprofile.router.js";
 import EducationRouter from "../routes/education.router.js";
-import InterviewListRouter from "../routes/education.router.js";
+import InterviewListRouter from "../routes/interviewlist.router.js";
 import InvoiceRouter from "../routes/invoice.router.js";
 import InvoiceMRouter from "../routes/invoiceM.router.js";
 import JobFieldRouter from "../routes/jobfield.router.js";
