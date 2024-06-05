@@ -1,7 +1,15 @@
 import sequelize from "./sequelize.mjs";
 import mongooseConnection from "./mongoose.js";
+import User from '../models/user.entity.js';
+import Company from '../models/Company.entity.js';
+import PendingAccount from "../models/pendingAccount.js";
 
 const dashboardHandler = async () => {
+
+  const usersCount = await User.count();
+  const companiesCount = await Company.count();
+  const pendingAccountsCount = await PendingAccount.countDocuments();
+
   return {
     message: "Data from handler",
     accountTypesData: {
@@ -9,7 +17,7 @@ const dashboardHandler = async () => {
       datasets: [
         {
           label: 'Account Types',
-          data: [300, 50, 45],
+          data: [usersCount, companiesCount, pendingAccountsCount],
           backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 205, 86, 0.5)'],
           borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
           hoverOffset: 3,

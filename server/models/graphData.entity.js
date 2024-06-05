@@ -1,23 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/sequelize.mjs";
-//import JobPosition from "./JobPosition";   //REMOVE COMMENTS AFTER THE MODEL HAS BEEN CREATED !!!
 
-const JobPost = sequelize.define(
-  "JobPost",
+const GraphData = sequelize.define(
+  "GraphData",
   {
-    ID: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    jobSummary: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    // experience_min: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    // },
     is_Active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
@@ -81,14 +72,17 @@ const JobPost = sequelize.define(
     },
     interviewStart: {
       type: DataTypes.DATE,
+      defaultValue: false,
       allowNull: false,
     },
     interviewAddress: {
       type: DataTypes.STRING(255),
+      defaultValue: false,
       allowNull: true,
     },
     interviewLink: {
       type: DataTypes.STRING(255),
+      defaultValue: false,
       allowNull: true,
     },
     interviewNrCandidates: {
@@ -103,8 +97,8 @@ const JobPost = sequelize.define(
 );
 
 console.log(
-  "JobPost model created successfully:",
-  JobPost === sequelize.models.JobPost
+  "GraphData model created successfully:",
+  GraphData === sequelize.models.GraphData
 );
 
-export default JobPost;
+export default GraphData;
