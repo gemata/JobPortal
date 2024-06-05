@@ -117,7 +117,7 @@
   text-align: start;
 }
 
-.resetPassword__decorative>* {
+.resetPassword__decorative > * {
   z-index: 1;
   position: relative;
 }
@@ -488,19 +488,23 @@ html {
 }
 
 .bg-ripple-gray {
-  background: repeating-linear-gradient(135deg,
-      rgb(209, 213, 219),
-      rgb(209, 213, 219) 3px,
-      rgb(189, 193, 199) 3px,
-      rgb(189, 193, 199) 6px);
+  background: repeating-linear-gradient(
+    135deg,
+    rgb(209, 213, 219),
+    rgb(209, 213, 219) 3px,
+    rgb(189, 193, 199) 3px,
+    rgb(189, 193, 199) 6px
+  );
 }
 
 .bg-ripple-pink {
-  background: repeating-linear-gradient(135deg,
-      #b051aa,
-      #b051aa 3px,
-      #c762bb 3px,
-      #c762bb 6px);
+  background: repeating-linear-gradient(
+    135deg,
+    #b051aa,
+    #b051aa 3px,
+    #c762bb 3px,
+    #c762bb 6px
+  );
 }
 
 .confirmAccount__step {
@@ -535,7 +539,7 @@ html {
   right: -35%;
   opacity: 0.9;
   transform: scaleX(1.25);
-  z-index: 99;
+  z-index: 50;
 }
 
 .up-arrow::before {
@@ -559,7 +563,6 @@ html {
 }
 
 @media (max-width: 765px) {
-
   .up-arrow::before,
   .down-arrow::before {
     transform: scaleX(1) scaleY(1.25) rotate(90deg);

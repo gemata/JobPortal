@@ -11,7 +11,7 @@ export default function NationalitySelect({ nationality, setNationality }) {
         name='nationality'
         value={nationality}
         onChange={handleNationalityChange}
-        className='flex-shrink-0 z-10 inline-flex max-w-[175px] items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-jobportal-pink focus:border-jobportal-pink focus:outline-none'
+        className='flex-shrink-0 z-10 mr-3 inline-flex max-w-[175px] items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-jobportal-pink focus:border-jobportal-pink focus:outline-none'
       >
         <option value=''>Select Nationality</option>
         <option value='Afghanistan'>Afghanistan</option>

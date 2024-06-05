@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebookF, FaYoutube, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebookF, FaYoutube, FaInstagram} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import logo from '../../img/mainLogo.png';
 
@@ -27,27 +27,22 @@ const Footer = () => {
             <address className='not-italic'>Dukagjini Residence - 1 Prishtina, Republic of Kosova</address>
           </div>
           <div>
-            <h3 className='text-white font-semibold mb-4'>Quick Link</h3>
+            <h3 className='text-white font-semibold mb-4'>Other Links</h3>
             <ul>
               <li>
-                <Link to='/about' className='hover:text-white'>
-                  About
+                <Link to='/salary-tools' className='hover:text-white'>
+                Salary Tools
                 </Link>
               </li>
               <li>
-                <Link to='/contact' className='hover:text-white'>
-                  Contact
+                <Link to='/resume-help' className='hover:text-white'>
+                Resume Help
                 </Link>
               </li>
               <li>
-                <Link to='/pricing' className='hover:text-white'>
-                  Pricing
+                <Link to='/career-advice' className='hover:text-white'>
+                Career Advice
                 </Link>
-              </li>
-              <li>
-                <a href='#' className='hover:text-white'>
-                  Blog
-                </a>
               </li>
             </ul>
           </div>
@@ -55,24 +50,24 @@ const Footer = () => {
             <h3 className='text-white font-semibold mb-4'>Candidate</h3>
             <ul>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Browse Jobs
-                </a>
+                <Link to='/find-jobs' className='hover:text-white'>
+                Browse Jobs
+                </Link>
               </li>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Browse Employers
-                </a>
+                <Link to='/#' className='hover:text-white'>
+                Browse Employers
+                </Link>
               </li>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Candidate Dashboard
-                </a>
+                <Link to='/profile/detail' className='hover:text-white'>
+                Candidate Dashboard
+                </Link>
               </li>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Saved Jobs
-                </a>
+                <Link to='/profile/listed-jobs' className='hover:text-white'>
+                Applications
+                </Link>
               </li>
             </ul>
           </div>
@@ -80,24 +75,24 @@ const Footer = () => {
             <h3 className='text-white font-semibold mb-4'>Employers</h3>
             <ul>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Post a Job
-                </a>
+                <Link to='/company/dashboard' className='hover:text-white'>
+                Employer Dashboard
+                </Link>
               </li>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Browse Candidates
-                </a>
+                <Link to='/company/profile' className='hover:text-white'>
+                Employer Profile
+                </Link>
               </li>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Employers Dashboard
-                </a>
+                <Link to='/company/profile' className='hover:text-white'>
+                Interviews
+                </Link>
               </li>
               <li>
-                <a href='#' className='hover:text-white'>
-                  Applications
-                </a>
+                <Link to='/pricing' className='hover:text-white'>
+                Pricing
+                </Link>
               </li>
             </ul>
           </div>
@@ -133,9 +128,6 @@ const Footer = () => {
             </a>
             <a href='#' className='hover:text-white'>
               <FaInstagram />
-            </a>
-            <a href='#' className='hover:text-white'>
-              <FaTwitter />
             </a>
           </div>
         </div>

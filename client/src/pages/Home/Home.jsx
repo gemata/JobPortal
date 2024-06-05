@@ -166,7 +166,7 @@ const Home = () => {
           <div className="rounded-xl down-arrow bg-white flex flex-col items-center py-6">
             <div
               className="p-5 bg-jobportal-pink aspect-square w-20  rounded-full"
-              style={{ zIndex: 100 }}
+              style={{ zIndex: 50 }}
             >
               <img src={cloudSVG} />
             </div>

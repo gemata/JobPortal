@@ -32,8 +32,10 @@ import ResumeExample from "./pages/ResumeHelp/ResumeExample";
 import Salary from "./pages/Salary/Salary";
 import FindJobs from "./pages/FindJobs/FindJobs";
 import CreateInterview from "./components/CompanyComponents/Jobs/InterviewList/CreateInterview";
+import useScrollToTop from "./components/useScrollToTop";
 
 function App() {
+  useScrollToTop();
   const [userData, setUserData] = useState([]);
   const [isLoggedOut, setIsLoggedOut] = useState(true);
   const location = useLocation(); // Add this line to use the location hook
@@ -71,6 +73,8 @@ function App() {
             setIsLoggedOut={setIsLoggedOut}
           />
         )}
+    <useScrollToTop/>
+        
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
