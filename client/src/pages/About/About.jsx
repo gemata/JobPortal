@@ -91,7 +91,7 @@ const About = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-2xl font-bold">{jobPostCount}</p>
-                  <p className="text-gray-500">Live Job</p>
+                  <p className="text-gray-500">Live Jobs</p>
                 </div>
               </div>
               <div className="flex items-center mb-4">

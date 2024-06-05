@@ -57,7 +57,7 @@ const Home = () => {
         );
 
         const jobPositionsData = await responses[2].json();
-        setMostLikedJobs(jobPositionsData);
+        setMostLikedJobs(Array.isArray(jobPositionsData) ? jobPositionsData : []);
 
         const jobFieldsData = await responses[3].json();
         setJobFields(
@@ -86,10 +86,10 @@ const Home = () => {
                 </span>
               </h1>
               <span className="text-base text-[#5e6670]">
-                We Aim to Provide a Platform where Individuals can{" "}
+                We aim to provide a platform where individuals can{" "}
                 <span className="block leading-[0.8] text-base m-0 p-0">
-                  Explore Opportunities Tailored to Their Strengths and
-                  Passions.
+                  explore opportunities tailored to their strengths and
+                  passions.
                 </span>
               </span>
 
@@ -147,7 +147,7 @@ const Home = () => {
       </div>
       <div className="bg-[#f1f2f4] mt-[100px]">
         <div className="font-medium text-[42px] text-center mb-[100px] pt-[100px]">
-          How does Job horizon Work ?
+          How does Job Horizon Work ?
         </div>
         <div className="px-6 md:px-0 pb-[100px] flex flex-col md:flex-row justify-center gap-5">
           <div className="rounded-xl up-arrow flex flex-col items-center py-6">

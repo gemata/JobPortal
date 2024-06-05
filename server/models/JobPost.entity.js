@@ -81,7 +81,7 @@ const JobPost = sequelize.define(
     },
     interviewStart: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     interviewAddress: {
       type: DataTypes.STRING(255),
@@ -98,7 +98,7 @@ const JobPost = sequelize.define(
     },
   },
   {
-    sequelize
+    sequelize,
   }
 );
 
