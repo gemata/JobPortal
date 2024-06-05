@@ -22,7 +22,11 @@ export default function PreviewResume({ resume }) {
               <button onClick={handleOpenPreview} className='py-2 mt-2 text-white bg-purple-600 rounded hover:bg-purple-700'>
                 Preview Resume
               </button>
-              <div onClick={handleClosePreview} className={`${isPreviewOpen ? 'fixed' : 'hidden'} inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50`}>
+              <div
+                onClick={handleClosePreview}
+                className={`${isPreviewOpen ? 'fixed' : 'hidden'} inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50`}
+                style={{ zIndex: 301 }}
+              >
                 <div
                   className='bg-white p-2 pt-8 rounded shadow-lg w-full max-w-[875px] overflow-y-auto absolute top-10 bottom-10'
                   style={{

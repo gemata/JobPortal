@@ -1,41 +1,37 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
 const Modal = ({ isOpen, onClose, children }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target) &&
-        !event.target.closest('input, textarea, select, button')
-      ) {
+      if (modalRef.current && !modalRef.current.contains(event.target) && !event.target.closest('input, textarea, select, button')) {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50' style={{ zIndex: 301 }}>
       <div
         ref={modalRef}
-        className="bg-white p-6 rounded-xl shadow-lg w-full max-w-lg overflow-y-auto absolute top-10 bottom-10"
+        className='bg-white p-6 rounded-xl shadow-lg w-full max-w-lg overflow-y-auto absolute top-10 bottom-10'
         style={{
-          maxHeight: "80vh",
-          scrollbarColor: "purple",
-          scrollbarWidth: "thin",
+          maxHeight: '80vh',
+          scrollbarColor: 'purple',
+          scrollbarWidth: 'thin',
         }}
       >
         <style>
@@ -56,10 +52,7 @@ const Modal = ({ isOpen, onClose, children }) => {
             }
           `}
         </style>
-        <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
+        <button className='absolute top-2 right-2 text-gray-500 hover:text-gray-700' onClick={onClose}>
           &times;
         </button>
         {children}
