@@ -80,16 +80,16 @@ const Home = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-section">
               <h1 className="font-semibold text-[50px] leading-[1.2]">
-                Find a job that matches{" "}
+                Find a Job that Matches{" "}
                 <span className="block mb-7 p-0">
-                  your interests and skills.
+                  Your Interests and Skills.
                 </span>
               </h1>
               <span className="text-base text-[#5e6670]">
-                We aim to provide a platform where individuals can{" "}
+                We Aim to Provide a Platform where Individuals can{" "}
                 <span className="block leading-[0.8] text-base m-0 p-0">
-                  explore opportunities tailored to their strengths and
-                  passions.
+                  Explore Opportunities Tailored to Their Strengths and
+                  Passions.
                 </span>
               </span>
 
@@ -138,7 +138,7 @@ const Home = () => {
               >
                 <div className="font-semibold text-lg">{job.position}</div>
                 <div className="text-sm text-gray-500">
-                  {job.totalLikes} Users Liked The Jobs In This Position
+                  {job.totalLikes} Users Liked the Jobs in this Position
                 </div>
               </div>
             ))}
@@ -147,7 +147,7 @@ const Home = () => {
       </div>
       <div className="bg-[#f1f2f4] mt-[100px]">
         <div className="font-medium text-[42px] text-center mb-[100px] pt-[100px]">
-          How does job-horizon work ?
+          How does Job horizon Work ?
         </div>
         <div className="px-6 md:px-0 pb-[100px] flex flex-col md:flex-row justify-center gap-5">
           <div className="rounded-xl up-arrow flex flex-col items-center py-6">
@@ -157,9 +157,9 @@ const Home = () => {
             >
               <img src={userSVG} />
             </div>
-            <h3 className="text-lg font-semibold mt-5">Create account</h3>
+            <h3 className="text-lg font-semibold mt-5">Create Account</h3>
             <p className="w-10/12 leading-5 text-center mt-3 text-gray-500">
-              Sign up and unlock countless job opportunities!
+              Sign Up and Unlock Countless Job Opportunities!
             </p>
           </div>
 
@@ -172,7 +172,7 @@ const Home = () => {
             </div>
             <h3 className="text-lg font-semibold mt-5">Upload CV/Resume</h3>
             <p className="w-10/12 leading-5 text-center mt-3 text-gray-500">
-              Share your resume and let employers find you.
+              Share Your Resume and Let Employers Find You.
             </p>
           </div>
           <div className="rounded-xl up-arrow flex flex-col items-center py-6">
@@ -182,9 +182,9 @@ const Home = () => {
             >
               <img src={searchSVG} />
             </div>
-            <h3 className="text-lg font-semibold mt-5">Find suitable job</h3>
+            <h3 className="text-lg font-semibold mt-5">Find Suitable Job</h3>
             <p className="w-10/12 leading-5 text-center mt-3 text-gray-500">
-              Browse and discover your ideal job in minutes.
+              Browse and Discover Your Ideal Job in Minutes.
             </p>
           </div>
           <div className="rounded-xl flex flex-col items-center py-6">
@@ -194,9 +194,9 @@ const Home = () => {
             >
               <img src={checkBadgeSVG} />
             </div>
-            <h3 className="text-lg font-semibold mt-5">Apply to job</h3>
+            <h3 className="text-lg font-semibold mt-5">Apply to Job</h3>
             <p className="w-10/12 leading-5 text-center mt-3 text-gray-500">
-              Apply with a click and take the next career step.
+              Apply with a Click and Take the Next Career Step.
             </p>
           </div>
         </div>
@@ -222,7 +222,7 @@ const Home = () => {
                 <div className="ml-4">
                   <div className="text-lg font-semibold">{field.field}</div>
                   <div className="text-sm text-gray-600">
-                    {field.jobPositionCount} Open position
+                    {field.jobPositionCount} Open Position
                     {field.jobPositionCount > 1 ? "s" : ""}
                   </div>
                 </div>
@@ -234,7 +234,7 @@ const Home = () => {
 
       <div className="max-w-[1200px] mx-auto my-0 px-[15px] py-0">
         <div className="font-medium text-[42px] mb-[40px] mt-[100px]">
-          <h2>Top companies</h2>
+          <h2>Top Companies</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {companies.map((company, index) => (
