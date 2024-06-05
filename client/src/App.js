@@ -9,6 +9,7 @@ import CompanyDashboard from "./pages/CompanyPages/Dashboard";
 import CompanyProfile from "./pages/CompanyPages/Profile";
 import CompanyAnalyticsOverview from "./pages/CompanyPages/Analytics/Overview";
 import JobsShow from "./pages/CompanyPages/Jobs/Show";
+import CompanyShow from "./pages/CompanyPages/CompanyShow";
 import CompanyJobsCreate from "./pages/CompanyPages/Jobs/Create";
 import Dashboard from "./pages/UserPages/Dashboard";
 import MyProfile from "./pages/UserPages/MyProfile";
@@ -124,6 +125,11 @@ function App() {
         <Route
           path="/jobs/show/:id"
           element={<JobsShow userData={userData} />}
+        />
+
+        <Route
+          path="/company/show/:id"
+          element={<CompanyShow userData={userData} />}
         />
       </Routes>
       <Footer />
