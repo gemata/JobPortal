@@ -13,7 +13,7 @@ InterviewListRouter.get('/:id', InterviewListController.getInterviewListById);
 
 InterviewListRouter.get('/user/:UserId', InterviewListController.getInterviewListsByUserId);
 
-InterviewListRouter.get('/jobs/:JobPostID', InterviewListController.getInterviewListsByJobPostID);
+InterviewListRouter.get('/jobs/:JobPostID', InterviewListController.getInterviewListByJobPostID);
 
 InterviewListRouter.put('/:id', InterviewListController.updateInterviewList);
 

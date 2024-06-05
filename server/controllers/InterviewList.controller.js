@@ -1,6 +1,9 @@
 // Import the InterviewList model and Sequelize
 import InterviewList from "../models/InterviewList.entity.js";
 import ApplicantList from "../models/applicantlist.entity.js";
+import JobPost from "../models/JobPost.entity.js";
+import User from "../models/user.entity.js";
+import UserProfile from "../models/userProfile.entity.js";
 
 // Controller functions
 const InterviewListController = {
@@ -29,8 +32,10 @@ const InterviewListController = {
         return res.status(404).json({ message: "No selected applicants found for this job post" });
       }
 
+      let newCandidatesNr = selectedApplicants.length;
       // Create interview records for each selected applicant
       const interviewPromises = selectedApplicants.map((applicant) =>
+        
         InterviewList.create({
           JobPostID: applicant.JobPostID,
           UserId: applicant.UserId,
@@ -45,6 +50,27 @@ const InterviewListController = {
       );
 
       const newInterviews = await Promise.all(interviewPromises);
+
+
+      try {
+        const activeJob = await JobPost.findByPk(id);
+    
+        if (activeJob) {
+            activeJob.interviewActive = 1;
+            activeJob.interviewStart = time;
+            activeJob.interviewNrCandidates = newCandidatesNr;
+            activeJob.interviewAddress =  interviewMethod === 'In Person' ? address : null;  // Save address if interview method is In Person
+            activeJob.interviewLink= interviewMethod === 'Online' ? onlineLink : null;
+            await activeJob.save();  // Await the save operation to ensure it completes successfully
+            console.log('Job updated successfully');
+        } else {
+            console.log('Job not found');
+        }
+    } catch (error) {
+        console.error('Error updating job:', error);
+    }
+    
+
 
       return res.status(201).json(newInterviews);
     } catch (error) {
@@ -91,15 +117,31 @@ const InterviewListController = {
   },
 
 
-  // Get all InterviewLists by Job Post ID
-  async getInterviewListsByJobPostID(req, res) {
+
+
+  // Get a ApplicantList by JobPostID
+  async getInterviewListByJobPostID(req, res) {
     const { JobPostID } = req.params;
     try {
-      const InterviewLists = await InterviewList.findAll({ where: { JobPostID } });
-      if (!InterviewLists.length) {
-        return res.status(404).json({ message: "No interviews found for job post" });
+      const InterviewListRecord = await InterviewList.findAll({
+        where: { JobPostID },
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [
+              {
+                model: UserProfile,
+                attributes: ['phoneNumber', 'dateOfBirth']
+              }
+            ]
+          }
+        ]
+      });
+      if (InterviewListRecord.length === 0) {
+        return res.status(404).json({ message: "Interview list empty or not found" });
       }
-      return res.status(200).json(InterviewLists);
+      return res.status(200).json(InterviewListRecord);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

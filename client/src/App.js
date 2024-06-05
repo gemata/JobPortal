@@ -34,6 +34,7 @@ import Salary from "./pages/Salary/Salary";
 import FindJobs from "./pages/FindJobs/FindJobs";
 import CreateInterview from "./components/CompanyComponents/Jobs/InterviewList/CreateInterview";
 import useScrollToTop from "./components/useScrollToTop";
+import InterviewList from "./pages/CompanyPages/InterviewList";
 
 function App() {
   useScrollToTop();
@@ -110,7 +111,7 @@ function App() {
         <Route path="/company/jobs" element={<CompanyJobs userData={userData} />} />
         <Route path="/company/interviews" element={<CompanyInterviews userData={userData} />} />
         <Route path="/company/createinterview/:id" element={<CreateInterview userData={userData} />} />
-
+        <Route path="/company/interviewlist/:id" element={<InterviewList userData={userData} />} />
         <Route path="/company/applicantlist/:id" element={<ApplicantList userData={userData} />} />
 
         <Route

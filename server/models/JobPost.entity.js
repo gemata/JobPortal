@@ -79,6 +79,26 @@ const JobPost = sequelize.define(
       defaultValue: false,
       allowNull: false,
     },
+    interviewStart: {
+      type: DataTypes.DATE,
+      defaultValue: false,
+      allowNull: false,
+    },
+    interviewAddress: {
+      type: DataTypes.STRING(255),
+      defaultValue: false,
+      allowNull: true,
+    },
+    interviewLink: {
+      type: DataTypes.STRING(255),
+      defaultValue: false,
+      allowNull: true,
+    },
+    interviewNrCandidates: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
   },
   {
     sequelize

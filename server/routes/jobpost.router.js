@@ -16,6 +16,11 @@ JobPostRouter.get(
   JobPostController.getJobPostByCompanyID
 );
 
+JobPostRouter.get(
+  "/interviews/:CompanyID",
+  JobPostController.getJobPoststWithInterviews
+);
+
 JobPostRouter.put("/:id", JobPostController.updateJobPost);
 
 JobPostRouter.delete("/:id", JobPostController.deleteJobPost);
