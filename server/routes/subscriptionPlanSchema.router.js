@@ -7,6 +7,8 @@ SubscriptionPlanRouter.post("/", SubscriptionPlanController.createSubscriptionPl
 
 SubscriptionPlanRouter.get("/", SubscriptionPlanController.getSubscriptionPlans);
 
+SubscriptionPlanRouter.get("/plan/:id", SubscriptionPlanController.getSubscriptionPlanByStripeId);
+
 SubscriptionPlanRouter.get("/:id", SubscriptionPlanController.getSubscriptionPlanById);
 
 SubscriptionPlanRouter.put("/:id", SubscriptionPlanController.updateSubscriptionPlan);

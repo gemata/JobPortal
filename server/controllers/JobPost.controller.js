@@ -140,7 +140,7 @@ const JobPostController = {
           },
         ],
       });
-  
+
       const jobLikes = jobPosts.reduce((acc, jobPost) => {
         const position = jobPost["Job Position"].position;
         if (!acc[position]) {
@@ -152,21 +152,34 @@ const JobPostController = {
         acc[position].totalLikes += jobPost.likes;
         return acc;
       }, {});
-  
+
       const jobLikesArray = Object.values(jobLikes).sort((a, b) => b.totalLikes - a.totalLikes);
-  
+
       return res.status(200).json(jobLikesArray);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
-  
 
   // Get a JobPost by ID
   async getJobPostById(req, res) {
     const { id } = req.params;
     try {
-      const JobPostRecord = await JobPost.findByPk(id);
+      const JobPostRecord = await JobPost.findByPk(id, {
+        include: [
+          {
+            model: Company, as: 'Company', include: [
+              {
+                model: CompanyLogo,
+                as: "CompanyLogo",
+              },
+            ],
+          },
+          {
+            model: JobPosition, as: 'Job Position'
+          }
+        ]
+      });
       if (!JobPostRecord) {
         return res.status(404).json({ message: "Job Post not found" });
       }

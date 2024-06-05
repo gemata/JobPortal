@@ -15,6 +15,29 @@ export default function CompanyProfile({ userData }) {
   const [fetchData, setFetchData] = useState(false);
   const [toggleDeleteButton, setToggleDeleteButton] = useState(false);
   const [deleteWarningMessage, setDeleteWarningMessage] = useState('Are you sure you want to delete your profile info?');
+  const [isPremium, setIsPremium] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState('');
+
+  useEffect(() => {
+    if (userData.Email) {
+      fetch(`http://localhost:5000/api/invoicesM/email/${userData.Email}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            if (data.isActive) {
+              setIsPremium(true);
+              fetch(`http://localhost:5000/api/subscriptionsPlan/plan/${data.subscriptionPlan}`)
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data) {
+                    setSubscriptionData(data);
+                  }
+                });
+            }
+          }
+        });
+    }
+  }, [userData]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/companies/${userData.ID}`)
@@ -175,47 +198,61 @@ export default function CompanyProfile({ userData }) {
                       </p>
                     </div>
                     <div className='bg-purple-200 shadow-lg w-full p-5 rounded-lg flex flex-col justify-between gap-8'>
-                      {companyData.FreeJobPosted ? (
+                      {isPremium ? (
                         <>
                           <div className='flex flex-col gap-3'>
-                            <h1 className='text-lg font-bold text-purple-900'>You have already posted your free job.</h1>
-                            <p className='text-purple-900'>
-                              To keep posting new job listings, you need to become a{' '}
-                              <Link to='/pricing' className='underline text-jobportal-pink'>
-                                premium member
-                              </Link>
-                              .
-                            </p>
-                          </div>
-                          <div className='flex flex-col gap-3 w-full'>
-                            <button type='button' className='bg-white w-full px-3 py-2 rounded hover:bg-gray-100 active:bg-gray-200'>
-                              View Job Details
-                            </button>
-                            <Link to='/pricing' className='bg-jobportal-pink text-center text-white w-full px-3 py-2 rounded hover:bg-fuchsia-700 active:bg-fuchsia-800'>
-                              View Subscriptions
-                            </Link>
+                            <h1 className='text-lg font-bold text-purple-900'>You have a premium account!</h1>
+                            <p className='text-purple-900'>You are now one of our premium members!</p>
+                            <p className='text-purple-900'>Subscription type: {subscriptionData?.planName}</p>
+                            {subscriptionData?.planDescription?.split(', ').map((benefit, index) => (
+                              <div key={index} className='flex flex-row gap-2.5 items-start text-left text-sm text-purple-900 ml-3'>
+                                <span>{benefit}</span>
+                              </div>
+                            ))}
                           </div>
                         </>
                       ) : (
                         <>
-                          <div className='flex flex-col gap-3'>
-                            <h1 className='text-lg font-bold text-purple-900'>You still have your free job posting.</h1>
-                            <p className='text-purple-900'>
-                              If you want to create you very own job listing, you can{' '}
-                              <Link to='/company/jobs/create' className='underline text-jobportal-pink'>
-                                create a job listing here
-                              </Link>
-                              .
-                            </p>
-                          </div>
-                          <div className='flex flex-col gap-3 w-full md:w-auto'>
-                            <Link
-                              to='/company/jobs/create'
-                              className='bg-jobportal-pink text-white w-full text-center md:w-auto px-3 py-2 rounded hover:bg-fuchsia-700 active:bg-fuchsia-800'
-                            >
-                              Create New Post
-                            </Link>
-                          </div>
+                          {companyData.FreeJobPosted ? (
+                            <>
+                              <div className='flex flex-col gap-3'>
+                                <h1 className='text-lg font-bold text-purple-900'>You have already posted your free job.</h1>
+                                <p className='text-purple-900'>
+                                  To keep posting new job listings, you need to become a{' '}
+                                  <Link to='/pricing' className='underline text-jobportal-pink'>
+                                    premium member
+                                  </Link>
+                                  .
+                                </p>
+                              </div>
+                              <div className='flex flex-col gap-3 w-full'>
+                                <Link to='/pricing' className='bg-jobportal-pink text-center text-white w-full px-3 py-2 rounded hover:bg-fuchsia-700 active:bg-fuchsia-800'>
+                                  View Subscriptions
+                                </Link>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className='flex flex-col gap-3'>
+                                <h1 className='text-lg font-bold text-purple-900'>You still have your free job posting.</h1>
+                                <p className='text-purple-900'>
+                                  If you want to create you very own job listing, you can{' '}
+                                  <Link to='/company/jobs/create' className='underline text-jobportal-pink'>
+                                    create a job listing here
+                                  </Link>
+                                  .
+                                </p>
+                              </div>
+                              <div className='flex flex-col gap-3 w-full md:w-auto'>
+                                <Link
+                                  to='/company/jobs/create'
+                                  className='bg-jobportal-pink text-white w-full text-center md:w-auto px-3 py-2 rounded hover:bg-fuchsia-700 active:bg-fuchsia-800'
+                                >
+                                  Create New Post
+                                </Link>
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </div>

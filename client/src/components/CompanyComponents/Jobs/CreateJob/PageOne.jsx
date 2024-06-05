@@ -12,7 +12,6 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
     fetch('http://localhost:5000/api/jobfields/')
       .then((response) => response.json())
       .then((data) => {
-        console.log('Job fields data:', data); // Log the entire response
         if (data && Array.isArray(data.rows)) {
           setJobFields(data.rows);
         } else {
@@ -74,7 +73,7 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
           </option>
         ))}
       </select>
-        
+
       <label className='float-left' htmlFor='jobSummary'>
         Job Summary
       </label>
@@ -85,11 +84,11 @@ export default function PageOne({ jobField, setJobField, jobPosition, setJobPosi
         placeholder='Job Summary'
         modules={{
           toolbar: [
-            [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-            [{size: []}],
+            [{ header: '1' }, { header: '2' }, { font: [] }],
+            [{ size: [] }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-            [{'list': 'ordered'}, {'list': 'bullet'}],
-            ['clean']                                         
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean'],
           ],
         }}
       />

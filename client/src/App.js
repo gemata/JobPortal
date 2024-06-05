@@ -8,7 +8,7 @@ import CompanyJobs from "./pages/CompanyPages/Jobs";
 import CompanyDashboard from "./pages/CompanyPages/Dashboard";
 import CompanyProfile from "./pages/CompanyPages/Profile";
 import CompanyAnalyticsOverview from "./pages/CompanyPages/Analytics/Overview";
-import CompanyJobsShow from "./pages/CompanyPages/Jobs/Show";
+import JobsShow from "./pages/CompanyPages/Jobs/Show";
 import CompanyJobsCreate from "./pages/CompanyPages/Jobs/Create";
 import Dashboard from "./pages/UserPages/Dashboard";
 import MyProfile from "./pages/UserPages/MyProfile";
@@ -117,7 +117,10 @@ function App() {
           path="/company/jobs/create"
           element={<CompanyJobsCreate userData={userData} />}
         />
-        <Route path="/company/jobs/show/:id" element={<CompanyJobsShow />} />
+        <Route
+          path="/jobs/show/:id"
+          element={<JobsShow userData={userData} />}
+        />
       </Routes>
       <Footer />
     </div>
