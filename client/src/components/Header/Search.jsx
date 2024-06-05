@@ -84,7 +84,7 @@ export default function Search({
                       </Link>
                     ) : (
                       <Link
-                        to="/profile/dashboard"
+                        to="/profile/detail"
                         className="w-full md:w-auto text-center px-3 py-[7px] border border-solid border-jobportal-pink bg-jobportal-pink text-white rounded hover:bg-fuchsia-700"
                       >
                         Profile
