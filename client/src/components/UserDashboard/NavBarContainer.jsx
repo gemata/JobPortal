@@ -6,7 +6,7 @@ const NavBarContainer = () => {
     <nav className="bg-white shadow-lg">
       <div className="max-w-[1200px] mx-auto ">
         <ul className="flex justify-between gap-7 p-3 text-black font-semibold flex-wrap">
-          <li>
+          {/* <li>
             <NavLink
               to="/profile/dashboard"
               className={({ isActive }) =>
@@ -15,7 +15,7 @@ const NavBarContainer = () => {
                   : "flex items-center"
               }
             >
-              {/* Dashboard icon */}
+              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -26,7 +26,7 @@ const NavBarContainer = () => {
               </svg>
               Dashboard
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink
               to="/profile/detail"
@@ -52,7 +52,7 @@ const NavBarContainer = () => {
               My Profile
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
               to="/profile/job-tracker"
               className={({ isActive }) =>
@@ -61,7 +61,7 @@ const NavBarContainer = () => {
                   : "flex items-center"
               }
             >
-              {/* JobTracker icon */}
+             
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -77,8 +77,8 @@ const NavBarContainer = () => {
               </svg>
               JobTracker
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <NavLink
               to="/profile/my-goals"
               className={({ isActive }) =>
@@ -87,7 +87,7 @@ const NavBarContainer = () => {
                   : "flex items-center"
               }
             >
-              {/* My Goals icon */}
+              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -102,77 +102,71 @@ const NavBarContainer = () => {
               </svg>
               My Goals
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink
-              to="/profile/job-alerts"
+              to="/profile/applied-jobs"
               className={({ isActive }) =>
                 isActive
                   ? "flex items-center border-b-4 border-purple-500"
                   : "flex items-center"
               }
             >
-              {/* Job Alerts icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
+                viewBox="0 0 20 20"
                 fill="currentColor"
-                className="w-4  mr-1"
+                className="size-5"
               >
-                <path d="M3.6 1.7A.75.75 0 1 0 2.4.799a6.978 6.978 0 0 0-1.123 2.247.75.75 0 1 0 1.44.418c.187-.644.489-1.24.883-1.764ZM13.6.799a.75.75 0 1 0-1.2.9 5.48 5.48 0 0 1 .883 1.765.75.75 0 1 0 1.44-.418A6.978 6.978 0 0 0 13.6.799Z" />
-                <path
-                  fillRule="evenodd"
-                  d="M8 1a4 4 0 0 1 4 4v2.379c0 .398.158.779.44 1.06l1.267 1.268a1 1 0 0 1 .293.707V11a1 1 0 0 1-1 1h-2a3 3 0 1 1-6 0H3a1 1 0 0 1-1-1v-.586a1 1 0 0 1 .293-.707L3.56 8.44A1.5 1.5 0 0 0 4 7.38V5a4 4 0 0 1 4-4Zm0 12.5A1.5 1.5 0 0 1 6.5 12h3A1.5 1.5 0 0 1 8 13.5Z"
-                  clipRule="evenodd"
-                />
+                <path d="M6.111 11.89A5.5 5.5 0 1 1 15.501 8 .75.75 0 0 0 17 8a7 7 0 1 0-11.95 4.95.75.75 0 0 0 1.06-1.06Z" />
+                <path d="M8.232 6.232a2.5 2.5 0 0 0 0 3.536.75.75 0 1 1-1.06 1.06A4 4 0 1 1 14 8a.75.75 0 0 1-1.5 0 2.5 2.5 0 0 0-4.268-1.768Z" />
+                <path d="M10.766 7.51a.75.75 0 0 0-1.37.365l-.492 6.861a.75.75 0 0 0 1.204.65l1.043-.799.985 3.678a.75.75 0 0 0 1.45-.388l-.978-3.646 1.292.204a.75.75 0 0 0 .74-1.16l-3.874-5.764Z" />
               </svg>
-              Job Alerts
+              Applied Jobs
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/profile/listed-jobs"
+              to="/profile/saved-jobs"
               className={({ isActive }) =>
                 isActive
                   ? "flex items-center border-b-4 border-purple-500"
                   : "flex items-center"
               }
             >
-              {/* My Jobs icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
+                viewBox="0 0 20 20"
                 fill="currentColor"
-                className="w-4  mr-1"
+                className="size-5"
               >
-                <path d="M2 6.342a3.375 3.375 0 0 1 6-2.088 3.375 3.375 0 0 1 5.997 2.26c-.063 2.134-1.618 3.76-2.955 4.784a14.437 14.437 0 0 1-2.676 1.61c-.02.01-.038.017-.05.022l-.014.006-.004.002h-.002a.75.75 0 0 1-.592.001h-.002l-.004-.003-.015-.006a5.528 5.528 0 0 1-.232-.107 14.395 14.395 0 0 1-2.535-1.557C3.564 10.22 1.999 8.558 1.999 6.38L2 6.342Z" />
+                <path
+                  fillRule="evenodd"
+                  d="M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 0 0 1.075.676L10 15.082l5.925 2.844A.75.75 0 0 0 17 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0 0 10 2Z"
+                  clipRule="evenodd"
+                />
               </svg>
-              My Jobs
+              Saved Jobs
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/profile/settings"
+              to="/profile/liked-jobs"
               className={({ isActive }) =>
                 isActive
                   ? "flex items-center border-b-4 border-purple-500"
                   : "flex items-center"
               }
             >
-              {/* Setting icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
+                viewBox="0 0 20 20"
                 fill="currentColor"
-                className="w-4 h-4"
+                className="size-5"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M6.955 1.45A.5.5 0 0 1 7.452 1h1.096a.5.5 0 0 1 .497.45l.17 1.699c.484.12.94.312 1.356.562l1.321-1.081a.5.5 0 0 1 .67.033l.774.775a.5.5 0 0 1 .034.67l-1.08 1.32c.25.417.44.873.561 1.357l1.699.17a.5.5 0 0 1 .45.497v1.096a.5.5 0 0 1-.45.497l-1.699.17c-.12.484-.312.94-.562 1.356l1.082 1.322a.5.5 0 0 1-.034.67l-.774.774a.5.5 0 0 1-.67.033l-1.322-1.08c-.416.25-.872.44-1.356.561l-.17 1.699a.5.5 0 0 1-.497.45H7.452a.5.5 0 0 1-.497-.45l-.17-1.699a4.973 4.973 0 0 1-1.356-.562L4.108 13.37a.5.5 0 0 1-.67-.033l-.774-.775a.5.5 0 0 1-.034-.67l1.08-1.32a4.971 4.971 0 0 1-.561-1.357l-1.699-.17A.5.5 0 0 1 1 8.548V7.452a.5.5 0 0 1 .45-.497l1.699-.17c.12-.484.312-.94.562-1.356L2.629 4.107a.5.5 0 0 1 .034-.67l.774-.774a.5.5 0 0 1 .67-.033L5.43 3.71a4.97 4.97 0 0 1 1.356-.561l.17-1.699ZM6 8c0 .538.212 1.026.558 1.385l.057.057a2 2 0 0 0 2.828-2.828l-.058-.056A2 2 0 0 0 6 8Z"
-                  clipRule="evenodd"
-                />
+                <path d="M1 8.25a1.25 1.25 0 1 1 2.5 0v7.5a1.25 1.25 0 1 1-2.5 0v-7.5ZM11 3V1.7c0-.268.14-.526.395-.607A2 2 0 0 1 14 3c0 .995-.182 1.948-.514 2.826-.204.54.166 1.174.744 1.174h2.52c1.243 0 2.261 1.01 2.146 2.247a23.864 23.864 0 0 1-1.341 5.974C17.153 16.323 16.072 17 14.9 17h-3.192a3 3 0 0 1-1.341-.317l-2.734-1.366A3 3 0 0 0 6.292 15H5V8h.963c.685 0 1.258-.483 1.612-1.068a4.011 4.011 0 0 1 2.166-1.73c.432-.143.853-.386 1.011-.814.16-.432.248-.9.248-1.388Z" />
               </svg>
-              Settings
+              Liked Jobs
             </NavLink>
           </li>
         </ul>

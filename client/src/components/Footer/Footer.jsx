@@ -65,7 +65,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to='/profile/listed-jobs' className='hover:text-white'>
+                <Link to='/profile/applied-jobs' className='hover:text-white'>
                 Applications
                 </Link>
               </li>

@@ -136,7 +136,11 @@ export default function FindJobsSearchbar({
               isMenuOpen ? "bg-ripple-gray" : "bg-ripple-pink"
             } transition-all active:bg-fuchsia-700 hover:opacity-70 w-full absolute bottom-0 left-0 h-3`}
             type="button"
-          />
+          >
+            <span className="absolute -top-1.5 right-4 text-white text-sm">
+              v
+            </span>
+          </button>
         </form>
         <div
           className={`${

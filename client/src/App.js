@@ -11,14 +11,10 @@ import CompanyAnalyticsOverview from "./pages/CompanyPages/Analytics/Overview";
 import JobsShow from "./pages/CompanyPages/Jobs/Show";
 import CompanyShow from "./pages/CompanyPages/CompanyShow";
 import CompanyJobsCreate from "./pages/CompanyPages/Jobs/Create";
-import Dashboard from "./pages/UserPages/Dashboard";
 import MyProfile from "./pages/UserPages/MyProfile";
-import JobTracker from "./pages/UserPages/JobTracker";
-import MyGoals from "./pages/UserPages/MyGoals";
-import JobAlerts from "./pages/UserPages/JobAlerts";
-import ListedJobs from "./pages/UserPages/ListedJobs";
-import Settings from "./pages/UserPages/Settings";
-import Messages from "./pages/UserPages/Messages";
+import SavedJobs from "./pages/UserPages/SavedJobs";
+import AppliedJobs from "./pages/UserPages/AppliedJobs";
+import LikedJobs from "./pages/UserPages/LikedJobs";
 import ResetPassword from "./pages/ResetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 import ApplicantList from "./pages/CompanyPages/ApplicantList";
@@ -75,7 +71,6 @@ function App() {
             setIsLoggedOut={setIsLoggedOut}
           />
         )}
-    <useScrollToTop/>
         
       <Routes>
         <Route path="/" element={<Home />} />
@@ -84,13 +79,9 @@ function App() {
           path="/profile/detail"
           element={<MyProfile userData={userData} />}
         />
-        <Route path="/profile/dashboard" element={<Dashboard userData={userData} />} />
-        <Route path="/profile/job-tracker" element={<JobTracker userData={userData} />} />
-        <Route path="/profile/my-goals" element={<MyGoals userData={userData} />} />
-        <Route path="/profile/job-alerts" element={<JobAlerts userData={userData} />} />
-        <Route path="/profile/listed-jobs" element={<ListedJobs userData={userData} />} />
-        <Route path="/profile/settings" element={<Settings userData={userData} />} />
-        <Route path="/profile/messages" element={<Messages />} />
+        <Route path="/profile/saved-jobs" element={<SavedJobs userData={userData} />} />
+        <Route path="/profile/applied-jobs" element={<AppliedJobs userData={userData} />} />
+        <Route path="/profile/liked-jobs" element={<LikedJobs userData={userData} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/confirm-account" element={<ConfirmAccount />} />
         <Route path="/success" element={<CheckoutSuccess />} />

@@ -2,15 +2,14 @@ import React from 'react';
 import NavBarContainer from '../../components/UserDashboard/NavBarContainer';
 import SignInPrompt from '../../components/SignInPrompt';
 
-const ListedJobs = ({ userData }) => {
+const AppliedJobs = ({ userData }) => {
   return (
     <>
       <NavBarContainer />
       {userData.length != 0 && userData.role !== 'Company' ? (
         <>
           <section className='max-w-[1200px] mx-auto py-10'>
-            <div>Liked Jobs</div>
-            <div>Applied Jobs</div>
+            <div>AppliedJobs</div>
           </section>
         </>
       ) : (
@@ -22,4 +21,4 @@ const ListedJobs = ({ userData }) => {
   );
 };
 
-export default ListedJobs;
+export default AppliedJobs;

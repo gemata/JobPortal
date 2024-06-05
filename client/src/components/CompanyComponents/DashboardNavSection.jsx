@@ -54,12 +54,11 @@ export default function DashboardNavSection() {
               </NavLink>
             </li>
 
-            <li>
+            {/* <li>
               <NavLink
                 to='/company/jobs'
                 className={() => `flex gap-2 p-5 items-center ${checkActive('/company/jobs', true) ? 'border-b border-jobportal-cyan text-jobportal-cyan' : ''}`}
               >
-                {/* Briefcase SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
                   <path
                     fillRule='evenodd'
@@ -70,7 +69,7 @@ export default function DashboardNavSection() {
                 </svg>
                 Jobs
               </NavLink>
-            </li>
+            </li> */}
             {/* <li>
               <NavLink
                 to='/company/applicantlist/1'
@@ -95,14 +94,12 @@ export default function DashboardNavSection() {
                 Interviews
               </NavLink>
             </li>
-            <li className='relative'>
+            {/* <li className='relative'>
               <button onClick={toggleDropdown} className='flex gap-2 p-5 items-center'>
-                {/* Chart SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
                   <path d='M12 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-1ZM6.5 6a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V6ZM2 9a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9Z' />
                 </svg>
                 Analytics
-                {/* Chevron Down SVG */}
                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 mt-[0.125rem]'>
                   <path
                     fillRule='evenodd'
@@ -130,7 +127,7 @@ export default function DashboardNavSection() {
                   </div>
                 </div>
               )}
-            </li>
+            </li> */}
           </ul>
         </nav>
       </section>

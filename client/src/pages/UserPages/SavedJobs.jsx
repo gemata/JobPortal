@@ -2,14 +2,14 @@ import React from 'react';
 import NavBarContainer from '../../components/UserDashboard/NavBarContainer';
 import SignInPrompt from '../../components/SignInPrompt';
 
-const JobAlerts = ({ userData }) => {
+const SavedJobs = ({ userData }) => {
   return (
     <>
       <NavBarContainer />
       {userData.length != 0 && userData.role !== 'Company' ? (
         <>
           <section className='max-w-[1200px] mx-auto py-10'>
-            <div>JobAlerts</div>
+            <div>Saved Jobs</div>
           </section>
         </>
       ) : (
@@ -21,4 +21,4 @@ const JobAlerts = ({ userData }) => {
   );
 };
 
-export default JobAlerts;
+export default SavedJobs;
