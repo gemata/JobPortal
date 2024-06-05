@@ -4,6 +4,8 @@ import DashboardNavSection from '../../../components/CompanyComponents/Dashboard
 import NavBarContainer from '../../../components/UserDashboard/NavBarContainer';
 import SignInPrompt from '../../../components/SignInPrompt';
 import grayLogo from '../../../img/grayLogo.png';
+import Modal from '../../../components/UserDashboard/Modal';
+import CompanyEditJobModal from './CompanyEditJobModal';
 
 const JobsShow = ({ userData }) => {
   const { id } = useParams();
@@ -11,6 +13,8 @@ const JobsShow = ({ userData }) => {
   const [currentCompany, setCurrentCompany] = useState('');
   const [applied, setApplied] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isEditJobModalOpen, setIsEditJobModalOpen] = useState(false);
+  const [fetchData, setFetchData] = useState(false);
 
   const handleApplyClick = async () => {
     if (!userData || !currentJob) {
@@ -80,7 +84,15 @@ const JobsShow = ({ userData }) => {
           setCurrentCompany(data.Company);
         });
     }
-  }, [id]);
+  }, [id, fetchData]);
+
+  const handleOpenEditJobModal = () => {
+    setIsEditJobModalOpen(true);
+  };
+
+  const handleCloseEditJobModal = () => {
+    setIsEditJobModalOpen(false);
+  };
 
   return (
     <>
@@ -99,7 +111,24 @@ const JobsShow = ({ userData }) => {
                   <div className='bg-gray-50 rounded-lg shadow-lg relative border transition-all flex relative'>
                     <div className='flex flex-col w-full gap-3'>
                       <div className='bg-white flex rounded-lg flex-col w-full gap-3 shadow-lg px-10 py-6'>
-                        <h1 className='text-2xl font-semibold'>{currentJob['Job Position']?.position}</h1>
+                        <div className='flex justify-between'>
+                          <h1 className='text-2xl font-semibold'>{currentJob['Job Position']?.position}</h1>
+                          {userData.ID === currentJob.CompanyID && userData.role === 'Company' ? (
+                            <>
+                              <button onClick={handleOpenEditJobModal} type='button' className='bg-gray-200 hover:bg-gray-300 active:bg-gray-400 rounded px-4 py-2'>
+                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='size-5'>
+                                  <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125'
+                                  />
+                                </svg>
+                              </button>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
                         <hr className='w-full border border-1' />
                         <Link to={`/company/show/${currentJob?.CompanyID}`} className='w-fit p-2'>
                           <div className='flex items-center space-x-3'>
@@ -206,6 +235,29 @@ const JobsShow = ({ userData }) => {
                       </div>
                       <hr />
                       <div className='px-10 py-5 flex gap-3 flex-col'>
+                        <h3 className='text-xl font-semibold'>Job Details</h3>
+                        <h3 className='text-lg mt-3 ml-3'>
+                          <span className='font-semibold mr-2'>Pay:</span> ${currentJob.salary_from} - ${currentJob.salary_to} per hour
+                        </h3>
+                        <h3 className='text-lg mt-3 ml-3'>
+                          <span className='font-semibold mr-2'>Schedule:</span> <span className='capitalize'> {currentJob.interviewMethod} </span>
+                        </h3>
+                        <h3 className='text-lg mt-3 ml-3'>
+                          <span className='font-semibold mr-2'>Nationality:</span> <span className='capitalize'> {currentJob.nationality} </span>
+                        </h3>
+                      </div>
+                      <hr />
+                      <div className='px-10 py-5 flex gap-3 flex-col'>
+                        <h3 className='text-xl font-semibold'>Job Summary</h3>
+                        <div
+                          className='mt-3 text-gray-600 jobHtmlStyling'
+                          dangerouslySetInnerHTML={{
+                            __html: currentJob.jobSummary,
+                          }}
+                        ></div>
+                      </div>
+                      <hr />
+                      <div className='px-10 py-5 flex gap-3 flex-col'>
                         <h3 className='text-xl font-semibold'>Company Info</h3>
                         <h3 className='text-lg mt-3 ml-3'>
                           <span className='font-semibold mr-2'>Address: </span> {currentCompany?.address || 'None specified'}
@@ -223,26 +275,6 @@ const JobsShow = ({ userData }) => {
                           <span className='font-semibold mr-2'>Description: </span> {currentCompany?.description || 'None specified'}
                         </h3>
                       </div>
-                      <hr />
-                      <div className='px-10 py-5 flex gap-3 flex-col'>
-                        <h3 className='text-xl font-semibold'>Job Details</h3>
-                        <h3 className='text-lg mt-3 ml-3'>
-                          <span className='font-semibold mr-2'>Pay:</span> ${currentJob.salary_from} - ${currentJob.salary_to} per hour
-                        </h3>
-                        <h3 className='text-lg mt-3 ml-3'>
-                          <span className='font-semibold mr-2'>Schedule:</span> <span className='capitalize'> {currentJob.interviewMethod} </span>
-                        </h3>
-                      </div>
-                      <hr />
-                      <div className='px-10 py-5 flex gap-3 flex-col'>
-                        <h3 className='text-xl font-semibold'>Job Summary</h3>
-                        <div
-                          className='mt-3 text-gray-600 jobHtmlStyling'
-                          dangerouslySetInnerHTML={{
-                            __html: currentJob.jobSummary,
-                          }}
-                        ></div>
-                      </div>
                     </div>
                   </div>
                 </section>
@@ -253,6 +285,9 @@ const JobsShow = ({ userData }) => {
           <SignInPrompt />
         )}
       </div>
+      <Modal isOpen={isEditJobModalOpen} onClose={handleCloseEditJobModal}>
+        <CompanyEditJobModal jobData={currentJob} fetchData={fetchData} setFetchData={setFetchData} />
+      </Modal>
     </>
   );
 };
