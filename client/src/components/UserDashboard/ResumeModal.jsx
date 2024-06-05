@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import grayLogo from '../../img/grayLogo.png';
-import pdf from '../../img/pdfFileIcon.png';
+import pdf from '../../pages/ResumeHelp/img/pdf.svg';
 import docx from '../../img/docxFileIcon.png';
 import doc from '../../img/docFileIcon.png';
 
