@@ -1,11 +1,26 @@
 import SavedJob from "../models/savedJob.entity.js";
 import JobPost from "../models/JobPost.entity.js";
+import JobPosition from "../models/jobposition.entity.js";
+import Company from "../models/Company.entity.js";
 
 // Controller functions
 const SavedJobController = {
   // Create a new SavedJob
   async createSavedJob(req, res) {
     try {
+      
+      const existingSavedJob = await SavedJob.findOne({
+        where: {
+          UserId: req.body.UserId,
+          JobPostID: req.body.JobPostID,
+        },
+      });
+
+      if (existingSavedJob) {
+        return res.status(400).json({ error: "Applicant already Saved for this job post." });
+      }
+
+
       const newSavedJob = await SavedJob.create(req.body);
 
       // Increment nrApplicants for the related JobPost
@@ -48,15 +63,26 @@ const SavedJobController = {
   async getSavedJobsByUserId(req, res) {
     const { UserId } = req.params;
     try {
-      const SavedJobs = await SavedJob.findAll({ where: { UserId } });
+      const SavedJobs = await SavedJob.findAll({
+        where: { UserId },
+        include: [
+          {
+            model: JobPost, include: [
+              { model: JobPosition },
+              { model: Company },
+            ]
+          }
+        ]
+      });
       if (!SavedJobs.length) {
-        return res.status(404).json({ message: "No saved jobs found for this user" });
+        return res.status(404).json({ message: "No Saved jobs found for this user" });
       }
       return res.status(200).json(SavedJobs);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
+
 
   // Update a SavedJob
   async updateSavedJob(req, res) {

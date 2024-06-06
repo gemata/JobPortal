@@ -9,10 +9,6 @@ const SavedJob = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    savedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    }
 
   },
   {

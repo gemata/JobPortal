@@ -1,11 +1,24 @@
 import LikedJob from "../models/likedJob.entity.js";
 import JobPost from "../models/JobPost.entity.js";
+import JobPosition from "../models/jobposition.entity.js";
+import Company from "../models/Company.entity.js";
 
 // Controller functions
 const LikedJobController = {
   // Create a new LikedJob
   async createLikedJob(req, res) {
     try {
+      const existingLikedJob = await LikedJob.findOne({
+        where: {
+          UserId: req.body.UserId,
+          JobPostID: req.body.JobPostID,
+        },
+      });
+
+      if (existingLikedJob) {
+        return res.status(400).json({ error: "Applicant already Liked for this job post." });
+      }
+
       const newLikedJob = await LikedJob.create(req.body);
 
       // Increment nrApplicants for the related JobPost
@@ -48,15 +61,26 @@ const LikedJobController = {
   async getLikedJobsByUserId(req, res) {
     const { UserId } = req.params;
     try {
-      const LikedJobs = await LikedJob.findAll({ where: { UserId } });
+      const LikedJobs = await LikedJob.findAll({
+        where: { UserId },
+        include: [
+          {
+            model: JobPost, include: [
+              { model: JobPosition },
+              { model: Company },
+            ]
+          }
+        ]
+      });
       if (!LikedJobs.length) {
-        return res.status(404).json({ message: "No liked jobs found for this user" });
+        return res.status(404).json({ message: "No Liked jobs found for this user" });
       }
       return res.status(200).json(LikedJobs);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
+
 
   // Update a LikedJob
   async updateLikedJob(req, res) {

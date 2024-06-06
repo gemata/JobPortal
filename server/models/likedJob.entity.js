@@ -9,10 +9,6 @@ const LikedJob = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    likedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    }
 
   },
   {
