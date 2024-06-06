@@ -86,7 +86,7 @@ function App() {
         <Route path="/confirm-account" element={<ConfirmAccount />} />
         <Route path="/success" element={<CheckoutSuccess />} />
         <Route path="/pricing" element={<Pricing />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact" element={<Contact userData={userData} />} />
         <Route path="/career-advice" element={<CareerAdvice />} />
         <Route path="/resume-help" element={<ResumeHelp />} />
         <Route path="/resume-example" element={<ResumeExample />} />
