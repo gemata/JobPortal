@@ -51,7 +51,7 @@ const Home = () => {
         setTestimonials(testimonialsData.sort((a, b) => b.rating - a.rating).slice(0, 3));
 
         const jobPositionsData = await responses[2].json();
-        setMostLikedJobs(Array.isArray(jobPositionsData) ? jobPositionsData : []);
+        setMostLikedJobs(Array.isArray(jobPositionsData) ? jobPositionsData.slice(0, 12) : []);
 
         const jobFieldsData = await responses[3].json();
         setJobFields(jobFieldsData.rows.sort((a, b) => b.jobPositionCount - a.jobPositionCount).slice(0, 8)); // Assuming API returns count of open positions
