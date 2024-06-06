@@ -18,7 +18,6 @@ const CompanyDashboard = ({ userData }) => {
           <>
             <JobTableSection userData={userData} />
             <hr className='h-px my-8 bg-gray-300 border-0' />
-            <LowerJobSection />
           </>
         ) : (
           <SignInPrompt />

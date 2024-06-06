@@ -11,7 +11,7 @@ import InterviewListHeader from '../../components/CompanyComponents/Jobs/Intervi
 
 const InterviewList = ({ userData }) => {
   const location = useLocation();
-  const [isInterviewActive, setInterviewIsActive] =useState('')
+  const [isInterviewActive, setInterviewIsActive] = useState('');
   const { id } = useParams();
   const [applicants, setApplicants] = useState([]);
 
@@ -26,13 +26,13 @@ const InterviewList = ({ userData }) => {
         const data = await response.json();
 
         // Sanitize userNotes using DOMPurify
-        const sanitizedData = data.map(applicant => ({
+        const sanitizedData = data.map((applicant) => ({
           ...applicant,
-          userNotes: DOMPurify.sanitize(applicant.userNotes)
-      }));
+          userNotes: DOMPurify.sanitize(applicant.userNotes),
+        }));
 
-      // Set the sanitized data in the state
-      setApplicants(sanitizedData);
+        // Set the sanitized data in the state
+        setApplicants(sanitizedData);
         setApplicants(data);
       } catch (error) {
         console.error('Error fetching applicants:', error);
@@ -64,16 +64,15 @@ const InterviewList = ({ userData }) => {
     //console.log('Updated status:', isInterviewActive);
   }, [isInterviewActive]);
 
-
   return (
     <>
       <div className='applicantList dashboard bg-gray-100'>
         <DashboardNavSection />
         {userData.length !== 0 && userData.role === 'Company' ? (
           <>
-            {applicants.length > 0 && isInterviewActive !== ''? (
+            {applicants.length > 0 && isInterviewActive !== '' ? (
               <div className='flex flex-col gap-5 container mx-auto'>
-                <InterviewListHeader applicantList={applicants} jobPostId={id} isActive={isInterviewActive}/>
+                <InterviewListHeader applicantList={applicants} jobPostId={id} isActive={isInterviewActive} />
                 <hr className='h-px my-8 bg-gray-300 border-0' />
               </div>
             ) : (
@@ -81,8 +80,6 @@ const InterviewList = ({ userData }) => {
                 <hr className='h-px my-8 bg-gray-300 border-0' />
               </div>
             )}
-
-            <LowerJobSection />
           </>
         ) : (
           <SignInPrompt />

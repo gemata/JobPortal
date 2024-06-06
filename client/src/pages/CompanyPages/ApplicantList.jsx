@@ -9,7 +9,7 @@ import SignInPrompt from '../../components/SignInPrompt';
 
 const ApplicantList = ({ userData }) => {
   const location = useLocation();
-  const [isJobActive, setJobIsActive] =useState('')
+  const [isJobActive, setJobIsActive] = useState('');
   const { id } = useParams();
   const [applicants, setApplicants] = useState([]);
 
@@ -53,16 +53,15 @@ const ApplicantList = ({ userData }) => {
     console.log('Updated status:', isJobActive);
   }, [isJobActive]);
 
-
   return (
     <>
       <div className='applicantList dashboard bg-gray-100'>
         <DashboardNavSection />
         {userData.length !== 0 && userData.role === 'Company' ? (
           <>
-            {applicants.length > 0 && isJobActive !== ''? (
+            {applicants.length > 0 && isJobActive !== '' ? (
               <div className='flex flex-col gap-5 container mx-auto'>
-                <ApplicantListHeader applicantList={applicants} jobPostId={id} isActive={isJobActive}/>
+                <ApplicantListHeader applicantList={applicants} jobPostId={id} isActive={isJobActive} />
                 <hr className='h-px my-8 bg-gray-300 border-0' />
               </div>
             ) : (
@@ -70,8 +69,6 @@ const ApplicantList = ({ userData }) => {
                 <hr className='h-px my-8 bg-gray-300 border-0' />
               </div>
             )}
-
-            <LowerJobSection />
           </>
         ) : (
           <SignInPrompt />

@@ -264,6 +264,9 @@ const FindJobs = ({ userData }) => {
   };
 
   const openJob = (job) => {
+    setApplied(false);
+    setLiked(false);
+    setSaved(false);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
