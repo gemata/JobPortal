@@ -115,7 +115,7 @@ const Home = () => {
                 className='p-4 bg-white rounded-md shadow-sm hover:shadow-lg cursor-pointer transition-shadow duration-300'
               >
                 <div className='font-semibold text-lg'>{job.position}</div>
-                <div className='text-sm text-gray-500'>{job.totalLikes} Users Liked the Jobs in this Position</div>
+                <div className='text-sm text-gray-500'>{job.totalLikes} Likes</div>
               </Link>
             ))}
           </div>
