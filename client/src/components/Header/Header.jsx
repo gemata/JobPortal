@@ -38,6 +38,15 @@ const Header = ({ userData, setUserData, isLoggedOut, setIsLoggedOut }) => {
               <Link to="/contact" className={getLinkClassName("/contact")}>
                 Contact
               </Link>
+              {userData.length !== 0 && userData.role === "User" && (
+                <Link
+                  to="/profile/detail"
+                  className="inline-flex hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-white cursor-pointer text-white"
+                >
+                  Your Dashboard
+                  <FaArrowRight className="mt-1.5 ml-2" />
+                </Link>
+              )}
               {userData.length !== 0 && userData.role === "Company" && (
                 <Link
                   to="/company/dashboard"

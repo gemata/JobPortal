@@ -70,6 +70,12 @@ const dbContext = async () => {
   JobPost.hasMany(AppliedJob);
   AppliedJob.belongsTo(JobPost);
 
+  JobPost.hasMany(LikedJob);
+  LikedJob.belongsTo(JobPost);
+
+  JobPost.hasMany(SavedJob);
+  SavedJob.belongsTo(JobPost);
+
   User.hasMany(AppliedJob);
   AppliedJob.belongsTo(User);
 

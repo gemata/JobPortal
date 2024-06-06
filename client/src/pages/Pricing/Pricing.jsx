@@ -51,7 +51,7 @@ const Pricing = () => {
       <div className='max-w-[1200px] mx-auto my-0 px-[15px] flex flex-col items-center justify-center'>
         <div className='flex flex-col lg:flex-row items-center justify-between mt-[50px] py-8 bg-white'>
           <div className='max-w-xl text-center lg:text-left'>
-            <h1 className='text-3xl font-bold mb-4'>Buy Premium Subscription to Post a Job</h1>
+            <h1 className='text-3xl font-bold mb-4'>Buy Premium Subscription to Post Jobs</h1>
             <p className='mb-8 text-gray-700'>
               Become an employer on our platform and the wide reach of qualified candidates, using our learning and intuitive treatment to post and manage your job announcements.
             </p>
