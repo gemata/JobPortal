@@ -1,5 +1,7 @@
 import React from 'react';
 import NavigationButtons from './NavigationButtons';
+import illustration from '../../img/Illustration.svg';
+import pricing from '../../img/pricing.svg';
 
 const AccountTypeStep = ({ prevStep, nextStep, activeStep, maxSteps, selectedOption, setSelectedOption }) => {
   return (
@@ -22,7 +24,7 @@ const AccountTypeStep = ({ prevStep, nextStep, activeStep, maxSteps, selectedOpt
             background: selectedOption === 'User' ? '#ead3ed' : 'none',
           }}
         >
-          <img src='mainLogo.png' style={{ width: '200px', height: '275px', objectFit: 'cover', objectPosition: 'center center' }} />
+          <img src={illustration} className='border border-fuchsia-700' style={{ width: '200px', height: '275px', objectFit: 'cover', objectPosition: 'center center' }} />
           <p style={{ paddingBottom: '1px' }}>Employee</p>
         </button>
         <button
@@ -37,7 +39,7 @@ const AccountTypeStep = ({ prevStep, nextStep, activeStep, maxSteps, selectedOpt
             background: selectedOption === 'Company' ? '#ead3ed' : 'none',
           }}
         >
-          <img src='mainLogo.png' style={{ width: '200px', height: '275px', objectFit: 'cover', objectPosition: 'center center' }} />
+          <img src={pricing} className='border border-fuchsia-700' style={{ width: '200px', height: '275px', objectFit: 'cover', objectPosition: 'center center' }} />
           <p style={{ paddingBottom: '1px' }}>Employer</p>
         </button>
       </div>

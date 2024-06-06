@@ -40,12 +40,14 @@ export default function CompanyProfile({ userData }) {
   }, [userData]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/companies/${userData.ID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCompanyData(data);
-      })
-      .catch((error) => console.error('Error fetching company data:', error));
+    if (userData.ID) {
+      fetch(`http://localhost:5000/api/companies/${userData.ID}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setCompanyData(data);
+        })
+        .catch((error) => console.error('Error fetching company data:', error));
+    }
   }, [userData, fetchData]);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function CompanyProfile({ userData }) {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [fetchData]);
+  }, [userData, fetchData]);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -145,6 +147,7 @@ export default function CompanyProfile({ userData }) {
         if (!response.ok) {
           console.error('Error:', responseData.error);
         }
+        setFetchData(!fetchData);
       } catch (error) {
         console.error('Fetch error:', error);
       }
