@@ -20,6 +20,15 @@ module.exports = {
           logoblue: "#035aa7",
         },
       },
+      keyframes: {
+        'pulse-once': {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
+      },
+      animation: {
+        'pulse-once': 'pulse-once 1s ease-in-out',
+      },
     },
   },
   plugins: [

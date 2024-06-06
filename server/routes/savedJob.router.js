@@ -1,18 +1,19 @@
-import express from 'express';
-import SavedJobController from '../controllers/savedJob.controller.js';
+import express from "express";
+import SavedJobController from "../controllers/savedJob.controller.js";
 
 const SavedJobsRouter = express.Router();
 
-SavedJobsRouter.post('/', SavedJobController.createSavedJob);
+SavedJobsRouter.post("/", SavedJobController.createSavedJob);
 
-SavedJobsRouter.get('/', SavedJobController.getSavedJobs);
+SavedJobsRouter.get("/", SavedJobController.getSavedJobs);
 
-SavedJobsRouter.get('/:id', SavedJobController.getSavedJobById);
+SavedJobsRouter.get("/:id", SavedJobController.getSavedJobById);
 
-SavedJobsRouter.get('/user/:UserId', SavedJobController.getSavedJobsByUserId);
+SavedJobsRouter.get("/user/:UserId", SavedJobController.getSavedJobsByUserId);
 
-SavedJobsRouter.put('/:id', SavedJobController.updateSavedJob);
+SavedJobsRouter.put("/:id", SavedJobController.updateSavedJob);
 
-SavedJobsRouter.delete('/:id', SavedJobController.deleteSavedJob);
+SavedJobsRouter.delete("/", SavedJobController.deleteSavedJob);
+SavedJobsRouter.delete("/:id", SavedJobController.deleteSavedJobById);
 
 export default SavedJobsRouter;

@@ -16,7 +16,9 @@ const LikedJobController = {
       });
 
       if (existingLikedJob) {
-        return res.status(400).json({ error: "Applicant already Liked for this job post." });
+        return res
+          .status(400)
+          .json({ error: "Applicant already Liked for this job post." });
       }
 
       const newLikedJob = await LikedJob.create(req.body);
@@ -65,22 +67,21 @@ const LikedJobController = {
         where: { UserId },
         include: [
           {
-            model: JobPost, include: [
-              { model: JobPosition },
-              { model: Company },
-            ]
-          }
-        ]
+            model: JobPost,
+            include: [{ model: JobPosition }, { model: Company }],
+          },
+        ],
       });
       if (!LikedJobs.length) {
-        return res.status(404).json({ message: "No Liked jobs found for this user" });
+        return res
+          .status(404)
+          .json({ message: "No Liked jobs found for this user" });
       }
       return res.status(200).json(LikedJobs);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
-
 
   // Update a LikedJob
   async updateLikedJob(req, res) {
@@ -102,6 +103,27 @@ const LikedJobController = {
 
   // Delete an LikedJob
   async deleteLikedJob(req, res) {
+    const { UserId, JobPostID } = req.body;
+    try {
+      const deletedRowCount = await LikedJob.destroy({
+        where: { UserId, JobPostID },
+      });
+      if (deletedRowCount === 0) {
+        return res.status(404).json({ message: "LikedJob not found" });
+      }
+      const jobPost = await JobPost.findByPk(JobPostID);
+      if (jobPost) {
+        jobPost.likes -= 1;
+        await jobPost.save();
+      }
+      return res.status(204).end(); // No content response
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Delete an LikedJob
+  async deleteLikedJobById(req, res) {
     const { id } = req.params;
     try {
       const deletedRowCount = await LikedJob.destroy({ where: { id } });
@@ -118,7 +140,6 @@ const LikedJobController = {
       return res.status(500).json({ error: error.message });
     }
   },
-
 };
 
 export default LikedJobController;

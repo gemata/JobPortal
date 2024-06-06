@@ -8,7 +8,6 @@ const SavedJobController = {
   // Create a new SavedJob
   async createSavedJob(req, res) {
     try {
-      
       const existingSavedJob = await SavedJob.findOne({
         where: {
           UserId: req.body.UserId,
@@ -17,9 +16,10 @@ const SavedJobController = {
       });
 
       if (existingSavedJob) {
-        return res.status(400).json({ error: "Applicant already Saved for this job post." });
+        return res
+          .status(400)
+          .json({ error: "Applicant already Saved for this job post." });
       }
-
 
       const newSavedJob = await SavedJob.create(req.body);
 
@@ -67,22 +67,21 @@ const SavedJobController = {
         where: { UserId },
         include: [
           {
-            model: JobPost, include: [
-              { model: JobPosition },
-              { model: Company },
-            ]
-          }
-        ]
+            model: JobPost,
+            include: [{ model: JobPosition }, { model: Company }],
+          },
+        ],
       });
       if (!SavedJobs.length) {
-        return res.status(404).json({ message: "No Saved jobs found for this user" });
+        return res
+          .status(404)
+          .json({ message: "No Saved jobs found for this user" });
       }
       return res.status(200).json(SavedJobs);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   },
-
 
   // Update a SavedJob
   async updateSavedJob(req, res) {
@@ -104,6 +103,22 @@ const SavedJobController = {
 
   // Delete an SavedJob
   async deleteSavedJob(req, res) {
+    const { UserId, JobPostID } = req.body;
+    try {
+      const deletedRowCount = await SavedJob.destroy({
+        where: { UserId, JobPostID },
+      });
+      if (deletedRowCount === 0) {
+        return res.status(404).json({ message: "SavedJob not found" });
+      }
+      return res.status(204).end(); // No content response
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Delete an SavedJob
+  async deleteSavedJobById(req, res) {
     const { id } = req.params;
     try {
       const deletedRowCount = await SavedJob.destroy({ where: { id } });
@@ -120,7 +135,6 @@ const SavedJobController = {
       return res.status(500).json({ error: error.message });
     }
   },
-
 };
 
 export default SavedJobController;
